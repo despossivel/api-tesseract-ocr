@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
 
 const Evento = new mongoose.Schema({
     nome:{
@@ -14,7 +16,7 @@ const Evento = new mongoose.Schema({
         required: true
     },
     dataHora:{
-        type: DateTime,
+        type: Date,
         required: true
     },
     valor:{
@@ -22,16 +24,13 @@ const Evento = new mongoose.Schema({
         required: true
     },
     tipo:{
-        type: Interger, //com nome na lista
+        type: Number, //com nome na lista
                         //com nome na lista sujeito a aprovação
                         //aberto
                         //com ingresso
         required: true
     },
-    idPromotor:{
-        type:ObjectId,
-        required:true
-    },
+    idPromotor: Schema.Types.ObjectId
     // timpestamp:true
 })
 

@@ -10,9 +10,9 @@ const mongoose = require('mongoose')
 const app = express();
 
 
-mongoose.connect('mongodb+srv://dev:dev@cluster0-pasu1.mongodb.net/test?retryWrites=true', {
+mongoose.connect('mongodb+srv://dev:qazx123.@cluster0-ep251.gcp.mongodb.net/test?retryWrites=true&w=majority', {
     useNewUrlParser: true
-});
+}).catch(error => handleError(error));;
 
 
 app.set('view engine', 'ejs')
