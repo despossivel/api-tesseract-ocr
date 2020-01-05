@@ -1,3 +1,4 @@
+/*
 const mongoose = require('mongoose');
 
 const Promoter = new mongoose.Schema({
@@ -39,3 +40,4 @@ const Promoter = new mongoose.Schema({
 
 
 module.exports = mongoose.model('Promoter', Promoter)
+*/
