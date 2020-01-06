@@ -1,7 +1,6 @@
-/*
+ 
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
-
 
 const Evento = new mongoose.Schema({
     nome:{
@@ -30,10 +29,14 @@ const Evento = new mongoose.Schema({
                         //aberto
                         //com ingresso
         required: true
+    },
+    _idPromoter: {
+        type:ObjectId,
+        required:true
     }
     // timpestamp:true
 })
 
 
-module.exports = mongoose.model('Evento', Evento)
-*/
+module.exports = () => mongoose.model('Evento', Evento)
+ 

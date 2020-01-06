@@ -1,5 +1,12 @@
+const { check } = require('express-validator');
+
+
 module.exports = (application) =>{
-  
-    application.get('/auth', (req, res) => application.src.controllers.Auth.login(req, res))
+  	const Auth = new application.src.controllers.Auth(application);
+
+
+    application.post('/auth', 
+    			[check('email').isEmail(), check('password').isLength({ min: 5 })], 
+    			(req, res) =>  Auth.show(req, res))
 
 }
