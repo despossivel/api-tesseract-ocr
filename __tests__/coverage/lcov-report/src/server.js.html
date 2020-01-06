@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/15</span>
+        <span class='fraction'>0/18</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>0/2</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/15</span>
+        <span class='fraction'>0/17</span>
       </div>
     </div>
     <p class="quiet">
@@ -76,16 +76,7 @@
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -95,13 +86,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -109,8 +97,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -120,10 +106,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strinct';
-const express = <span class="cstat-no" title="statement not covered" >require('express');</span>
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const express = <span class="cstat-no" title="statement not covered" >require('express');</span>
 const consign = <span class="cstat-no" title="statement not covered" >require('consign');</span>
 const bodyParser = <span class="cstat-no" title="statement not covered" >require('body-parser');</span>
 const env = <span class="cstat-no" title="statement not covered" >require('dotenv').config()</span>
@@ -133,23 +116,18 @@ const mongoose = <span class="cstat-no" title="statement not covered" >require('
 &nbsp;
 const app = <span class="cstat-no" title="statement not covered" >express();</span>
 &nbsp;
-&nbsp;
-/*
-mongoose.connect('mongodb+srv://dev:qazx123.@cluster0-ep251.gcp.mongodb.net/test?retryWrites=true&amp;w=majority', {
+<span class="cstat-no" title="statement not covered" >mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}`, {</span>
     useUnifiedTopology: true,
     useNewUrlParser: true
-}).then(()=&gt;console.log('conexão estabelecida')).catch(error =&gt; handleError(error));;
-*/
-&nbsp;
+}).then(<span class="fstat-no" title="function not covered" >()</span>=&gt;<span class="cstat-no" title="statement not covered" >console.log('Mongoose se conectou som sucesso!'))</span>.catch(<span class="fstat-no" title="function not covered" >e=</span>&gt;<span class="cstat-no" title="statement not covered" >console.error(e))</span>
+  
 <span class="cstat-no" title="statement not covered" >app.set('view engine', 'ejs')</span>
 <span class="cstat-no" title="statement not covered" >app.set('views', path.join(__dirname, '../src/views'));</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >app.use(bodyParser.urlencoded({extended:true}));</span>
 <span class="cstat-no" title="statement not covered" >app.use(bodyParser.json());</span>
 <span class="cstat-no" title="statement not covered" >app.use(cors());</span>
-&nbsp;
-&nbsp;
-&nbsp;
+ 
 <span class="cstat-no" title="statement not covered" >consign()</span>
     .then('src/controllers')
     .then('src/models') 
@@ -158,15 +136,13 @@ mongoose.connect('mongodb+srv://dev:qazx123.@cluster0-ep251.gcp.mongodb.net/test
     .include('./src/routes')
     .into(app)
 &nbsp;
-   // console.log(app)
-&nbsp;
 <span class="cstat-no" title="statement not covered" >module.exports = app;</span></pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Jan 05 2020 22:52:21 GMT-0300 (GMT-03:00)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jan 06 2020 10:49:08 GMT-0300 (Horário Padrão de Brasília)
 </div>
 </div>
 <script src="../prettify.js"></script>

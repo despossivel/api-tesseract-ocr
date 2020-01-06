@@ -11,7 +11,7 @@ const app = express();
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}`, {
     useUnifiedTopology: true,
     useNewUrlParser: true
-}).then(()=>console.log('conexão estabelecida')).catch(error => handleError(error));;
+}).then(()=>console.log('Mongoose se conectou som sucesso!')).catch(e=>console.error(e))
   
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, '../src/views'));

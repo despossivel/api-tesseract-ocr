@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/middlewares/requestResponse.js</title>
+    <title>Code coverage report for src/middlewares/Jwt.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -16,28 +16,28 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../index.html">All files</a> / <a href="index.html">src/middlewares</a> requestResponse.js
+      <a href="../../index.html">All files</a> / <a href="index.html">src/middlewares</a> Jwt.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/7</span>
+        <span class='fraction'>0/11</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/2</span>
+        <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/2</span>
+        <span class='fraction'>0/5</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/6</span>
+        <span class='fraction'>0/7</span>
       </div>
     </div>
     <p class="quiet">
@@ -56,27 +56,42 @@
 <a name='L8'></a><a href='#L8'>8</a>
 <a name='L9'></a><a href='#L9'>9</a>
 <a name='L10'></a><a href='#L10'>10</a>
-<a name='L11'></a><a href='#L11'>11</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { validationResult } = <span class="cstat-no" title="statement not covered" >require('express-validator');</span>
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const jwt = <span class="cstat-no" title="statement not covered" >require('jsonwebtoken');</span>
 &nbsp;
-const responseError = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {</span>
-	    const errors = <span class="cstat-no" title="statement not covered" >validationResult(req);</span>
-<span class="cstat-no" title="statement not covered" >		  if (!errors.isEmpty()) {</span>
-<span class="cstat-no" title="statement not covered" >		    return res.status(422).json({ errors: errors.array() });</span>
-		  }
+class JWT { 
 &nbsp;
+<span class="fstat-no" title="function not covered" >	co</span>nstructor(){
+<span class="cstat-no" title="statement not covered" >		this.privateKey = process.env.SECRET_KEY;</span>
+<span class="cstat-no" title="statement not covered" >		this.expiresIn = '8h';</span>
 	}
 &nbsp;
-<span class="cstat-no" title="statement not covered" >	module.exports = <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >responseError</span></span></pre></td></tr>
+	sing =<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(p</span>ayload) =&gt; <span class="cstat-no" title="statement not covered" >jwt.sign({ payload }, this.privateKey, { expiresIn: '8h' })</span></span>
+	verify = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(t</span>oken) =&gt; <span class="cstat-no" title="statement not covered" >jwt.verify(token, this.privateKey, <span class="fstat-no" title="function not covered" >(e</span>rr, decoded) =&gt; <span class="cstat-no" title="statement not covered" >decoded)</span></span></span>
+	decoded =  <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(t</span>oken) =&gt; <span class="cstat-no" title="statement not covered" >jwt.decode(token, {complete: true});</span></span>
+&nbsp;
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >module.exports = new JWT();</span></pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->

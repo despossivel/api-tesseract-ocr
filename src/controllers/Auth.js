@@ -1,5 +1,3 @@
-
-
 class Auth {
 
 	constructor(application){
@@ -37,6 +35,5 @@ class Auth {
 	}
 
 }
-
 
 module.exports = () => Auth;

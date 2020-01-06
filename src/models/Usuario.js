@@ -30,6 +30,10 @@ const Usuario = new mongoose.Schema({
         type: String,
         required: true
     },
+    admin:{
+        type:Boolean,
+        required:false
+    },
     status:{
         type:Boolean,
         required:true,

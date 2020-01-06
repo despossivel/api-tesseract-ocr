@@ -1,7 +1,4 @@
- 
-
 const jwt = require('jsonwebtoken');
-
 class JWT { 
 
 	constructor(){
@@ -9,10 +6,10 @@ class JWT {
 		this.expiresIn = '8h';
 	}
 
-	sing = (payload) => jwt.sign({ payload }, this.privateKey, { expiresIn: '8h' })
+	sing =(payload) => jwt.sign({ payload }, this.privateKey, { expiresIn: '8h' })
 	verify = (token) => jwt.verify(token, this.privateKey, (err, decoded) => decoded)
 	decoded =  (token) => jwt.decode(token, {complete: true});
-
+	
 }
 
 module.exports = new JWT();
