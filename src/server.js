@@ -1,4 +1,3 @@
-'use strinct';
 const express = require('express');
 const consign = require('consign');
 const bodyParser = require('body-parser');
@@ -9,14 +8,11 @@ const mongoose = require('mongoose')
 
 const app = express();
 
-
- 
-mongoose.connect('mongodb+srv://dev:qazx123.@cluster0-ep251.gcp.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}`, {
     useUnifiedTopology: true,
     useNewUrlParser: true
 }).then(()=>console.log('conexão estabelecida')).catch(error => handleError(error));;
   
-
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, '../src/views'));
 
@@ -24,8 +20,6 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(cors());
  
-
-
 consign()
     .then('src/controllers')
     .then('src/models') 
@@ -33,7 +27,5 @@ consign()
     .then('src/middlewares')
     .include('./src/routes')
     .into(app)
-
-   // console.log(app)
 
 module.exports = app;
