@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const env = require('dotenv').config()
 const cors = require('cors');
 const path = require('path');
-
 const app = express();
 
 // app.set('view engine', 'ejs')

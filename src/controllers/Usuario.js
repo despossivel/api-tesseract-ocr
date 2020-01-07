@@ -19,10 +19,7 @@ class Usuario {
  		const response = this.application.src.controllers.Response
 		response.send(res, usuario)
 	}
-
-
-
-
+ 
 	//store – Salva o novo item na tabela
 	store(req,res){
 		this.application.src.middlewares.requestResponse(req,res)
@@ -43,18 +40,6 @@ class Usuario {
 		
 		res.send('controller usuario')
 	}
-
-
-	//edit – Retorna a View para edição do dado
-	//edit(req,res){
-	//	res.send('controller usuario')
-	//}
-	//create – Retorna a View para criar um item da tabela
-	//create(req,res){
-	//	this.application.src.middlewares.requestResponse(req,res)
-	//
-	//	res.send('controller usuario')
-	//}
 
 }
 

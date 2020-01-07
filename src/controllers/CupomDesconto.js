@@ -20,21 +20,11 @@ class CupomDesconto {
 		response.send(res, cupomDesconto)
 	}
 
-	//create – Retorna a View para criar um item da tabela
-	//create(req,res){
-	//	res.send('Cupom desconto')
-	//}
-
 	//store – Salva o novo item na tabela
 	store(req,res){
 		this.application.src.middlewares.requestResponse(req,res)
 		res.send('cupom desconto')
 	}
-
-	//edit – Retorna a View para edição do dado
-	//edit(req,res){
-	//	res.send('Cupom desconto')
-	//}
 
 	//update – Salva a atualização do dado
 	update(req,res){

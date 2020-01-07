@@ -19,21 +19,11 @@ class CartaoFidelidade {
 		response.send(res, cartaoFidelidade)
 	}
 
-	//create – Retorna a View para criar um item da tabela
-	//create(req, res){
-	//	res.send('Cartao fidelidade')
-	//}
-
 	//store – Salva o novo item na tabela
 	store(req, res){
 		this.application.src.middlewares.requestResponse(req,res)
 		res.send('cartao fidelidade')
 	}
-
-	//edit – Retorna a View para edição do dado
-	//edit(req, res){
-	//	res.send('Cartao fidelidade')
-	//}
 
 	//update – Salva a atualização do dado
 	update(req, res){

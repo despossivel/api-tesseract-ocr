@@ -15,26 +15,9 @@ class Auth {
  			   body.password = this.blowfish.encrypt(body.password)
  
  		const login = await this.models.Usuario.find({ email: body.email, password: body.password }).catch(e=>console.log(e))
-	 
-		console.log(login);
-	
-		 try{
- 			const response = {};
+ 		const response = this.application.src.controllers.Response;
+ 				response.send(res, {token})
 
- 			if(login.lenght == 0){
- 				response.error = true
- 				response.mensage = 'Usuário não encontrado1' 
- 				response.code = 401;
- 			}else{
- 				response.success = true;
- 				response.token = token;
- 				response.code = 200;
- 			}
-
-		 res.status(response.code).send(response);
-		}catch(e){
-			throw e;
-		}
 	}
 
 }
