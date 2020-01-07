@@ -10,6 +10,8 @@ class JWT {
 	verify = (token) => jwt.verify(token, this.privateKey, (err, decoded) => decoded)
 	decoded =  (token) => jwt.decode(token, {complete: true});
 	
+
+	
 }
 
 module.exports = new JWT();

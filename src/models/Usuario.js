@@ -22,10 +22,6 @@ const Usuario = new mongoose.Schema({
         type: String,
         required: true
     },
-    dataNascimento: {
-        type: Date,
-        required: true
-    },
     senha: {
         type: String,
         required: true
@@ -33,6 +29,10 @@ const Usuario = new mongoose.Schema({
     admin:{
         type:Boolean,
         required:false
+    },
+    telefone:{
+        type:String,
+        required:true
     },
     status:{
         type:Boolean,
