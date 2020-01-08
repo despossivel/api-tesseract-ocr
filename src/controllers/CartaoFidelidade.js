@@ -6,35 +6,47 @@ class CartaoFidelidade {
 	}
 
 	//index – Lista os dados da tabela
-	async index(req, res){
+	async index(req,res){
 		const cartoesFidelidade = await this.model.find().catch(e=>console.log(e))
- 		const response = this.application.src.controllers.Response
+		const response = this.application.src.controllers.Response
 		response.send(res, cartoesFidelidade)
+ 		
 	}
 
 	//show – Mostra um item específico
-	async show(req, res){
-		const cartaoFidelidade = await this.model.find({ _id:req.params._id.value}).catch(e=>console.log(e))
+	async show(req,res){
+		const cartaoFidelidade = await this.model.findById({ _id: req.params._id }).catch(e=>console.log(e))
  		const response = this.application.src.controllers.Response
-		response.send(res, cartaoFidelidade)
+		response.send(res, [cartaoFidelidade])
 	}
-
+ 
 	//store – Salva o novo item na tabela
-	store(req, res){
+	async store(req,res){
 		this.application.src.middlewares.requestResponse(req,res)
-		res.send('cartao fidelidade')
+		const cartaoFidelidade = await this.model.create(req.body);
+		const response = this.application.src.controllers.Response
+		response.send(res, [cartaoFidelidade])
 	}
 
 	//update – Salva a atualização do dado
-	update(req, res){
+	async update(req,res){
 		this.application.src.middlewares.requestResponse(req,res)
-		res.send('Cartao fidelidade')
+		const _id = req.body._id;
+		let doc = req.body;
+			delete doc._id;
+
+		const cartaoFidelidade = await this.model.updateOne({ _id },doc);
+		const response = this.application.src.controllers.Response
+		response.send(res, [cartaoFidelidade])
+ 
 	}
 
 	//destroy – Remove o dado
-	destroy(req, res){
+	async destroy(req,res){
 		this.application.src.middlewares.requestResponse(req,res)
-		res.send('Cartao fidelidade')
+		const cartaoFidelidade = await this.model.deleteOne({ _id:req.body._id });
+		const response = this.application.src.controllers.Response
+		response.send(res, [cartaoFidelidade])
 	}
 
 
