@@ -1,22 +1,22 @@
 class Auth {
 
-	constructor(application){
+	constructor(application) {
 		this.application = application;
 		this.JWT = application.src.middlewares.Jwt;
-		this.blowfish =  this.application.src.middlewares.blowfish;
+		this.blowfish = this.application.src.middlewares.blowfish;
 		this.models = this.application.src.models;
 	}
 
-	async show(req,res){
-		this.application.src.middlewares.requestResponse(req,res)
+	async show(req, res) {
+		this.application.src.middlewares.requestResponse(req, res)
 		const body = req.body;
 		const token = this.JWT.sing({});
-		
- 			   body.password = this.blowfish.encrypt(body.password)
- 
- 		const login = await this.models.Usuario.find({ email: body.email, password: body.password }).catch(e=>console.log(e))
- 		const response = this.application.src.controllers.Response;
- 				response.send(res, {token})
+
+		body.password = this.blowfish.encrypt(body.password)
+
+		const login = await this.models.Usuario.find({ email: body.email, password: body.password }).catch(e => console.log(e))
+		const response = this.application.src.controllers.Response;
+		response.send(res, { token })
 
 	}
 
