@@ -13,15 +13,15 @@ class CartaoFidelidade {
  		
 	}
 
-	//show – Mostra um item específico
-	async show(req,res){
-		const cartaoFidelidade = await this.model.findById({ _id: req.params._id }).catch(e=>console.log(e))
+
+	async show(req, res){
+		const cartaoFidelidade = await this.model.find({ _id:req.params._id.value}).catch(e=>console.log(e))
  		const response = this.application.src.controllers.Response
 		response.send(res, [cartaoFidelidade])
 	}
- 
-	//store – Salva o novo item na tabela
-	async store(req,res){
+
+
+	async store(req, res){
 		this.application.src.middlewares.requestResponse(req,res)
 		const cartaoFidelidade = await this.model.create(req.body);
 		const response = this.application.src.controllers.Response

@@ -3,7 +3,6 @@ const { check } = require('express-validator');
 module.exports = (application) =>{
   	const CartaoFidelidade = new application.src.controllers.CartaoFidelidade(application);
 
- 
   	application.get('/cartoes/fidelidade',[
       application.src.middlewares.Jwt.verify
     ],(req, res) =>  CartaoFidelidade.index(req, res))
