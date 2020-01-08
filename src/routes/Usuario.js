@@ -16,9 +16,9 @@ module.exports = (application) =>{
 		check('nome').notEmpty(),
     	check('usuario').notEmpty(),
     	check('email').notEmpty().isEmail(),
-    	check('cidade').notEmpty(),
-    	check('estado').notEmpty(),
-    	check('senha').notEmpty(),
+    	check('cidade').notEmpty(), 
+    	check('estado').notEmpty().isLength({ max: 2 }),
+    	check('senha').notEmpty().isLength({ min: 5 }),
     	check('telefone').notEmpty()
     	], (req, res) =>  Usuario.store(req, res))
 

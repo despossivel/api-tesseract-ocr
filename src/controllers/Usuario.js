@@ -1,3 +1,6 @@
+const ObjectId = require('mongodb').ObjectID;
+
+
 class Usuario {
 
 	constructor(application){
@@ -15,30 +18,39 @@ class Usuario {
 
 	//show – Mostra um item específico
 	async show(req,res){
-		const usuario = await this.model.find({ _id:req.params._id.value}).catch(e=>console.log(e))
+		const usuario = await this.model.findById({ _id: req.params._id }).catch(e=>console.log(e))
  		const response = this.application.src.controllers.Response
-		response.send(res, usuario)
+		response.send(res, [usuario])
 	}
  
 	//store – Salva o novo item na tabela
-	store(req,res){
+	async store(req,res){
 		this.application.src.middlewares.requestResponse(req,res)
-
-		res.send('controller usuario')
+		const usuario = await this.model.create(req.body);
+		const response = this.application.src.controllers.Response
+		response.send(res, [usuario])
 	}
 
-	//update – Salva a atualização do dado
-	update(req,res){
-		this.application.src.middlewares.requestResponse(req,res)
 
-		res.send('controller usuario')
+	//update – Salva a atualização do dado
+	async update(req,res){
+		this.application.src.middlewares.requestResponse(req,res)
+		const _id = req.body._id;
+		let doc = req.body;
+			delete doc._id;
+
+		const usuario = await this.model.updateOne({ _id },doc);
+		const response = this.application.src.controllers.Response
+		response.send(res, [usuario])
+ 
 	}
 
 	//destroy – Remove o dado
-	destroy(req,res){
+	async destroy(req,res){
 		this.application.src.middlewares.requestResponse(req,res)
-		
-		res.send('controller usuario')
+		const usuario = await this.model.deleteOne({ _id:req.body._id });
+		const response = this.application.src.controllers.Response
+		response.send(res, [usuario])
 	}
 
 }

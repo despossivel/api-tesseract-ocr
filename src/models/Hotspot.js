@@ -10,7 +10,7 @@ const Hotspot = new mongoose.Schema({
 		type:String,
 		require:true
 	},
-	_idEstabelecimento:{
+	_idUsuario:{
 		type: ObjectId,
 		require:true
 	}

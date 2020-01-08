@@ -33,13 +33,7 @@ const Usuario = new mongoose.Schema({
     telefone:{
         type:String,
         required:true
-    },
-    status:{
-        type:Boolean,
-        required:true,
-        setDefaultsOnInsert:true
-    },
-    // timestamps: true
+    }
 })
 
 

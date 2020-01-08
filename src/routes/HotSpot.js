@@ -15,7 +15,7 @@ module.exports = (application) =>{
        application.src.middlewares.Jwt.verify,
     	check('ssid').notEmpty(),
     	check('password').notEmpty(),
-    	check('_idEstabelecimento').notEmpty(),
+    	check('_idUsuario').notEmpty(),
     	], (req, res) =>  HotSpot.store(req, res))
 
     application.put('/hotspot/update',[
