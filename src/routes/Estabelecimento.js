@@ -19,13 +19,7 @@ module.exports = (application) => {
 				throw new Error('Cnpj já está em uso')
 			}
 		}),
-		check('email').notEmpty().isEmail().custom(async (value) => {
-			const email = await application.src.models.Estabelecimento.findOne({ email: value })
-			if (email) {
-				throw new Error('E-mail já está em uso')
-			}
-		}),
-		check('senha').notEmpty()
+		check('_idUsuario').notEmpty()
 	], (req, res) => Estabelecimento.store(req, res))
 
 	application.put('/estabelecimento/update', [

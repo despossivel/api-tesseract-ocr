@@ -13,11 +13,11 @@ const Estabelecimento = new mongoose.Schema({
 		type:String,
 		require:true
 	},
-	email:{
+	logo:{
 		type:String,
-		require:true
+		require:false
 	},
-	senha:{
+	_idUsuario:{
 		type:String,
 		require:true
 	},

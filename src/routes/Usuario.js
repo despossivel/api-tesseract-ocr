@@ -1,5 +1,5 @@
 const { check } = require('express-validator');
- 
+
 module.exports = (application) => {
 	const Usuario = new application.src.controllers.Usuario(application);
 
