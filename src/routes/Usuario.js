@@ -16,7 +16,7 @@ module.exports = (application) => {
 
 
 		check('usuario').notEmpty().custom((value) => {
-			return this.src.models.Usuario.findOne({ usuario: value }).then(usuario=>{
+			return application.src.models.Usuario.findOne({ usuario: value }).then(usuario=>{
 				 if(usuario){
 					 return Promise.reject('Nome de usuário já está em uso')
 				 }
@@ -24,7 +24,7 @@ module.exports = (application) => {
 	   }),
  
 		check('email').notEmpty().isEmail().custom((value) => {
-			 return this.src.models.Usuario.findOne({ email: value }).then(email=>{
+			 return application.src.models.Usuario.findOne({ email: value }).then(email=>{
 				  if(email){
 					  return Promise.reject('E-mail já está em uso')
 				  }
@@ -37,7 +37,7 @@ module.exports = (application) => {
 
 
 		check('telefone').notEmpty().custom((value) => {
-			return this.src.models.Usuario.findOne({ telefone: value }).then(telefone=>{
+			return application.src.models.Usuario.findOne({ telefone: value }).then(telefone=>{
 				 if(telefone){
 					 return Promise.reject('Telefone já está em uso')
 				 }
