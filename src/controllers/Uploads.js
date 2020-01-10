@@ -1,16 +1,37 @@
 class Uploads {
 
-    usuario(req,res){
-        res.send({file:req.file.filename, _idUsuario: req.body._idUsuario})
+	constructor(application) {
+		this.application = application;
+		this.modelEstabelecimento = application.src.models.Estabelecimento;
+		this.modelUsuario = application.src.models.Usuario;
+	}
+
+    async foto(req,res){
+ 
+        this.application.src.middlewares.validationResult(req, res); 
+		const _id = req.body._id;
+		let doc = {
+			foto:req.file.filename
+		}; 
+		const usuario = await this.modelUsuario.updateOne({ _id }, doc);
+		const response = this.application.src.middlewares.Response
+		response.send(res, [usuario])
+     
     }
 
-    estabelecimento(req, res){
-        console.log(req.body)
+    async logo(req, res){
+        this.application.src.middlewares.validationResult(req, res); 
+		const _id = req.body._id;
+		let doc = {
+			logo:req.file.filename
+		}; 
+		const estabelecimento = await this.modelEstabelecimento.updateOne({ _id }, doc);
+		const response = this.application.src.middlewares.Response
+		response.send(res, [estabelecimento])
 
-        res.send({file:req.file.filename, _idEstabelecimento: req.body._idEstabelecimento})
     }
 
 }
 
 
-module.exports = () => new Uploads()
+module.exports = () => Uploads

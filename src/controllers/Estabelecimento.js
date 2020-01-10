@@ -16,7 +16,7 @@ class Estabelecimento {
 
 	async show(req, res) {
 		this.application.src.middlewares.validationResult(req, res);
-		const estabelecimento = await this.model.find({ _id: req.params._id.value }).catch(e => console.log(e))
+		const estabelecimento = await this.model.find({ _id: req.params._id }).catch(e => console.log(e))
 		const response = this.application.src.middlewares.Response
 		response.send(res, [estabelecimento])
 	}

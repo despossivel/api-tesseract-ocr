@@ -33,6 +33,10 @@ const Usuario = new mongoose.Schema({
     telefone:{
         type:String,
         required:true
+    },
+    foto:{
+        type:String,
+        required:false
     }
 })
 

@@ -8,16 +8,15 @@ class Auth {
 	}
 
 	async show(req, res) {
-		this.application.src.middlewares.requestResponse(req, res)
 		const body = req.body;
 		const token = this.JWT.sing({});
 
 		body.password = this.blowfish.encrypt(body.password)
 
 		const login = await this.models.Usuario.find({ email: body.email, password: body.password }).catch(e => console.log(e))
-		const response = this.application.src.controllers.Response;
+		const response = this.application.src.middlewares.Response;
+ 
 		response.send(res, { token })
-
 	}
 
 }
