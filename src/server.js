@@ -16,6 +16,7 @@ consign()
     .then('src/services')
     .then('src/middlewares')
     .then('src/config')
+    .then('src/utils')
     .include('./src/routes')
     .into(app)
 

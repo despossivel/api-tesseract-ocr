@@ -13,8 +13,6 @@ module.exports = (application) => {
 	application.post('/usuario/store', [
 		application.src.middlewares.Jwt.verify,
 		check('nome').notEmpty(),
-
-
 		check('usuario').notEmpty().custom((value) => {
 			return application.src.models.Usuario.findOne({ usuario: value }).then(usuario=>{
 				 if(usuario){
@@ -22,7 +20,6 @@ module.exports = (application) => {
 				 }
 			 })
 	   }),
- 
 		check('email').notEmpty().isEmail().custom((value) => {
 			 return application.src.models.Usuario.findOne({ email: value }).then(email=>{
 				  if(email){
@@ -30,12 +27,9 @@ module.exports = (application) => {
 				  }
 			  })
 		}),
-
 		check('cidade').notEmpty(),
 		check('estado').notEmpty().isLength({ max: 2 }),
 		check('senha').notEmpty().isLength({ min: 5 }).withMessage('deve ter pelo menos 5 caracteres'),
-
-
 		check('telefone').notEmpty().custom((value) => {
 			return application.src.models.Usuario.findOne({ telefone: value }).then(telefone=>{
 				 if(telefone){
@@ -43,8 +37,6 @@ module.exports = (application) => {
 				 }
 			 })
 	   })
-
-
 	], (req, res) => Usuario.store(req, res))
 
 	application.put('/usuario/update', [
