@@ -2,38 +2,40 @@ const nodemailer = require("nodemailer");
 
 class SMTP {
 
-    constructor(){
- 
+    constructor() {
         this.TRANSPORTER = {
-            host: process.env.SMTP_HOST,
-            port: process.env.SMTP_PORT,
-            secure: process.env.SMTP_SECURE,
+            host: process.env.SMTP_HOST ? process.env.SMTP_HOST : 'smtpout.secureserver.net',
+            port: process.env.SMTP_PORT ? process.env.SMTP_PORT : 465,
+            secure: process.env.SMTP_SECURE ? process.env.SMTP_SECURE : true,
             auth: {
-                use:process.env.SMTP_USE,
-                pass:process.env.SMTP_PASS
+                user: process.env.SMTP_USER ? process.env.SMTP_USER : 'contato@centavus.com',
+                pass: process.env.SMTP_PASS ? process.env.SMTP_PASS : 'contato@123.'
             }
-          };
+        };
     }
 
-    async send(to='mattbmoller@gmail.com',
-        subject='teste',
-        text='teste',
-        html='teste'){
+    async send(to = 'mattbmoller@gmail.com',
+        subject = 'teste',
+        text = 'teste',
+        html = 'teste') {
+
         const transporter = nodemailer.createTransport({
             ...this.TRANSPORTER
-          });
+        });
 
-       return await transporter.sendMail({
-            from: process.env.SMTP_FROM,
+        return await transporter.sendMail({
+            from: process.env.SMTP_FROM ? process.env.SMTP_FROM : `"Centavus" <contato@centavus.com>`,
             to,
             subject,
             text,
             html
-          }).catch(e=>console.error(e));
+        }).catch(e => console.error(e));
 
     }
 
 }
 
-const smtp = new SMTP()
-    smtp.send()
+//const smtp = new SMTP()
+//smtp.send()
+
+module.exports = () => new SMTP();
