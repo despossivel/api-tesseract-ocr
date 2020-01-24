@@ -18,6 +18,8 @@ class Payments {
 	async show(req, res) {
 		this.application.src.utils.validationResult(req, res);
 		const payment = await this.model.findById({ _id: req.params._id }).catch(e => console.log(e))
+		//const cielo = new this.application.src.services.Cielo(this.application);
+		//const consulta = await cielo.consulting(payment.Payment.PaymentId)
 		const response = this.application.src.utils.Response
 		response.send(res, [payment])
 	}
