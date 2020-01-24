@@ -11,12 +11,23 @@ class Auth {
 		const body = req.body;
 		const token = this.JWT.sing({});
 
-		body.password = this.blowfish.encrypt(body.password)
+		body.senha = this.blowfish.encrypt(body.senha)
 
-		const login = await this.models.Usuario.find({ email: body.email, password: body.password }).catch(e => console.log(e))
+		const login = await this.models.Usuario.find({ email: body.email, senha: body.senha }).catch(e => console.log(e))
+
+	 
+				login.length == 0 
+						? login.push({errors:[
+							{
+								"msg":"Usuario não encontrado!",
+								
+							}
+						]}) 
+						: login.push({ token });
+		 
 		const response = this.application.src.utils.Response;
- 
-		response.send(res, { token })
+
+		response.send(res, token)
 	}
 
 }

@@ -11,7 +11,7 @@ module.exports = (application) => {
 	check('_id').notEmpty()], (req, res) => Usuario.show(req, res))
 
 	application.post('/usuario/store', [
-		application.src.middlewares.Jwt.verify,
+		//application.src.middlewares.Jwt.verify,
 		check('nome').notEmpty(),
 		check('usuario').notEmpty().custom((value) => {
 			return application.src.models.Usuario.findOne({ usuario: value }).then(usuario=>{
