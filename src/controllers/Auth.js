@@ -8,29 +8,32 @@ class Auth {
 	}
 
 	async show(req, res) {
-		this.application.src.utils.validationResult(req, res);
-
 		const body = req.body;
 		const token = this.JWT.sing({});
 
 		body.senha = this.blowfish.encrypt(body.senha)
 
 		const login = await this.models.Usuario.find({ email: body.email, senha: body.senha }).catch(e => console.log(e))
-		console.log(login)
+		let [response] = login;
 
-	 
-				login.length == 0 
-						? login.push({errors:[
-							{
-								"msg":"Usuario não encontrado!",
-								
-							}
-						]}) 
-						: login.push({ token });
-		 
-		const response = this.application.src.utils.Response;
 
-		response.send(res, login)
+		login.length == 0
+			? response = { errors: [{ "msg": "Usuario não encontrado!" }], status: 404 }
+			: response = { token }
+
+		// {
+		// 	"errors": [
+		// 	  {
+		// 		"msg": "Invalid value",
+		// 		"param": "senha",
+		// 		"location": "body"
+		// 	  }
+		// 	]
+		//   }
+
+		const { status, ..._response_ } = response;
+		res.status(status).send(_response_);
+
 	}
 
 }

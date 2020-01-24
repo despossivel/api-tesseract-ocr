@@ -9,6 +9,7 @@ module.exports = (application) => {
         application.src.middlewares.Jwt.verify,
        // check('foto').notEmpty(),
        // check('_id').notEmpty(),
+       application.src.middlewares.expressValidation.validation,
         multer(application.src.middlewares.multer).single('foto'),
         (req, res) => Uploads.foto(req, res))
 
@@ -16,6 +17,7 @@ module.exports = (application) => {
         application.src.middlewares.Jwt.verify,
        // check('logo').notEmpty(),
       //  check('_id').exists().notEmpty(),
+      application.src.middlewares.expressValidation.validation,
         multer(application.src.middlewares.multer).single('logo'),
         (req, res) => Uploads.logo(req, res))
 

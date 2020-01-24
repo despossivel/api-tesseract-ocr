@@ -8,7 +8,7 @@ class Uploads {
 
     async foto(req,res){
  
-        this.application.src.utils.validationResult(req, res); 
+        //this.application.src.utils.validationResult(req, res); 
 		const _id = req.body._id;
 		let doc = {
 			foto:req.file.filename
@@ -20,7 +20,7 @@ class Uploads {
     }
 
     async logo(req, res){
-        this.application.src.utils.validationResult(req, res); 
+        //this.application.src.utils.validationResult(req, res); 
 		const _id = req.body._id;
 		let doc = {
 			logo:req.file.filename

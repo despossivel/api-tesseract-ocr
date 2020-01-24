@@ -5,8 +5,8 @@ module.exports = (application) => {
 
 	application.post('/auth', [
 		check('email').exists().notEmpty().isEmail(),
-		check('senha').exists().notEmpty().isLength({ min: 5 })
-	],
-		(req, res) => Auth.show(req, res))
+		check('senha').exists().notEmpty().isLength({ min: 5 }),
+		application.src.middlewares.expressValidation.validation
+	], (req, res) => Auth.show(req, res))
 
 }

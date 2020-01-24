@@ -7,7 +7,7 @@ class CartaoFidelidade {
 
 	//index – Lista os dados da tabela
 	async index(req, res) {
-		this.application.src.utils.validationResult(req, res);
+		//this.application.src.utils.validationResult(req, res);
 		const cartoesFidelidade = await this.model.find().catch(e => console.log(e))
 		const response = this.application.src.utils.Response
 		response.send(res, cartoesFidelidade)
@@ -16,7 +16,7 @@ class CartaoFidelidade {
 
 
 	async show(req, res) {
-		this.application.src.utils.validationResult(req, res);
+		//this.application.src.utils.validationResult(req, res);
 		const cartaoFidelidade = await this.model.find({ _id: req.params._id }).catch(e => console.log(e))
 		const response = this.application.src.utils.Response
 		response.send(res, [cartaoFidelidade])
@@ -24,7 +24,7 @@ class CartaoFidelidade {
 
 
 	async store(req, res) {
-		this.application.src.utils.validationResult(req, res); 
+		//this.application.src.utils.validationResult(req, res); 
 		const cartaoFidelidade = await this.model.create(req.body);
 		const response = this.application.src.utils.Response
 		response.send(res, [cartaoFidelidade])
@@ -32,7 +32,7 @@ class CartaoFidelidade {
 
 	//update – Salva a atualização do dado
 	async update(req, res) {
-		this.application.src.utils.validationResult(req, res); 
+		//this.application.src.utils.validationResult(req, res); 
 		const _id = req.body._id;
 		let doc = req.body;
 		delete doc._id;
@@ -45,7 +45,7 @@ class CartaoFidelidade {
 
 	//destroy – Remove o dado
 	async destroy(req, res) {
-		this.application.src.utils.validationResult(req, res); 
+		//this.application.src.utils.validationResult(req, res); 
 		const cartaoFidelidade = await this.model.deleteOne({ _id: req.body._id });
 		const response = this.application.src.utils.Response
 		response.send(res, [cartaoFidelidade])

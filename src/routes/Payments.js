@@ -4,7 +4,8 @@ module.exports = (application) => {
    const Payments = new application.src.controllers.Payments(application);
 
    application.get('/payments', [
-    application.src.middlewares.Jwt.verify
+    application.src.middlewares.Jwt.verify,
+    application.src.middlewares.expressValidation.validation
  ], (req, res) => Payments.index(req, res))
 
  application.get('/payment/:_id', [
@@ -20,7 +21,8 @@ module.exports = (application) => {
 		check("SecurityCode").notEmpty().isLength({ max: 3 }).isLength({ min: 3 }),
 		check("Brand").notEmpty(),
   	   check("Type").notEmpty(),
-		check("Amount").notEmpty()
+      check("Amount").notEmpty(),
+      application.src.middlewares.expressValidation.validation
  ], (req, res) => Payments.store(req, res))
 
  /*

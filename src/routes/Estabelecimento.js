@@ -7,7 +7,9 @@ module.exports = (application) => {
 
 	application.get('/estabelecimento/:_id', [
 		application.src.middlewares.Jwt.verify,
-		check('_id').notEmpty()], (req, res) => Estabelecimento.show(req, res))
+		check('_id').notEmpty(),
+		application.src.middlewares.expressValidation.validation
+	], (req, res) => Estabelecimento.show(req, res))
 
 	application.post('/estabelecimento/store', [
 		application.src.middlewares.Jwt.verify,
@@ -19,17 +21,20 @@ module.exports = (application) => {
 				throw new Error('Cnpj já está em uso')
 			}
 		}),
-		check('_idUsuario').notEmpty()
+		check('_idUsuario').notEmpty(),
+		application.src.middlewares.expressValidation.validation
 	], (req, res) => Estabelecimento.store(req, res))
 
 	application.put('/estabelecimento/update', [
 		application.src.middlewares.Jwt.verify,
-		check('_id').notEmpty()
+		check('_id').notEmpty(),
+		application.src.middlewares.expressValidation.validation
 	], (req, res) => Estabelecimento.update(req, res))
 
 	application.delete('/estabelecimento/destroy', [
 		application.src.middlewares.Jwt.verify,
-		check('_id').notEmpty()
+		check('_id').notEmpty(),
+		application.src.middlewares.expressValidation.validation
 	], (req, res) => Estabelecimento.destroy(req, res))
 
 }

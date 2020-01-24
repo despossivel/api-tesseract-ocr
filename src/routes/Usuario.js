@@ -4,11 +4,14 @@ module.exports = (application) => {
 	const Usuario = new application.src.controllers.Usuario(application);
 
 	application.get('/usuarios', [
-		application.src.middlewares.Jwt.verify
+		application.src.middlewares.Jwt.verify,
+		application.src.middlewares.expressValidation.validation
 	], (req, res) => Usuario.index(req, res))
 
 	application.get('/usuario/:_id', [application.src.middlewares.Jwt.verify,
-	check('_id').notEmpty()], (req, res) => Usuario.show(req, res))
+	check('_id').notEmpty(),
+	application.src.middlewares.expressValidation.validation
+], (req, res) => Usuario.show(req, res))
 
 	application.post('/usuario/store', [
 		//application.src.middlewares.Jwt.verify,
@@ -36,17 +39,20 @@ module.exports = (application) => {
 					 return Promise.reject('Telefone já está em uso')
 				 }
 			 })
-	   })
+	   }),
+	   application.src.middlewares.expressValidation.validation
 	], (req, res) => Usuario.store(req, res))
 
 	application.put('/usuario/update', [
 		application.src.middlewares.Jwt.verify,
-		check('_id').notEmpty()
+		check('_id').notEmpty(),
+		application.src.middlewares.expressValidation.validation
 	], (req, res) => Usuario.update(req, res))
 
 	application.delete('/usuario/destroy', [
 		application.src.middlewares.Jwt.verify,
-		check('_id').notEmpty()
+		check('_id').notEmpty(),
+		application.src.middlewares.expressValidation.validation
 	], (req, res) => Usuario.destroy(req, res))
 
 }
