@@ -8,12 +8,15 @@ class Auth {
 	}
 
 	async show(req, res) {
+		this.application.src.utils.validationResult(req, res);
+
 		const body = req.body;
 		const token = this.JWT.sing({});
 
 		body.senha = this.blowfish.encrypt(body.senha)
 
 		const login = await this.models.Usuario.find({ email: body.email, senha: body.senha }).catch(e => console.log(e))
+		console.log(login)
 
 	 
 				login.length == 0 
@@ -27,7 +30,7 @@ class Auth {
 		 
 		const response = this.application.src.utils.Response;
 
-		response.send(res, token)
+		response.send(res, login)
 	}
 
 }
