@@ -1,68 +1,64 @@
 const mongoose = require('mongoose');
 
 const Estabelecimento = new mongoose.Schema({
-	nome:{
-		type:String,
-		require:true
+	nome: {
+		type: String,
+		require: true
 	},
-	nomeFantasia:{
-		type:String,
-		require:true
+	nomeFantasia: {
+		type: String,
+		require: true
 	},
-	cnpj:{
-		type:String,
-		require:true
+	cnpj: {
+		type: String,
+		require: true
 	},
-	telefone:{
+	telefone: {
 		type: String,
 		required: true
 	},
-	endereco:{
+	endereco: {
 		type: String,
 		required: true
 	},
-	estado:{
-		type:String,
-		required:true
-	},
-	cidade:{
+	estado: {
 		type: String,
 		required: true
 	},
-	logo:{
-		type:String,
-		require:false
-	},
-	latitude: {
-		type: String,
-		required: true
-	}, 
-	longitude: {
+	cidade: {
 		type: String,
 		required: true
 	},
-	_idUsuario:{
-		type:String,
-		require:true
+	logo: {
+		type: String,
+		require: false
 	},
-	status:{
-		type:Boolean,
-		require:true,
-		setDefaultsOnInsert:true
+	coordinates: {
+		type: [Number],
+		required: true
 	},
-	
-},
-{
-	timestamps: true,
-	toObject: { virtuals: true },
-	toJSON: { virtuals: true }
-});
+	_idUsuario: {
+		type: String,
+		require: true
+	},
+	status: {
+		type: Boolean,
+		require: true,
+		setDefaultsOnInsert: true
+	},
 
-Estabelecimento.virtual('logoUrl').get(function(){
+},
+	{
+		timestamps: true,
+		toObject: { virtuals: true },
+		toJSON: { virtuals: true }
+	});
+
+Estabelecimento.virtual('logoUrl').get(function () {
 	const url = process.env.URL || process.env.LOCAL
-    return `http://${url}/static/${encodeURIComponent(this.logo)}`
+	return `http://${url}/static/${encodeURIComponent(this.logo)}`
 })
 
 
 
-module.exports = () =>  mongoose.model('Estabelecimento', Estabelecimento);
+module.exports = () => mongoose.model('Estabelecimento', Estabelecimento);
