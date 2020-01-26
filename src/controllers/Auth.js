@@ -16,20 +16,9 @@ class Auth {
 		const login = await this.models.Usuario.find({ email: body.email, senha: body.senha }).catch(e => console.log(e))
 		let [response] = login;
 
-
 		login.length == 0
 			? response = { errors: [{ "msg": "Usuario não encontrado!" }], status: 404 }
-			: response = { token }
-
-		// {
-		// 	"errors": [
-		// 	  {
-		// 		"msg": "Invalid value",
-		// 		"param": "senha",
-		// 		"location": "body"
-		// 	  }
-		// 	]
-		//   }
+			: response = { token, ...response._doc, status: 200 }
 
 		const { status, ..._response_ } = response;
 		res.status(status).send(_response_);

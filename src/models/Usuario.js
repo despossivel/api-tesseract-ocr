@@ -38,6 +38,16 @@ const Usuario = new mongoose.Schema({
         type:String,
         required:false
     }
+},
+{
+	timestamps: true,
+	toObject: { virtuals: true },
+	toJSON: { virtuals: true }
+})
+
+Usuario.virtual('fotoUrl').get(function(){
+	const url = process.env.URL || process.env.LOCAL
+    return `http://${url}/static/${encodeURIComponent(this.logo)}`
 })
 
 

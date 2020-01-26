@@ -11,9 +11,10 @@ class JWT {
 
 	verify = (req, res, next) => {
 		const token = req.headers['authorization'];
-		if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+		if (!token) return res.status(401).send({ errors: [{ "msg": "Token de autenticação não informado!" }], status: 404 });
 		jwt.verify(token, this.privateKey, function (err, decoded) {
-			if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+			//console.log(decoded);
+			if (err) return res.status(500).send({ errors: [{ "msg": "Aconteceu alguma coisa ao validar o token!" }], status: 404 });
 			req.userId = decoded.id;
 			next();
 		});

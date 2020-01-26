@@ -6,28 +6,40 @@ class Uploads {
 		this.modelUsuario = application.src.models.Usuario;
 	}
 
+	jsonResponse(data) {
+		let response;
+		data.length == 0
+			? response = { errors: [{ "msg": "Nenhum estabelecimento encontrado!" }], status: 404 }
+			: response = { data, status: 200 }
+		return response;
+	}
+	
     async foto(req,res){
  
-        //this.application.src.utils.validationResult(req, res); 
+ 
 		const _id = req.body._id;
 		let doc = {
 			foto:req.file.filename
 		}; 
 		const usuario = await this.modelUsuario.updateOne({ _id }, doc);
-		const response = this.application.src.utils.Response
-		response.send(res, [usuario])
+		let response = usuario;
+			response = this.jsonResponse(response);
+			const { status, ..._response_ } = response;
+			res.status(status).send(_response_.data);
      
     }
 
     async logo(req, res){
-        //this.application.src.utils.validationResult(req, res); 
+ 
 		const _id = req.body._id;
 		let doc = {
 			logo:req.file.filename
 		}; 
 		const estabelecimento = await this.modelEstabelecimento.updateOne({ _id }, doc);
-		const response = this.application.src.utils.Response
-		response.send(res, [estabelecimento])
+		let response = estabelecimento;
+			response = this.jsonResponse(response);
+			const { status, ..._response_ } = response;
+			res.status(status).send(_response_.data);
 
     }
 

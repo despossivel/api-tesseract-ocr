@@ -13,9 +13,33 @@ const Estabelecimento = new mongoose.Schema({
 		type:String,
 		require:true
 	},
+	telefone:{
+		type: String,
+		required: true
+	},
+	endereco:{
+		type: String,
+		required: true
+	},
+	estado:{
+		type:String,
+		required:true
+	},
+	cidade:{
+		type: String,
+		required: true
+	},
 	logo:{
 		type:String,
 		require:false
+	},
+	latitude: {
+		type: String,
+		required: true
+	}, 
+	longitude: {
+		type: String,
+		required: true
 	},
 	_idUsuario:{
 		type:String,
@@ -26,7 +50,18 @@ const Estabelecimento = new mongoose.Schema({
 		require:true,
 		setDefaultsOnInsert:true
 	},
+	
+},
+{
+	timestamps: true,
+	toObject: { virtuals: true },
+	toJSON: { virtuals: true }
 });
+
+Estabelecimento.virtual('logoUrl').get(function(){
+	const url = process.env.URL || process.env.LOCAL
+    return `http://${url}/static/${encodeURIComponent(this.logo)}`
+})
 
 
 

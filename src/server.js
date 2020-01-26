@@ -6,6 +6,7 @@ const cors = require('cors');
 const path = require('path');
 const app = express();
 
+app.use('/static', express.static('./public/uploads'))
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(cors());
