@@ -15,8 +15,10 @@ class CartaoFidelidade {
 
 	//index – Lista os dados da tabela
 	async index(req, res) {
-		
-		const cartoesFidelidade = await this.model.find().catch(e => console.log(e))
+
+			const find = req.query;
+
+		const cartoesFidelidade = await this.model.find(find).catch(e => console.log(e))
 		let response = cartoesFidelidade;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
