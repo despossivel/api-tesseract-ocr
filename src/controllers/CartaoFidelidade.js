@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 class CartaoFidelidade {
 
 	constructor(application) {
@@ -11,15 +13,27 @@ class CartaoFidelidade {
 			? response = { errors: [{ "msg": "Nenhum estabelecimento encontrado!" }], status: 404 }
 			: response = { data, status: 200 }
 		return response;
-    }
+	}
 
 	//index – Lista os dados da tabela
 	async index(req, res) {
 
-			const find = req.query;
+		let find = req.query;
+		find._idUsuario = mongoose.Types.ObjectId(find._idUsuario)
 
-		const cartoesFidelidade = await this.model.find(find).catch(e => console.log(e))
-		let response = cartoesFidelidade;
+		const cartoesFidelidade = await this.model.aggregate().lookup(
+			{
+				from: 'estabelecimentos', localField: '_idEstabelecimento',
+				foreignField: '_id', as: 'estabelecimento'
+			}).match(find);
+
+
+		let response = cartoesFidelidade.map(c => {
+			let { pontos, estabelecimento } = c;
+			[estabelecimento] = estabelecimento;
+			return { pontos, ...estabelecimento };
+		})
+
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
 		res.status(status).send(_response_.data);
@@ -27,7 +41,7 @@ class CartaoFidelidade {
 
 
 	async show(req, res) {
-		
+
 		const cartaoFidelidade = await this.model.find({ _id: req.params._id }).catch(e => console.log(e))
 		let response = cartaoFidelidade;
 		response = this.jsonResponse(response);
@@ -37,7 +51,7 @@ class CartaoFidelidade {
 
 
 	async store(req, res) {
-		 
+
 		const cartaoFidelidade = await this.model.create(req.body);
 		let response = cartaoFidelidade;
 		response = this.jsonResponse(response);
@@ -47,7 +61,7 @@ class CartaoFidelidade {
 
 	//update – Salva a atualização do dado
 	async update(req, res) {
-		 
+
 		const _id = req.body._id;
 		let doc = req.body;
 		delete doc._id;
@@ -62,7 +76,7 @@ class CartaoFidelidade {
 
 	//destroy – Remove o dado
 	async destroy(req, res) {
-		 
+
 		const cartaoFidelidade = await this.model.deleteOne({ _id: req.body._id });
 		let response = cartaoFidelidade;
 		response = this.jsonResponse(response);
