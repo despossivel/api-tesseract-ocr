@@ -20,6 +20,9 @@ class CartaoFidelidade {
 
 		let find = req.query;
 		find._idUsuario = mongoose.Types.ObjectId(find._idUsuario)
+		if (find._idEstabelecimento) {
+			find._idEstabelecimento = mongoose.Types.ObjectId(find._idEstabelecimento);
+		}
 
 		const cartoesFidelidade = await this.model.aggregate().lookup(
 			{
@@ -48,6 +51,7 @@ class CartaoFidelidade {
 		const { status, ..._response_ } = response;
 		res.status(status).send(_response_.data);
 	}
+
 
 
 	async store(req, res) {
