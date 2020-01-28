@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "jest",
     "mongoConnect":"mongo 'mongodb+srv://cluster0-ep251.gcp.mongodb.net/test?retryWrites=true&w=majority'  --username dev"
   },
