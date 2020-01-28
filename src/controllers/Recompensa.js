@@ -8,6 +8,7 @@ class Recompensa {
 
 	}
 
+
 	jsonResponse(data) {
 		let response;
 		data.length == 0
@@ -15,6 +16,8 @@ class Recompensa {
 			: response = { data, status: 200 }
 		return response;
 	}
+
+	
 
 	async index(req, res) {
 
