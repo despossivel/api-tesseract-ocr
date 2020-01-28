@@ -33,6 +33,7 @@ class CartaoFidelidade {
 
 		let response = cartoesFidelidade.map(c => {
 			let { pontos, estabelecimento } = c;
+
 			[estabelecimento] = estabelecimento;
 			return { pontos, ...estabelecimento };
 		})
@@ -66,11 +67,13 @@ class CartaoFidelidade {
 	//update – Salva a atualização do dado
 	async update(req, res) {
 
-		const _id = req.body._id;
+		const _idUsuario = req.body._idUsuario;
+		const _idEstabelecimento = req.body._idEstabelecimento;
+
 		let doc = req.body;
 		delete doc._id;
 
-		const cartaoFidelidade = await this.model.updateOne({ _id }, doc);
+		const cartaoFidelidade = await this.model.updateOne({ _idUsuario, _idEstabelecimento }, doc);
 		let response = cartaoFidelidade;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;

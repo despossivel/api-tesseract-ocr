@@ -23,7 +23,9 @@ module.exports = (application) => {
 
   application.put('/cartao/fidelidade/update', [
     application.src.middlewares.Jwt.verify,
-    check('_id').notEmpty(),
+    check('_idEstabelecimento').notEmpty(),
+    check('_idUsuario').notEmpty(),
+    check('pontos').notEmpty(),
     application.src.middlewares.expressValidation.validation
   ], (req, res) => CartaoFidelidade.update(req, res))
 
