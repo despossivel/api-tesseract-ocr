@@ -16,8 +16,9 @@ module.exports = (application) => {
     application.post('/recompensa/store', [
         application.src.middlewares.Jwt.verify,
         check('_idEstabelecimento').notEmpty(),
-        check('valor').notEmpty(),
-        check('validade').notEmpty(),
+        check('titulo').notEmpty(),
+        check('descricao').notEmpty(),
+        check('quantidadePontos').notEmpty(),
         application.src.middlewares.expressValidation.validation
     ], (req, res) => Recompensa.store(req, res))
 
