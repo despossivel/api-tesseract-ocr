@@ -1,8 +1,8 @@
-class CupomDesconto {
+class Recompensa {
 
 	constructor(application) {
 		this.application = application;
-		this.model = this.application.src.models.CupomDesconto;
+		this.model = this.application.src.models.Recompensa;
 
 	}
 
@@ -26,8 +26,8 @@ class CupomDesconto {
 
 	async show(req, res) {
 	
-		const cupomDesconto = await this.model.findById({ _id: req.params._id }).catch(e => console.log(e))
-		let response = cupomDesconto;
+		const Recompensa = await this.model.findById({ _id: req.params._id }).catch(e => console.log(e))
+		let response = Recompensa;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
 		res.status(status).send(_response_.data);
@@ -36,8 +36,8 @@ class CupomDesconto {
 
 	async store(req, res) {
 	
-		const cupomDesconto = await this.model.create(req.body);
-		let response = cupomDesconto;
+		const Recompensa = await this.model.create(req.body);
+		let response = Recompensa;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
 		res.status(status).send(_response_.data);
@@ -49,8 +49,8 @@ class CupomDesconto {
 		let doc = req.body;
 		delete doc._id;
 
-		const cupomDesconto = await this.model.updateOne({ _id }, doc);
-		let response = cupomDesconto;
+		const Recompensa = await this.model.updateOne({ _id }, doc);
+		let response = Recompensa;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
 		res.status(status).send(_response_.data);
@@ -59,8 +59,8 @@ class CupomDesconto {
 
 	async destroy(req, res) {
 	
-		const cupomDesconto = await this.model.deleteOne({ _id: req.body._id });
-		let response = cupomDesconto;
+		const Recompensa = await this.model.deleteOne({ _id: req.body._id });
+		let response = Recompensa;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
 		res.status(status).send(_response_.data);
@@ -68,4 +68,6 @@ class CupomDesconto {
 
 }
 
-module.exports = () => CupomDesconto;
+
+
+module.exports = () => Recompensa;
