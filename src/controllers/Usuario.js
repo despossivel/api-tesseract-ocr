@@ -52,6 +52,8 @@ class Usuario {
 		let doc = req.body;
 		delete doc._id;
 
+		doc.senha = this.blowfish.encrypt(doc.senha)
+
 		const usuario = await this.model.updateOne({ _id }, doc);
 		let response = usuario;
 		response = this.jsonResponse(response);
