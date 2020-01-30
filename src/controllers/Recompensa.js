@@ -11,24 +11,22 @@ class Recompensa {
 
 	jsonResponse(data) {
 		let response;
-		data.length == 0
+		data == null || data.length == 0
 			? response = { errors: [{ "msg": "Nenhuma recompensa encontrada!" }], status: 404 }
 			: response = { data, status: 200 }
 		return response;
 	}
 
-	
+
 
 	async index(req, res) {
 
 		let find = req.query;
-		find._idEstabelecimento = mongoose.Types.ObjectId(find._idEstabelecimento)
-
-		// const cartoesFidelidade = await this.model.aggregate().lookup(
-		// 	{
-		// 		from: 'estabelecimentos', localField: '_idEstabelecimento',
-		// 		foreignField: '_id', as: 'estabelecimento'
-		// 	}).match(find);
+		if (find._idEstabelecimento) {
+			find._idEstabelecimento = mongoose.Types.ObjectId(find._idEstabelecimento)
+		} else {
+			find = {};
+		}
 
 		const cuponsDesconto = await this.model.find(find).catch(e => console.log(e))
 		let response = cuponsDesconto;
