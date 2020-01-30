@@ -6,6 +6,7 @@ class Estabelecimento {
 	constructor(application) {
 		this.application = application;
 		this.model = this.application.src.models.Estabelecimento;
+		this.modelUsuario = this.application.src.models.Usuario;
 	}
 
 	jsonResponse(data) {
@@ -14,7 +15,7 @@ class Estabelecimento {
 			? response = { errors: [{ "msg": "Nenhum estabelecimento encontrado!" }], status: 404 }
 			: response = { data, status: 200 }
 		return response;
-    }
+	}
 
 	async index(req, res) {
 		try {
@@ -44,6 +45,19 @@ class Estabelecimento {
 		let response = estabelecimento;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
+
+
+
+		const { _id } = _response_.data;
+		const { _idUsuario } = req.body;
+
+		const updateUsuario = {
+			adminIn: [
+				_id
+			]
+		};
+
+		await this.modelUsuario.updateOne({ _id: _idUsuario }, updateUsuario);
 		res.status(status).send(_response_.data);
 	}
 
@@ -68,7 +82,7 @@ class Estabelecimento {
 		const { status, ..._response_ } = response;
 		res.status(status).send(_response_.data);
 
- 
+
 	}
 
 }

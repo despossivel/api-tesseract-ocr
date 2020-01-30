@@ -1,4 +1,5 @@
-const ObjectId = require('mongodb').ObjectID;
+const mongoose = require('mongoose');
+
 
 class Usuario {
 
@@ -10,7 +11,7 @@ class Usuario {
 
 	jsonResponse(data) {
 		let response;
-		data.length == 0
+		 data == null || data.length == 0
 			? response = { errors: [{ "msg": "Nenhum estabelecimento encontrado!" }], status: 404 }
 			: response = { data, status: 200 }
 		return response;
@@ -27,8 +28,7 @@ class Usuario {
 	}
 
 	async show(req, res) {
-
-		const usuario = await this.model.findById({ _id: req.params._id }).catch(e => console.log(e))
+		const usuario = await this.model.findById({ _id:  mongoose.Types.ObjectId(req.params._id) }).catch(e => console.log(e))
 		let response = usuario;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;

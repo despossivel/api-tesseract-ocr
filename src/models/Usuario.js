@@ -1,6 +1,6 @@
- 
+
 const mongoose = require('mongoose');
- 
+
 const Usuario = new mongoose.Schema({
     nome: {
         type: String,
@@ -10,9 +10,9 @@ const Usuario = new mongoose.Schema({
         type: String,
         required: true
     },
-    email:{
-        type:String,
-        required:true
+    email: {
+        type: String,
+        required: true
     },
     cidade: {
         type: Number,
@@ -26,30 +26,32 @@ const Usuario = new mongoose.Schema({
         type: String,
         required: true
     },
-    admin:{
-        type:Boolean,
-        required:false
+    admin: {
+        type: Boolean,
+        required: false
     },
-    telefone:{
-        type:String,
-        required:true
+    telefone: {
+        type: String,
+        required: true
     },
-    foto:{
-        type:String,
-        required:false
+    adminIn: {
+        type: Array
+    },
+    foto: {
+        type: String,
+        required: false
     }
 },
-{
-	timestamps: true,
-	toObject: { virtuals: true },
-	toJSON: { virtuals: true }
-})
+    {
+        timestamps: true,
+        toObject: { virtuals: true },
+        toJSON: { virtuals: true }
+    })
 
-Usuario.virtual('fotoUrl').get(function(){
-	const url = process.env.URL || process.env.LOCAL
+Usuario.virtual('fotoUrl').get(function () {
+    const url = process.env.URL || process.env.LOCAL
     return `http://${url}/static/${encodeURIComponent(this.logo)}`
 })
 
 
-module.exports =  () => mongoose.model('Usuario', Usuario)
- 
+module.exports = () => mongoose.model('Usuario', Usuario)
