@@ -13,7 +13,7 @@ class Auth {
 
 		body.senha = this.blowfish.encrypt(body.senha)
 
-		const login = await this.models.Usuario.find({ email: body.email, senha: body.senha }).catch(e => console.log(e))
+		const login = await this.models.Usuario.find({ email: body.email, senha: body.senha, status: true }).catch(e => console.log(e))
 		let [response] = login;
 
 		login.length == 0

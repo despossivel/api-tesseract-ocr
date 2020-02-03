@@ -35,7 +35,4 @@ class SMTP {
 
 }
 
-//const smtp = new SMTP()
-//smtp.send()
-
 module.exports = () => new SMTP();

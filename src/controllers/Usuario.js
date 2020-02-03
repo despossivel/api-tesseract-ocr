@@ -7,6 +7,7 @@ class Usuario {
 		this.application = application;
 		this.model = this.application.src.models.Usuario;
 		this.blowfish = this.application.src.utils.blowfish;
+		this.SMTP = this.application.src.services.SMTP;
 	}
 
 	jsonResponse(data) {
@@ -43,6 +44,11 @@ class Usuario {
 		let response = usuario;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
+
+
+		await this.SMTP.send(body.email, 'Confirmar conta no Pinpper', 'Acesse o link para confirmar a sua conta', ``)
+
+		
 		res.status(status).send(_response_.data);
 	}
 

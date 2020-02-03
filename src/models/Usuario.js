@@ -40,6 +40,11 @@ const Usuario = new mongoose.Schema({
     foto: {
         type: String,
         required: false
+    },
+    status:{
+        type: Boolean,
+		require: true,
+		setDefaultOnInsert: false
     }
 },
     {
