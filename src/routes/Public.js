@@ -7,4 +7,11 @@ module.exports = (application) => {
         check('_id').exists().notEmpty()
     ], (req, res) => Public.update(req, res))
 
+
+    application.get('/public/esqueci/minha/senha/:email', [
+        check('email').exists().notEmpty()
+    ], (req, res) => Public.show(req, res))
+
+
+
 }
