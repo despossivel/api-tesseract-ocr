@@ -14,21 +14,17 @@ const Usuario = new mongoose.Schema({
         type: String,
         required: true
     },
-    cidade: {
+    municipio: {
         type: Number,
         required: true
     },
     estado: {
-        type: String,
+        type: Number,
         required: true
     },
     senha: {
         type: String,
         required: true
-    },
-    admin: {
-        type: Boolean,
-        required: false
     },
     telefone: {
         type: String,
@@ -43,7 +39,6 @@ const Usuario = new mongoose.Schema({
     },
     status:{
         type: Boolean,
-		require: true,
 		setDefaultOnInsert: false
     }
 },

@@ -12,7 +12,7 @@ class Usuario {
 
 	jsonResponse(data) {
 		let response;
-		 data == null || data.length == 0
+		data == null || data.length == 0
 			? response = { errors: [{ "msg": "Nenhum estabelecimento encontrado!" }], status: 404 }
 			: response = { data, status: 200 }
 		return response;
@@ -29,7 +29,7 @@ class Usuario {
 	}
 
 	async show(req, res) {
-		const usuario = await this.model.findById({ _id:  mongoose.Types.ObjectId(req.params._id) }).catch(e => console.log(e))
+		const usuario = await this.model.findById({ _id: mongoose.Types.ObjectId(req.params._id) }).catch(e => console.log(e))
 		let response = usuario;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
@@ -39,16 +39,16 @@ class Usuario {
 	async store(req, res) {
 		const body = req.body;
 		body.senha = this.blowfish.encrypt(body.senha)
-
+		//body.status = false;
 		const usuario = await this.model.create(body);
 		let response = usuario;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
 
+		await this.SMTP.send(body.email, 'Confirmar conta no Pinpper', `Acesse o link para confirmar a sua conta
+			http://localhost:5000/public/confirmar/conta/${_response_.data._id}`, ``).catch(e => console.error(e))
 
-		await this.SMTP.send(body.email, 'Confirmar conta no Pinpper', 'Acesse o link para confirmar a sua conta', ``)
 
-		
 		res.status(status).send(_response_.data);
 	}
 
