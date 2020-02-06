@@ -24,6 +24,12 @@ const Recompensa = new mongoose.Schema({
 		setDefaultOnInsert: true
 	},
 
-});
+},
+	{
+		timestamps: true,
+		upsert: true,
+		new: true,
+		setDefaultsOnInsert: true
+	});
 
 module.exports = () => mongoose.model('Recompensa', Recompensa);

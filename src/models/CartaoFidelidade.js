@@ -2,23 +2,27 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const CartaoFidelidade = new mongoose.Schema({
-	_idEstabelecimento:{
+	_idEstabelecimento: {
 		type: ObjectId,
-		require:true
+		require: true
 	},
-	_idUsuario:{
+	_idUsuario: {
 		type: ObjectId,
-		require:true
+		require: true
 	},
-	pontos:{
+	pontos: {
 		type: Number,
-		require:true
+		require: true
 	},
-	status:{
+	status: {
 		type: Boolean,
-		require:true,
-		setDefaultOnInsert:true
+		require: true,
+		setDefaultOnInsert: true
 	}
+}, {
+	upsert: true,
+	new: true,
+	setDefaultsOnInsert: true
 });
 
 module.exports = () => mongoose.model('CartaoFidelidade', CartaoFidelidade);

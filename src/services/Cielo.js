@@ -9,7 +9,7 @@ class Cielo {
 		const dadosSale = {
 			"MerchantOrderId": Math.random() * (9999 - 1) + 123,
 			"Customer": {
-				"Name": "Centavus Leilões Online"
+				"Name": "Pinpper Online"
 			},
 			"Payment": {
 				...payment,

@@ -45,7 +45,10 @@ const Usuario = new mongoose.Schema({
     {
         timestamps: true,
         toObject: { virtuals: true },
-        toJSON: { virtuals: true }
+        toJSON: { virtuals: true },
+        upsert: true,
+		new: true,
+		setDefaultsOnInsert: true
     })
 
 Usuario.virtual('fotoUrl').get(function () {

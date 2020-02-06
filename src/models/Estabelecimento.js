@@ -44,14 +44,21 @@ const Estabelecimento = new mongoose.Schema({
 	status: {
 		type: Boolean,
 		require: true,
-		setDefaultsOnInsert: true
+		default: false
 	},
-
+	licence: {
+		type: Boolean,
+		require: true,
+		default: false
+	}
 },
 	{
 		timestamps: true,
 		toObject: { virtuals: true },
-		toJSON: { virtuals: true }
+		toJSON: { virtuals: true },
+		upsert: true,
+		new: true,
+		setDefaultsOnInsert: true
 	});
 
 Estabelecimento.virtual('logoUrl').get(function () {
