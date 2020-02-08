@@ -13,10 +13,10 @@ class Payments {
 			? response = { errors: [{ "msg": "Nenhum estabelecimento encontrado!" }], status: 404 }
 			: response = { data, status: 200 }
 		return response;
-    }
+	}
 
 	async index(req, res) {
-		
+
 		const payments = await this.model.find().catch(e => console.log(e))
 		let response = payments;
 		response = this.jsonResponse(response);
@@ -26,7 +26,7 @@ class Payments {
 	}
 
 	async show(req, res) {
-		
+
 		const payment = await this.model.findById({ _id: req.params._id }).catch(e => console.log(e))
 		//const cielo = new this.application.src.services.Cielo(this.application);
 		//const consulta = await cielo.consulting(payment.Payment.PaymentId)
@@ -37,25 +37,30 @@ class Payments {
 	}
 
 	async store(req, res) {
-		
+
 		const cielo = new this.application.src.services.Cielo(this.application)
 
-		let card = { ...req.body };
+		let { _idUsuario, _idEstabelecimento, Type, Amount, ...card } = req.body;
 
 		const payment = {
-			Type: req.body.Type,
-			Amount: req.body.Amount
+			Type,
+			Amount
 		};
 
-		delete card.Type;
-		delete card.Amount;
+		const [Transation] = await cielo.payment(card, payment);
+		const { MerchantOrderId } = Transation;
+		const paymentSave = await this.model.create({
+			MerchantOrderId,
+			_idUsuario,
+			_idEstabelecimento,
+			Customer: '',
+			Transation
+		});
 
-		const transation = await cielo.payment(card, payment);
-		const paymentSave = await this.model.create(transation);
 		let response = paymentSave;
-			response = this.jsonResponse(response);
-			const { status, ..._response_ } = response;
-			res.status(status).send(_response_.data);
+		response = this.jsonResponse(response);
+		const { status, ..._response_ } = response;
+		res.status(status).send(_response_.data);
 
 	}
 

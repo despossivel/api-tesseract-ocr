@@ -2,30 +2,35 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const MetodosDePagamento = new mongoose.Schema({
-	_idUsuario:{
+	_idUsuario: {
 		type: ObjectId,
-		require:true
+		require: true
 	},
-	tipo:{
+	tipo: {
 		type: String,
-		require:true
+		require: true
 	},
-	titular:{
+	titular: {
 		type: String,
-		require:true
+		require: true
 	},
-	numero:{
+	numero: {
 		type: String,
-		require:true
+		require: true
 	},
-	mes:{
+	mes: {
 		type: String,
-		require:true
+		require: true
 	},
-	ano:{
+	ano: {
 		type: String,
-		require:true
+		require: true
 	}
-});
+},
+	{
+		upsert: true,
+		new: true,
+		setDefaultsOnInsert: true
+	});
 
 module.exports = () => mongoose.model('MetodosDePagamento', MetodosDePagamento);
