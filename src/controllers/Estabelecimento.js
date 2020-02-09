@@ -1,5 +1,5 @@
 //const Treatment =  require('../utils/Treatment');
-
+const mongoose = require('mongoose')
 
 class Estabelecimento {
 
@@ -18,7 +18,7 @@ class Estabelecimento {
 	}
 
 	async index(req, res) {
-		try { 
+		try {
 			const estabelecimentos = await this.model.find({ ...req.query }, {}).catch(e => console.log(e))
 			let response = estabelecimentos;
 			response = this.jsonResponse(response);
@@ -45,16 +45,12 @@ class Estabelecimento {
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
 
-		const { _id } = _response_.data;
-		const { _idUsuario } = req.body;
+		//const { _id } = _response_.data;
+		//const { _idUsuario } = req.body;
+		//const updateUsuario = { adminIn: [_id] };
+		//const updateResponse = await this.modelUsuario.updateOne({ _id: mongoose.Types.ObjectId(_idUsuario) }, updateUsuario);
+		//console.log(updateResponse)
 
-		const updateUsuario = {
-			adminIn: [
-				_id
-			]
-		};
-
-		await this.modelUsuario.updateOne({ _id: _idUsuario }, updateUsuario);
 		res.status(status).send(_response_.data);
 	}
 

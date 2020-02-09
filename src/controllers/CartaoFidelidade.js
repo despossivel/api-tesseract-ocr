@@ -23,7 +23,6 @@ class CartaoFidelidade {
 		if (find._idEstabelecimento) {
 			find._idEstabelecimento = mongoose.Types.ObjectId(find._idEstabelecimento);
 		}
-
 		const cartoesFidelidade = await this.model.aggregate().lookup(
 			{
 				from: 'estabelecimentos', localField: '_idEstabelecimento',
@@ -67,13 +66,21 @@ class CartaoFidelidade {
 	//update – Salva a atualização do dado
 	async update(req, res) {
 
-		const _idUsuario = req.body._idUsuario;
-		const _idEstabelecimento = req.body._idEstabelecimento;
+		const _idUsuario = mongoose.Types.ObjectId(req.body._idUsuario);
+		const _idEstabelecimento = mongoose.Types.ObjectId(req.body._idEstabelecimento);
 
 		let doc = req.body;
 		delete doc._id;
 
-		const cartaoFidelidade = await this.model.updateOne({ _idUsuario, _idEstabelecimento }, doc);
+		let cartaoFidelidade;
+
+		const length = await this.model.countDocuments({ _idUsuario, _idEstabelecimento });
+		if (length == 0) {
+			cartaoFidelidade = await this.model.create(doc);
+		} else {
+			cartaoFidelidade = await this.model.updateOne({ _idUsuario, _idEstabelecimento }, doc);
+		}
+ 
 		let response = cartaoFidelidade;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
@@ -84,7 +91,11 @@ class CartaoFidelidade {
 	//destroy – Remove o dado
 	async destroy(req, res) {
 
-		const cartaoFidelidade = await this.model.deleteOne({ _id: req.body._id });
+		const _id = req.body._id; //mongoose.Types.ObjectId(
+
+		console.log(_id)
+
+		const cartaoFidelidade = await this.model.deleteOne({ _id });
 		let response = cartaoFidelidade;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
