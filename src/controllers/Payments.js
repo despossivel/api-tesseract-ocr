@@ -5,6 +5,7 @@ class Payments {
 	constructor(application) {
 		this.application = application;
 		this.model = this.application.src.models.Payment;
+		this.modalEstabelecimento = this.application.src.models.Estabelecimento;
 	}
 
 	jsonResponse(data) {
@@ -47,20 +48,48 @@ class Payments {
 			Amount
 		};
 
-		const [Transation] = await cielo.payment(card, payment);
-		const { MerchantOrderId } = Transation;
-		const paymentSave = await this.model.create({
-			MerchantOrderId,
-			_idUsuario,
-			_idEstabelecimento,
-			Customer: '',
-			Transation
-		});
+		const Transation = await cielo.payment(card, payment);
 
-		let response = paymentSave;
-		response = this.jsonResponse(response);
-		const { status, ..._response_ } = response;
-		res.status(status).send(_response_.data);
+		//https://developercielo.github.io/manual/cielo-ecommerce#resposta
+		switch (parseInt(Transation.Payment.ReturnCode)) {
+			case 4:
+			case 6:
+
+				const { MerchantOrderId } = Transation;
+				const paymentSave = await this.model.create({
+					MerchantOrderId,
+					_idUsuario,
+					_idEstabelecimento,
+					Customer: '',
+					Transation
+				});
+
+				
+				await this.modalEstabelecimento.updateOne({
+					_id: _idEstabelecimento
+				}, {
+					status: true,
+					licence: true
+				})
+
+
+				let response = paymentSave;
+				response = this.jsonResponse(response);
+				const { status, ..._response_ } = response;
+				res.status(status).send(_response_.data);
+
+				break;
+
+			case 5: //Não Autorizada
+			case 57: //Cartão Expirado
+			case 78: //Cartão Bloqueado
+			case 99: //Time Out
+			case 77: //Cartão Cancelado
+			case 70: //Problemas com o Cartão de Crédito
+				res.send({ errors: [{ "msg": Transation.Payment.ReturnMessage }], status: 404 })
+				break;
+
+		}
 
 	}
 
