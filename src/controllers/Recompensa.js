@@ -20,8 +20,8 @@ class Recompensa {
 
 
 	async index(req, res) {
-
 		let find = req.query;
+
 		if (find._idEstabelecimento) {
 			find._idEstabelecimento = mongoose.Types.ObjectId(find._idEstabelecimento)
 		} else {
@@ -37,18 +37,16 @@ class Recompensa {
 	}
 
 	async show(req, res) {
-
-		const Recompensa = await this.model.findById({ _id: req.params._id }).catch(e => console.log(e))
+		const { _id } = req.params;
+		const Recompensa = await this.model.findById({ _id }).catch(e => console.log(e))
 		let response = Recompensa;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
 		res.status(status).send(_response_.data);
 	}
 
-
 	async store(req, res) {
-
-		const Recompensa = await this.model.create(req.body);
+		const Recompensa = await this.model.create({ ...req.body });
 		let response = Recompensa;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
@@ -56,22 +54,17 @@ class Recompensa {
 	}
 
 	async update(req, res) {
-
-		const _id = req.body._id;
-		let doc = req.body;
-		delete doc._id;
-
+		const { _id, ...doc } = req.body._id;
 		const Recompensa = await this.model.updateOne({ _id }, doc);
 		let response = Recompensa;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
 		res.status(status).send(_response_.data);
-
 	}
 
 	async destroy(req, res) {
-
-		const Recompensa = await this.model.deleteOne({ _id: req.body._id });
+		const { _id } = req.body;
+		const Recompensa = await this.model.deleteOne({ _id });
 		let response = Recompensa;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;

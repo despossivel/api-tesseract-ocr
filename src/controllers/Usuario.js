@@ -19,17 +19,18 @@ class Usuario {
 	}
 
 	async index(req, res) {
-
 		const usuarios = await this.model.find().catch(e => console.log(e))
 		let response = usuarios;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
 		res.status(status).send(_response_.data);
-
 	}
 
 	async show(req, res) {
-		const usuario = await this.model.findById({ _id: mongoose.Types.ObjectId(req.params._id) }).catch(e => console.log(e))
+		let { _id } = req.params;
+		_id = bjectId(_id);
+
+		const usuario = await this.model.findById({ _id }).catch(e => console.log(e))
 		let response = usuario;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
@@ -37,29 +38,29 @@ class Usuario {
 	}
 
 	async store(req, res) {
-		const body = req.body;
-		body.senha = this.blowfish.encrypt(body.senha)
-		//body.status = false;
-		const usuario = await this.model.create(body);
+		const { senha, email } = req.body;
+		const senhaEncrypt = this.blowfish.encrypt(senha)
+		const doc = { senha: senhaEncrypt, ...req.body };
+		const usuario = await this.model.create(doc);
 		let response = usuario;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
+		const { _id } = _response_.data;
 
-		await this.SMTP.send(body.email, 'Confirmar conta no Pinpper', `Acesse o link para confirmar a sua conta
-			http://localhost:5000/public/confirmar/conta/${_response_.data._id}`, ``).catch(e => console.error(e))
-
+		await this.SMTP.send(email, 'Confirmar conta no Pinpper', `Acesse o link para confirmar a sua conta
+			http://localhost:5000/public/confirmar/conta/${_id}`, ``).catch(e => console.error(e))
 
 		res.status(status).send(_response_.data);
 	}
 
 	async update(req, res) {
+		const { _id, senha, ...rest } = req.body;
+		let doc = rest;
 
-		const _id = req.body._id;
-		let doc = req.body;
-		delete doc._id;
-
-		if (doc.senha) doc.senha = this.blowfish.encrypt(doc.senha)
-
+		if (senha) {
+			const senhaEncrypt = this.blowfish.encrypt(senha)
+			doc.senha = senhaEncrypt;
+		}
 
 		const usuario = await this.model.updateOne({ _id }, doc);
 		let response = usuario;
@@ -70,8 +71,8 @@ class Usuario {
 	}
 
 	async destroy(req, res) {
-
-		const usuario = await this.model.deleteOne({ _id: req.body._id });
+		const { _id } = req.body;
+		const usuario = await this.model.deleteOne({ _id });
 		let response = usuario;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;

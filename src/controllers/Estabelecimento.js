@@ -24,7 +24,6 @@ class Estabelecimento {
 			response = this.jsonResponse(response);
 			const { status, ..._response_ } = response;
 			res.status(status).send(_response_.data);
-
 		} catch (e) {
 			throw e;
 		}
@@ -39,26 +38,15 @@ class Estabelecimento {
 	}
 
 	async store(req, res) {
-
 		const estabelecimento = await this.model.create(req.body);
 		let response = estabelecimento;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
-
-		//const { _id } = _response_.data;
-		//const { _idUsuario } = req.body;
-		//const updateUsuario = { adminIn: [_id] };
-		//const updateResponse = await this.modelUsuario.updateOne({ _id: mongoose.Types.ObjectId(_idUsuario) }, updateUsuario);
-		//console.log(updateResponse)
-
 		res.status(status).send(_response_.data);
 	}
 
 	async update(req, res) {
-		const _id = req.body._id;
-		let doc = req.body;
-		delete doc._id;
-
+		const { _id, ...doc } = req.body;
 		const estabelecimento = await this.model.updateOne({ _id }, doc);
 		let response = estabelecimento;
 		response = this.jsonResponse(response);
@@ -68,14 +56,12 @@ class Estabelecimento {
 	}
 
 	async destroy(req, res) {
-		const estabelecimento = await this.model.deleteOne({ _id: req.body._id });
-
+		const { _id } = req.body;
+		const estabelecimento = await this.model.deleteOne({ _id });
 		let response = estabelecimento;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
 		res.status(status).send(_response_.data);
-
-
 	}
 
 }

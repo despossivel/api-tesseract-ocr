@@ -68,10 +68,7 @@ class CartaoFidelidade {
 
 		const _idUsuario = mongoose.Types.ObjectId(req.body._idUsuario);
 		const _idEstabelecimento = mongoose.Types.ObjectId(req.body._idEstabelecimento);
-
-		let doc = req.body;
-		delete doc._id;
-
+		const { _id, ...doc } = req.body;
 		let cartaoFidelidade;
 
 		const length = await this.model.countDocuments({ _idUsuario, _idEstabelecimento });
@@ -80,7 +77,7 @@ class CartaoFidelidade {
 		} else {
 			cartaoFidelidade = await this.model.updateOne({ _idUsuario, _idEstabelecimento }, doc);
 		}
- 
+
 		let response = cartaoFidelidade;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
@@ -91,9 +88,7 @@ class CartaoFidelidade {
 	//destroy – Remove o dado
 	async destroy(req, res) {
 
-		const _id = req.body._id; //mongoose.Types.ObjectId(
-
-		console.log(_id)
+		const { _id } = req.body; //mongoose.Types.ObjectId(
 
 		const cartaoFidelidade = await this.model.deleteOne({ _id });
 		let response = cartaoFidelidade;
