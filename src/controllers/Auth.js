@@ -12,7 +12,7 @@ class Auth {
 		const token = this.JWT.sing({});
 		const senhaEncrypt = this.blowfish.encrypt(senha)
 
-		const login = await this.models.Usuario.find({ email, senha, status: true }).catch(e => console.log(e))
+		const login = await this.models.Usuario.find({ email, senha: senhaEncrypt, status: true }).catch(e => console.log(e))
 		let [response] = login;
 
 		login.length == 0
