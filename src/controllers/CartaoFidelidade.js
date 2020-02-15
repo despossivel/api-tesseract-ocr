@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ValidatorQuery = require('../utils/ValidatorQuery');
 
 class CartaoFidelidade {
 
@@ -19,30 +20,10 @@ class CartaoFidelidade {
 	async index(req, res) {
 
 		const query = req.query;
-		const _idsConvert = Object.keys(query).map(key => {
-			switch (key) {
-				case '_id':
-				case '_idUsuario':
-				case '_idEstabelecimento':
-					return { [key]: mongoose.Types.ObjectId(query[key]) };
-					break;
-			}
-		});
-
-		const find = _idsConvert.reduce((accumulator, current) => ({ ...accumulator, ...current }))
-
-		const cartoesFidelidade = await this.model.aggregate().lookup({
-			from: 'estabelecimentos', localField: '_idEstabelecimento',
-			foreignField: '_id', as: 'estabelecimento'
-		}).match(find);
-
-		let response = cartoesFidelidade.map(c => {
-			let { pontos, estabelecimento } = c;
-			[estabelecimento] = estabelecimento;
-			return { pontos, ...estabelecimento };
-		})
-
-		response = this.jsonResponse(response);
+		const { strategy, ...find } = ValidatorQuery(query);
+		const modelStrategy = this.application.src.controllers.CartaoFidelidadeStrategy[strategy];
+		const cartoesFidelidade = await modelStrategy(this.model, find)
+		const response = this.jsonResponse(cartoesFidelidade);
 		const { status, ..._response_ } = response;
 		res.status(status).send(_response_.data);
 	}
