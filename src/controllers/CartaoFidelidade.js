@@ -15,29 +15,34 @@ class CartaoFidelidade {
 		return response;
 	}
 
-	//index – Lista os dados da tabela
+
 	async index(req, res) {
 
-		let find = req.query;
-		find._idUsuario = mongoose.Types.ObjectId(find._idUsuario)
-		if (find._idEstabelecimento) {
-			find._idEstabelecimento = mongoose.Types.ObjectId(find._idEstabelecimento);
-		}
-		const cartoesFidelidade = await this.model.aggregate().lookup(
-			{
-				from: 'estabelecimentos', localField: '_idEstabelecimento',
-				foreignField: '_id', as: 'estabelecimento'
-			}).match(find);
+		const query = req.query;
+		const _idsConvert = Object.keys(query).map(key => {
+			switch (key) {
+				case '_id':
+				case '_idUsuario':
+				case '_idEstabelecimento':
+					return { [key]: mongoose.Types.ObjectId(query[key]) };
+					break;
+			}
+		});
 
+		const find = _idsConvert.reduce((accumulator, current) => ({ ...accumulator, ...current }))
+
+		const cartoesFidelidade = await this.model.aggregate().lookup({
+			from: 'estabelecimentos', localField: '_idEstabelecimento',
+			foreignField: '_id', as: 'estabelecimento'
+		}).match(find);
 
 		let response = cartoesFidelidade.map(c => {
 			let { pontos, estabelecimento } = c;
-
 			[estabelecimento] = estabelecimento;
 			return { pontos, ...estabelecimento };
 		})
 
-		response = this.jsonResponse(response);
+		response = this.jsonResponse(cartoesFidelidade);
 		const { status, ..._response_ } = response;
 		res.status(status).send(_response_.data);
 	}

@@ -17,7 +17,7 @@ module.exports = {
         check('nome').notEmpty(),
         check('nomeFantasia').notEmpty(),
         check('cnpj').notEmpty().custom(async (value) => {
-            const cnpj = await Models.findOne({ cnpj: value })
+            const cnpj = Model.findOne({ cnpj: value })
             if (cnpj) {
                 throw new Error('Cnpj já está em uso')
             }

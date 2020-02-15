@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const Estabelecimento = new mongoose.Schema({
 	nome: {
@@ -38,7 +39,7 @@ const Estabelecimento = new mongoose.Schema({
 		required: true
 	},
 	_idUsuario: {
-		type: String,
+		type: ObjectId,
 		require: true
 	},
 	status: {
