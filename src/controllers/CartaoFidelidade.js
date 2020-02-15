@@ -42,7 +42,7 @@ class CartaoFidelidade {
 			return { pontos, ...estabelecimento };
 		})
 
-		response = this.jsonResponse(cartoesFidelidade);
+		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
 		res.status(status).send(_response_.data);
 	}
