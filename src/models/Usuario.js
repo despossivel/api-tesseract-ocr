@@ -37,9 +37,9 @@ const Usuario = new mongoose.Schema({
         type: String,
         required: false
     },
-    status:{
+    status: {
         type: Boolean,
-		setDefaultOnInsert: false
+        setDefaultOnInsert: false
     }
 },
     {
@@ -47,13 +47,13 @@ const Usuario = new mongoose.Schema({
         toObject: { virtuals: true },
         toJSON: { virtuals: true },
         upsert: true,
-		new: true,
-		setDefaultsOnInsert: true
+        new: true,
+        setDefaultsOnInsert: true
     })
 
 Usuario.virtual('fotoUrl').get(function () {
     const url = process.env.URL || process.env.LOCAL
-    return `http://${url}/static/${encodeURIComponent(this.logo)}`
+    return `http://${url}/static/${encodeURIComponent(this.foto)}`
 })
 
 
