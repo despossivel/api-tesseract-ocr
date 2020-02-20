@@ -11,9 +11,9 @@ class Auth {
 		const { email, senha } = req.body;
 		const token = this.JWT.sing({});
 		const senhaEncrypt = this.blowfish.encrypt(senha)
-		
-		const login = await this.models.Usuario.find({ email, senha: senhaEncrypt, status: true }).catch(e => console.log(e))
-		let [response] = login;
+
+		const login = await this.models.Usuario.findOne({ email, senha: senhaEncrypt, status: true }).catch(e => console.log(e))
+		let response = login;
 
 		login.length == 0
 			? response = { errors: [{ "msg": "Usuario não encontrado!" }], status: 404 }

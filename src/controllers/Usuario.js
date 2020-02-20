@@ -27,8 +27,7 @@ class Usuario {
 	}
 
 	async show(req, res) {
-		let { _id } = req.params;
-		_id = bjectId(_id);
+		const { _id } = req.params;
 
 		const usuario = await this.model.findById({ _id }).catch(e => console.log(e))
 		let response = usuario;
