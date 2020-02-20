@@ -7,14 +7,15 @@ const config = require('../multer')
 
 module.exports = {
     foto: [
-       // Jwt.verify,
-       // expressValidation.validation,
-        multer(config).single('foto')
+        Jwt.verify,
+        // check('_id').exists().notEmpty(),
+        multer(config).single('foto'),
+        expressValidation.validation
     ],
     logo: [
-       // Jwt.verify,
-        //expressValidation.validation,
+        Jwt.verify,
+        // check('_id').exists().notEmpty(),
         multer(config).single('logo'),
+        expressValidation.validation
     ],
-
 };
