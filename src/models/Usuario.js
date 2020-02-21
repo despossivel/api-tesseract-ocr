@@ -53,7 +53,7 @@ const Usuario = new mongoose.Schema({
 
 Usuario.virtual('fotoUrl').get(function () {
     const url = process.env.URL || process.env.LOCAL
-    return `http://${url}/static/${encodeURIComponent(this.foto)}`
+    return `http://${process.env.HEROKU}/static/${encodeURIComponent(this.foto)}`
 })
 
 
