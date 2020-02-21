@@ -65,7 +65,7 @@ const Estabelecimento = new mongoose.Schema({
 
 
 Estabelecimento.virtual('logoUrl').get(function () {
-	return `http://${process.env.NODE_ENV == 'heroku' ? process.env.HEROKU : process.env.DEV}/static/uploads/${encodeURIComponent(this.foto)}`
+	return `http://${process.env.NODE_ENV == 'heroku' ? process.env.HEROKU : process.env.DEV}/static/uploads/${encodeURIComponent(this.logo)}`
 })
 
 
