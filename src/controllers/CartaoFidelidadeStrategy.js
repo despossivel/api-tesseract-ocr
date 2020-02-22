@@ -17,16 +17,24 @@ const estabelecimentos = async (model, find) => {
 
 const usuarios = async (model, find) => {
 
-    const data = await model.aggregate().lookup({
-        from: 'usuarios', localField: '_idUsuario',
-        foreignField: '_id', as: 'usuario'
-    }).match(find);
-
+    const data = await model.aggregate([{
+        $lookup: {
+            from: 'usuarios',
+            localField: '_idUsuario',
+            foreignField: '_id',
+            as: 'usuario'
+        }
+    }
+    ]).match(find);
+ 
     const response = data.map(c => {
         let { pontos, usuario } = c;
         [usuario] = usuario;
         return { pontos, ...usuario };
     })
+
+
+    // console.log(response)
 
     return response;
 }
