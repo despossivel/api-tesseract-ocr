@@ -61,6 +61,9 @@ class CartaoFidelidade {
 		if (length == 0) {
 			cartaoFidelidade = await this.model.create(doc);
 		} else {
+
+			console.log(doc)
+			
 			cartaoFidelidade = await this.model.updateOne({ _idUsuario, _idEstabelecimento }, doc);
 		}
 
