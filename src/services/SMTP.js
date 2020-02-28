@@ -8,7 +8,7 @@ class SMTP {
             port: process.env.SMTP_PORT ? process.env.SMTP_PORT : 465,
             secure: process.env.SMTP_SECURE ? process.env.SMTP_SECURE : true,
             auth: {
-                user: process.env.SMTP_USER ? process.env.SMTP_USER : 'contato@centavus.com',
+                user: process.env.SMTP_USER ? process.env.SMTP_USER : 'contato@pinpper.com',
                 pass: process.env.SMTP_PASS ? process.env.SMTP_PASS : 'contato@123.'
             }
         };
@@ -19,12 +19,10 @@ class SMTP {
         text = 'teste',
         html = 'teste') {
 
-        const transporter = nodemailer.createTransport({
-            ...this.TRANSPORTER
-        });
+        const transporter = nodemailer.createTransport(this.TRANSPORTER);
 
         return await transporter.sendMail({
-            from: process.env.SMTP_FROM ? process.env.SMTP_FROM : `"Centavus" <contato@centavus.com>`,
+            from: process.env.SMTP_FROM ? process.env.SMTP_FROM : `"Pinpper" <contato@pinpper.com>`,
             to,
             subject,
             text,

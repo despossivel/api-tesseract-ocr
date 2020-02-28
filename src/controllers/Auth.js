@@ -13,12 +13,16 @@ class Auth {
 		const senhaEncrypt = this.blowfish.encrypt(senha)
 
 		const login = await this.models.Usuario.findOne({ email, senha: senhaEncrypt, status: true }).catch(e => console.log(e))
-	 	const { fotoUrl } = login;
-		const response = {
-			...login._doc,
-			fotoUrl,
-			token
-		}; 
+		if (login) {
+
+			const { fotoUrl } = login;
+			const response = {
+				...login._doc,
+				fotoUrl,
+				token
+			};
+
+		}
 
 		login ? res.status(200).send(response)
 			: res.status(404).send({ errors: [{ "msg": "Usuario não encontrado!" }], status: 404 })
