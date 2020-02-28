@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "jest",
-    "mongoConnect":"mongo 'mongodb+srv://cluster0-ep251.gcp.mongodb.net/test?retryWrites=true&w=majority'  --username dev"
+    "mongoConnect": "mongo 'mongodb+srv://cluster0-ep251.gcp.mongodb.net/test?retryWrites=true&w=majority'  --username dev"
   },
   "keywords": [],
   "author": "",
@@ -30,7 +30,8 @@
     "nodemailer": "^6.4.2",
     "nodemon": "^2.0.2",
     "npm": "^6.13.4",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "require-dir": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
