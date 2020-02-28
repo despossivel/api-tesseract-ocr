@@ -47,7 +47,7 @@ class Usuario {
 		const { _id } = _response_.data;
 
 		await this.SMTP.send(email, 'Confirmar conta no Pinpper', `Acesse o link para confirmar a sua conta
-			http://localhost:5000/public/confirmar/conta/${_id}`, ``).catch(e => console.error(e))
+			https://api-nova.herokuapp.com/public/confirmar/conta/${_id}`, ``).catch(e => console.error(e))
 
 		res.status(status).send(_response_.data);
 	}
