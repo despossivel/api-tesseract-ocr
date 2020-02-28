@@ -37,16 +37,20 @@ class Usuario {
 	}
 
 	async store(req, res) {
-		const { senha, email } = req.body;
-		const senhaEncrypt = this.blowfish.encrypt(senha)
-		const doc = { senha: senhaEncrypt, ...req.body };
+		let doc = req.body;
+		doc.senha = this.blowfish.encrypt(doc.senha);
+
+		// const doc = { senha: this.blowfish.encrypt(senha), ...req.body };
+
+		// console.log(doc)
+
 		const usuario = await this.model.create(doc);
 		let response = usuario;
 		response = this.jsonResponse(response);
 		const { status, ..._response_ } = response;
 		const { _id } = _response_.data;
 
-		await this.SMTP.send(email, 'Confirmar conta no Pinpper', `Acesse o link para confirmar a sua conta
+		await this.SMTP.send(doc.email, 'Confirmar conta no Pinpper', `Acesse o link para confirmar a sua conta
 			https://${process.env.NODE_ENV == 'heroku' ? process.env.HEROKU : process.env.DEV}/public/confirmar/conta/${_id}`, ``).catch(e => console.error(e))
 
 		res.status(status).send(_response_.data);
