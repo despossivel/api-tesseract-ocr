@@ -23,11 +23,11 @@ const Estabelecimento = new mongoose.Schema({
 		required: true
 	},
 	estado: {
-		type: String,
+		type: Number,
 		required: true
 	},
 	cidade: {
-		type: String,
+		type: Number,
 		required: true
 	},
 	logo: {
