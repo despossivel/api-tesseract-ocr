@@ -14,11 +14,20 @@ module.exports = (application) => {
 			check('nome').notEmpty(),
 			check('nomeFantasia').notEmpty(),
 			check('cnpj').notEmpty().custom(async (value) => {
-				const cnpj = application.src.models.Estabelecimento.findOne({ cnpj: value })
-				if (cnpj) {
-					throw new Error('Cnpj já está em uso')
-				}
+				return application.src.models.Estabelecimento.findOne({ cnpj: value }).then(cnpj => {
+					if (cnpj) {
+						return Promise.reject('Cnpj Já esta em uso')
+					}
+				})
 			}),
+
+			check('endereco').notEmpty(),
+			check('telefone').notEmpty(),
+			check('estado').notEmpty(),
+			check('cidade').notEmpty(),
+			
+
+
 			check('_idUsuario').notEmpty(),
 			application.src.middlewares.expressValidation.validation
 		]
