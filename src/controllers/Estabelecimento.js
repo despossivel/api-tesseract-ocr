@@ -19,6 +19,9 @@ class Estabelecimento {
 
 	async index(req, res) {
 		try {
+
+			console.log(req.query)
+
 			const estabelecimentos = await this.model.find({ ...req.query }).catch(e => console.log(e))
 			let response = estabelecimentos;
 			response = this.jsonResponse(response);
