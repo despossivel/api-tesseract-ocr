@@ -8,7 +8,6 @@ module.exports = (application) => {
 	application.get('/estabelecimento/:_id', application.src.middlewares.routes.estabelecimento.show, (req, res) => Estabelecimento.show(req, res))
 
 	application.post('/estabelecimento/store',
-
 		// application.src.middlewares.routes.estabelecimento.store
 		[
 			application.src.middlewares.Jwt.verify,
