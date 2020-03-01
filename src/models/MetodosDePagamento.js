@@ -33,4 +33,4 @@ const MetodosDePagamento = new mongoose.Schema({
 		setDefaultsOnInsert: true
 	});
 
-module.exports = () => mongoose.model('MetodosDePagamento', MetodosDePagamento);
+module.exports = mongoose.model('MetodosDePagamento', MetodosDePagamento);

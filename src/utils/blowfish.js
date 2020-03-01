@@ -417,6 +417,6 @@ Blowfish.prototype.decipher = function () {
 	t.xr_par = Xl;
 };
 
-// Export for node.js
- 
-module.exports = () => new Blowfish(process.env.SECRET_KEY, process.env.PADDING);
+// Export for node.js 
+
+module.exports = new Blowfish(process.env.SECRET_KEY, process.env.PADDING);

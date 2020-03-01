@@ -1,49 +1,30 @@
+const ModelEstabelecimento = require('../models/Estabelecimento');
+const ModelUsuario = require('../models/Usuario');
+
 class Uploads {
-
-	constructor(application) {
-		this.application = application;
-		this.modelEstabelecimento = application.src.models.Estabelecimento;
-		this.modelUsuario = application.src.models.Usuario;
-	}
-
-	jsonResponse(data) {
-		let response;
-		data.length == 0
-			? response = { errors: [{ "msg": "Nenhum estabelecimento encontrado!" }], status: 404 }
-			: response = { data, status: 200 }
-		return response;
-	}
 
 	async foto(req, res) {
 		const { _id } = req.body;
- 
-		const doc = {
-			foto: req.file.filename
-		};
-
-		const usuario = await this.modelUsuario.updateOne({ _id }, doc);
-		let response = usuario;
-		response = this.jsonResponse(response);
-		const { status, ..._response_ } = response;
-		res.status(status).send(_response_.data);
+		const doc = { foto: req.file.filename };
+		const usuario = await ModelUsuario.updateOne({ _id }, doc);
+		usuario.n == 0 ?
+			res.status(404).send({ errors: [{ "msg": "Não foi possivel atualizar a foto do perfil!" }] }) :
+			res.status(200).send(usuario.data);
 
 
 	}
 
 	async logo(req, res) {
 		const { _id } = req.body;
-		const doc = {
-			logo: req.file.filename
-		};
-		const estabelecimento = await this.modelEstabelecimento.updateOne({ _id }, doc);
-		let response = estabelecimento;
-		response = this.jsonResponse(response);
-		const { status, ..._response_ } = response;
-		res.status(status).send(_response_.data);
+		const doc = { logo: req.file.filename };
+		const estabelecimento = await ModelEstabelecimento.updateOne({ _id }, doc);
+		estabelecimento.n == 0 ?
+			res.status(404).send({ errors: [{ "msg": "Não foi possivel atualizar a logo do estabelecimento!" }] }) :
+			res.status(200).send(estabelecimento.data);
 
 	}
 
 }
 
 
-module.exports = () => Uploads
+module.exports = new Uploads()

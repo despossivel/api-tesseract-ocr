@@ -1,13 +1,10 @@
-const { check } = require('express-validator');
+const { Route } = require('express');
+const route = new Route();
 
-module.exports = (application) => {
-    const Public = new application.src.controllers.Public(application);
+const middleware = require('../middlewares/routes/public');
+const Public = require('../controllers/Public');
 
-    application.get('/public/confirmar/conta/:_id', application.src.middlewares.routes.public.update, (req, res) => Public.update(req, res))
+route.get('/public/confirmar/conta/:_id', middleware.update, Public.update)
+route.get('/public/esqueci/minha/senha/:email', middleware.show, Public.show)
 
-
-    application.get('/public/esqueci/minha/senha/:email', application.src.middlewares.routes.public.show, (req, res) => Public.show(req, res))
-
-
-
-}
+module.exports = route;

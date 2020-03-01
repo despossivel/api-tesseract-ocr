@@ -1,8 +1,14 @@
-module.exports = (application) => {
-	const Auth = new application.src.controllers.Auth(application);
+const { Router } = require('express')
+const route = new Router();
 
-	application.post('/auth',
-		application.src.middlewares.routes.auth.index,
-		(req, res) => Auth.show(req, res))
+const middleware = require('../middlewares/routes/auth');
+const Auth = require('../controllers/Auth');
 
-}
+//module.exports = (application) => {
+//	const Auth = new application.src.controllers.Auth(application);
+
+route.post('/auth', middleware.index, Auth.show)
+
+//}
+
+module.exports = route;

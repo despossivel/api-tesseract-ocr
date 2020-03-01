@@ -1,78 +1,59 @@
 const mongoose = require('mongoose');
 
+const Model = require('../models/Recompensa');
+
 class Recompensa {
 
-	constructor(application) {
-		this.application = application;
-		this.model = this.application.src.models.Recompensa;
-
-	}
-
-
-	jsonResponse(data) {
-		let response;
-		data == null || data.length == 0
-			? response = { errors: [{ "msg": "Nenhuma recompensa encontrada!" }], status: 404 }
-			: response = { data, status: 200 }
-		return response;
-	}
 
 
 
 	async index(req, res) {
 		let find = req.query;
 
-		if (find._idEstabelecimento) {
+		find._idEstabelecimento ?
 			find._idEstabelecimento = mongoose.Types.ObjectId(find._idEstabelecimento)
-		} else {
-			find = {};
-		}
+			: find = {};
 
-		const cuponsDesconto = await this.model.find(find).catch(e => console.log(e))
-		let response = cuponsDesconto;
-		response = this.jsonResponse(response);
-		const { status, ..._response_ } = response;
-		res.status(status).send(_response_.data);
+		const Recompensa = await Model.find(find).catch(e => console.log(e))
+		Recompensa.length == 0 ?
+			res.status(404).send({ errors: [{ "msg": "Nenhuma recompensa encontrada no momento!" }] }) :
+			res.status(200).send(Recompensa.data);
 
 	}
 
 	async show(req, res) {
 		const { _id } = req.params;
-		const Recompensa = await this.model.findById({ _id }).catch(e => console.log(e))
-		let response = Recompensa;
-		response = this.jsonResponse(response);
-		const { status, ..._response_ } = response;
-		res.status(status).send(_response_.data);
+		const Recompensa = await Model.findById({ _id }).catch(e => console.log(e))
+		Recompensa.length == 0 ?
+			res.status(404).send({ errors: [{ "msg": "Recompensa não encontrada!" }] }) :
+			res.status(200).send(Recompensa.data);
 	}
 
 	async store(req, res) {
-		const Recompensa = await this.model.create({ ...req.body });
-		let response = Recompensa;
-		response = this.jsonResponse(response);
-		const { status, ..._response_ } = response;
-		res.status(status).send(_response_.data);
+		const Recompensa = await Model.create({ ...req.body });
+		Recompensa.length == 0 ?
+			res.status(404).send({ errors: [{ "msg": "Não foi possiel criar a recompensa!" }] }) :
+			res.status(200).send(Recompensa.data);
 	}
 
 	async update(req, res) {
 		const { _id, ...doc } = req.body._id;
-		const Recompensa = await this.model.updateOne({ _id }, doc);
-		let response = Recompensa;
-		response = this.jsonResponse(response);
-		const { status, ..._response_ } = response;
-		res.status(status).send(_response_.data);
+		const Recompensa = await Model.updateOne({ _id }, doc);
+		Recompensa.n == 0 ?
+			res.status(404).send({ errors: [{ "msg": "Não foi possivel atualizar a recompensa!" }] }) :
+			res.status(200).send(Recompensa.data);
 	}
 
 	async destroy(req, res) {
 		const { _id } = req.body;
-		const Recompensa = await this.model.deleteOne({ _id });
-		let response = Recompensa;
-		response = this.jsonResponse(response);
-		const { status, ..._response_ } = response;
-		res.status(status).send(_response_.data);
+		const Recompensa = await Model.deleteOne({ _id });
+		Recompensa.n == 0 ?
+			res.status(404).send({ errors: [{ "msg": "Não foi possivel remover a recompensa" }] }) :
+			res.status(200).send(Recompensa.data);
 	}
 
 }
 
 
 
-module.exports = () => Recompensa;
+module.exports = new Recompensa();

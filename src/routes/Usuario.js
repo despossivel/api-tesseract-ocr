@@ -1,16 +1,13 @@
-const { check } = require('express-validator');
+const { Router } = require('express');
+const route = new Router();
 
-module.exports = (application) => {
-	const Usuario = new application.src.controllers.Usuario(application);
+const middleware = require('../middlewares/routes/usuario');
+const Usuario = require('../controllers/Usuario');
 
-	application.get('/usuarios', application.src.middlewares.routes.usuario.index, (req, res) => Usuario.index(req, res))
+route.get('/usuarios', middleware.index, Usuario.index)
+route.get('/usuario/:_id', middleware.show, Usuario.show)
+route.post('/usuario', middleware.store, Usuario.store)
+route.put('/usuario/:_id', middleware.update, Usuario.update)
+route.delete('/usuario/:_id', middleware.destroy, Usuario.destroy)
 
-	application.get('/usuario/:_id', application.src.middlewares.routes.usuario.show, (req, res) => Usuario.show(req, res))
-
-	application.post('/usuario/store', application.src.middlewares.routes.usuario.store, (req, res) => Usuario.store(req, res))
-
-	application.put('/usuario/update', application.src.middlewares.routes.usuario.update, (req, res) => Usuario.update(req, res))
-
-	application.delete('/usuario/destroy', application.src.middlewares.routes.usuario.destroy, (req, res) => Usuario.destroy(req, res))
-
-}
+module.exports = route;

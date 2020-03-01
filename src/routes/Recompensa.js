@@ -1,16 +1,13 @@
-const { check } = require('express-validator');
+const { Route } = require('express');
+const route = new Route();
 
-module.exports = (application) => {
-    const Recompensa = new application.src.controllers.Recompensa(application);
+const middleware = require('../middlewares/routes/recompensa');
+const Recompensa = require('../controllers/Recompensa');
 
-    application.get('/recompensas', application.src.middlewares.routes.recompensa.index, (req, res) => Recompensa.index(req, res))
+route.get('/recompensas', middleware.index, Recompensa.index)
+route.get('/recompensa/:_id', middleware.show, Recompensa.show)
+route.post('/recompensa', middleware.store, Recompensa.store)
+route.put('/recompensa/:_id', middleware.update, Recompensa.update)
+route.delete('/recompensa/:_id', middleware.destroy, Recompensa.destroy)
 
-    application.get('/recompensa/:_id', application.src.middlewares.routes.recompensa.show, (req, res) => Recompensa.show(req, res))
-
-    application.post('/recompensa/store', application.src.middlewares.routes.recompensa.store, (req, res) => Recompensa.store(req, res))
-
-    application.put('/recompensa/update', application.src.middlewares.routes.recompensa.update, (req, res) => Recompensa.update(req, res))
-
-    application.delete('/recompensa/destroy', application.src.middlewares.routes.recompensa.destroy, (req, res) => Recompensa.destroy(req, res))
-
-}
+module.exports = route;

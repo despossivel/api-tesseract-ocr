@@ -25,4 +25,4 @@ const CartaoFidelidade = new mongoose.Schema({
 	setDefaultsOnInsert: true
 });
 
-module.exports = () => mongoose.model('CartaoFidelidade', CartaoFidelidade);
+module.exports = mongoose.model('CartaoFidelidade', CartaoFidelidade);

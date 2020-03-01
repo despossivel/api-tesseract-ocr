@@ -1,59 +1,37 @@
-const mongoose = require('mongoose');
-
+const SMTP = require('../services/SMTP');
+const blowfish = require('../utils/blowfish');
+const Model = require('../models/Usuario');
 
 class Usuario {
 
-	constructor(application) {
-		this.application = application;
-		this.model = this.application.src.models.Usuario;
-		this.blowfish = this.application.src.utils.blowfish;
-		this.SMTP = this.application.src.services.SMTP;
-	}
-
-	jsonResponse(data) {
-		let response;
-		data == null || data.length == 0
-			? response = { errors: [{ "msg": "Nenhum estabelecimento encontrado!" }], status: 404 }
-			: response = { data, status: 200 }
-		return response;
-	}
 
 	async index(req, res) {
-		const usuarios = await this.model.find().catch(e => console.log(e))
-		let response = usuarios;
-		response = this.jsonResponse(response);
-		const { status, ..._response_ } = response;
-		res.status(status).send(_response_.data);
+		const usuarios = await Model.find().catch(e => console.log(e))
+		usuarios.length == 0 ?
+			res.status(404).send({ errors: [{ "msg": "Nenhum usuario encontrado!" }] }) :
+			res.status(200).send(usuarios.data);
 	}
 
 	async show(req, res) {
 		const { _id } = req.params;
 
-		const usuario = await this.model.findById({ _id }).catch(e => console.log(e))
-		let response = usuario;
-		response = this.jsonResponse(response);
-		const { status, ..._response_ } = response;
-		res.status(status).send(_response_.data);
+		const usuario = await Model.findById({ _id }).catch(e => console.log(e))
+		usuario.length == 0 ?
+			res.status(404).send({ errors: [{ "msg": "Usuario não encontrado!" }] }) :
+			res.status(200).send(usuario.data);
 	}
 
 	async store(req, res) {
 		let doc = req.body;
-		doc.senha = this.blowfish.encrypt(doc.senha);
+		doc.senha = blowfish.encrypt(doc.senha);
 
-		// const doc = { senha: this.blowfish.encrypt(senha), ...req.body };
+		const usuario = await Model.create(doc);
+		const { _id } = usuario.data;
 
-		// console.log(doc)
-
-		const usuario = await this.model.create(doc);
-		let response = usuario;
-		response = this.jsonResponse(response);
-		const { status, ..._response_ } = response;
-		const { _id } = _response_.data;
-
-		await this.SMTP.send(doc.email, 'Confirmar conta no Pinpper', `Acesse o link para confirmar a sua conta
+		await SMTP.send(doc.email, 'Confirmar conta no Pinpper', `Acesse o link para confirmar a sua conta
 			https://${process.env.NODE_ENV == 'heroku' ? process.env.HEROKU : process.env.DEV}/public/confirmar/conta/${_id}`, ``).catch(e => console.error(e))
 
-		res.status(status).send(_response_.data);
+		res.status(200).send(usuario.data);
 	}
 
 	async update(req, res) {
@@ -65,23 +43,21 @@ class Usuario {
 			doc.senha = senhaEncrypt;
 		}
 
-		const usuario = await this.model.updateOne({ _id }, doc);
-		let response = usuario;
-		response = this.jsonResponse(response);
-		const { status, ..._response_ } = response;
-		res.status(status).send(_response_.data);
+		const usuario = await Model.updateOne({ _id }, doc);
+		usuario.n == 0 ?
+			res.status(404).send({ errors: [{ "msg": "Não foi possivel atualizar!" }] }) :
+			res.status(200).send(usuario);
 
 	}
 
 	async destroy(req, res) {
 		const { _id } = req.body;
-		const usuario = await this.model.deleteOne({ _id });
-		let response = usuario;
-		response = this.jsonResponse(response);
-		const { status, ..._response_ } = response;
-		res.status(status).send(_response_.data);
+		const usuario = await Model.deleteOne({ _id });
+		usuario.n == 0 ?
+			res.status(404).send({ errors: [{ "msg": "Não foi possivel remover o usuario!" }] }) :
+			res.status(200).send(usuario);
 	}
 
 }
 
-module.exports = () => Usuario;
+module.exports = new Usuario();
