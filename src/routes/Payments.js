@@ -1,24 +1,11 @@
-const { check } = require('express-validator');
+const { Route } = require('express');
+const route = new Route();
 
-module.exports = (application) => {
-   const Payments = new application.src.controllers.Payments(application);
+const middleware = require('../middlewares/routes/payment');
+const Payments = require('../controllers/Payments');
 
-   application.get('/payments', application.src.middlewares.routes.payment.index, (req, res) => Payments.index(req, res))
+route.get('/payments', middleware.index, Payments.index);
+route.get('/payment/:_id', middleware.show, Payments.show);
+route.post('/payment', middleware.store, Payments.store);
 
-   application.get('/payment/:_id', application.src.middlewares.routes.payment.show, (req, res) => Payments.show(req, res))
-
-   application.post('/payment/store', application.src.middlewares.routes.payment.store, (req, res) => Payments.store(req, res))
-
-   /*
-   application.put('/payment/update', [
-      application.src.middlewares.Jwt.verify,
-     
-   ], (req, res) => Payments.update(req, res))
-  
-   application.delete('/payment/destroy', [
-      application.src.middlewares.Jwt.verify,
-      
-   ], (req, res) => Payments.destroy(req, res))
-   */
-
-}
+module.exports = route;

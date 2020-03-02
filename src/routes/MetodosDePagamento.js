@@ -1,16 +1,13 @@
-const { check } = require('express-validator');
+const { Route } = require('express');
+const route = new Route();
 
-module.exports = (application) => {
-   const MetodosDePagamento = new application.src.controllers.MetodosDePagamento(application);
+const middleware = require('../middlewares/routes/metodosDePagamento');
+const MetodosDePagamento = require('../controllers/MetodosDePagamento');
 
-   application.get('/metodos/pagamento', application.src.middlewares.routes.metodosDePagamento.index, (req, res) => MetodosDePagamento.index(req, res))
+route.get('/metodos/pagamento', middleware.index, MetodosDePagamento.index)
+route.get('/metodo/pagamento/:cvv/:_id', middleware.show, MetodosDePagamento.show)
+route.post('/metodo/pagamento', middleware.store, MetodosDePagamento.store)
+route.put('/metodo/pagamento/:_id', middleware.update, MetodosDePagamento.update)
+route.delete('/metodo/pagamento/:_id', middleware.destroy, MetodosDePagamento.destroy)
 
-   application.get('/metodo/pagamento/:cvv/:_id', application.src.middlewares.routes.metodosDePagamento.show, (req, res) => MetodosDePagamento.show(req, res))
-
-   application.post('/metodo/pagamento/store', application.src.middlewares.routes.metodosDePagamento.store, (req, res) => MetodosDePagamento.store(req, res))
-
-   application.put('/metodo/pagamento/update', application.src.middlewares.routes.metodosDePagamento.update, (req, res) => MetodosDePagamento.update(req, res))
-
-   application.delete('/metodo/pagamento/destroy', application.src.middlewares.routes.metodosDePagamento.destroy, (req, res) => MetodosDePagamento.destroy(req, res))
-
-}
+module.exports = route;

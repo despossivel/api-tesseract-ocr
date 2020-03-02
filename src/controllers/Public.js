@@ -1,41 +1,27 @@
 const mongoose = require('mongoose');
+const Model = require('../models/Usuario');
+const blowfish = require('../utils/blowfish');
+const SMTP = require('../services/SMTP');
 
 class Public {
 
-    constructor(application) {
-        this.application = application;
-        this.model = this.application.src.models.Usuario;
-        this.blowfish = this.application.src.utils.blowfish;
-        this.SMTP = this.application.src.services.SMTP;
-    }
-
-    jsonResponse(data) {
-        let response;
-        data == null || data.length == 0
-            ? response = { errors: [{ "msg": "Nenhum estabelecimento encontrado!" }], status: 404 }
-            : response = { data, status: 200 }
-        return response;
-    }
-
-    //confirmar conta
     async update(req, res) {
         let { _id } = req.params;
         _id = mongoose.Types.ObjectId(_id);
-        const usuario = await this.model.updateOne({ _id }, { status: true });
-        let response = usuario;
-        response = this.jsonResponse(response);
-        const { status, ..._response_ } = response;
-        res.status(status).send(_response_.data);
+        const usuario = await Model.updateOne({ _id }, { status: true });
+        usuario.length == 0 ?
+            res.status(404).send({ errors: [{ "msg": "Não foi possivel ativar sua conta!" }] }) :
+            res.status(200).send(usuario.data);
     }
 
     //recuperar senha
     async show(req, res) {
         const { email } = req.params;
-        const usuario = await this.model.find({ email, status: true }).catch(e => console.log(e))
+        const usuario = await Model.find({ email, status: true }).catch(e => console.log(e))
         const [response] = usuario;
         let { senha } = response;
         senha = this.blowfish.decrypt(senha)
-        await this.SMTP.send(email, 'Recuperação de senha',
+        await SMTP.send(email, 'Recuperação de senha',
             `Conseguimos recuperar sua senha, ela é ${senha}`, ``)
             .catch(e => console.error(e))
         res.status(200).send({ data: [{ "msg": "Email de recuperação foi enviado com sucesso!" }], status: 200 });
@@ -44,4 +30,4 @@ class Public {
 
 }
 
-module.exports = () => Public;
+module.exports = new Public();

@@ -55,4 +55,4 @@ Usuario.virtual('fotoUrl').get(function () {
 })
 
 
-module.exports = () => mongoose.model('Usuario', Usuario)
+module.exports = mongoose.model('Usuario', Usuario)

@@ -32,4 +32,4 @@ const Recompensa = new mongoose.Schema({
 		setDefaultsOnInsert: true
 	});
 
-module.exports = () => mongoose.model('Recompensa', Recompensa);
+module.exports = mongoose.model('Recompensa', Recompensa);

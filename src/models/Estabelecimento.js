@@ -70,4 +70,4 @@ Estabelecimento.virtual('logoUrl').get(function () {
 
 
 
-module.exports = () => mongoose.model('Estabelecimento', Estabelecimento);
+module.exports = mongoose.model('Estabelecimento', Estabelecimento);

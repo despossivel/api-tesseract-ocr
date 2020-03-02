@@ -1,17 +1,11 @@
-const { check } = require('express-validator');
-const multer = require('multer');
-const config = require('../middlewares/multer')
+const { Router } = require('express');
+const route = new Router();
 
-module.exports = (application) => {
 
-    const Uploads = new application.src.controllers.Uploads(application)
+const middleware = require('../middlewares/routes/upload');
+const Uploads = require('../controllers/Uploads');
 
-    application.post('/upload/foto', [
-        application.src.middlewares.routes.upload.foto,
-    ], (req, res) => Uploads.foto(req, res))
+route.post('/upload/foto', middleware.foto, Uploads.foto)
+route.post('/upload/logo', middleware.logo, Uploads.logo)
 
-    application.post('/upload/logo',
-        application.src.middlewares.routes.upload.logo
-        , (req, res) => Uploads.logo(req, res))
-
-}
+module.exports = route;
