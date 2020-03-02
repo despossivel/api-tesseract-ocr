@@ -7,7 +7,7 @@ class MetodosDePagamento {
 		const metodosDePagamento = await Model.find().catch(e => console.log(e))
 		metodosDePagamento.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Nenhum metodo de pagamento encontrado!" }] }) :
-			res.status(200).send(metodosDePagamento.data);
+			res.status(200).send(metodosDePagamento);
 	}
 
 	async show(req, res) {
@@ -15,14 +15,14 @@ class MetodosDePagamento {
 		const metodoDePagamento = await Model.findById({ _id }).catch(e => console.log(e))
 		metodosDePagamento.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel encontrar o metodo de pagamento encontrado!" }] }) :
-			res.status(200).send(metodosDePagamento.data);
+			res.status(200).send([metodosDePagamento]);
 	}
 
 	async store(req, res) {
 		const metodoDePagamento = await Model.create(req.body);
 		metodosDePagamento.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel adicionar o metodo de pagamento!" }] }) :
-			res.status(200).send(metodosDePagamento.data);
+			res.status(200).send(metodosDePagamento);
 	}
 
 	async update(req, res) {
@@ -30,7 +30,7 @@ class MetodosDePagamento {
 		const metodoDePagamento = await Model.updateOne({ _id }, doc);
 		metodosDePagamento.n == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel atualizar o metodo de pagamento!" }] }) :
-			res.status(200).send(metodosDePagamento.data);
+			res.status(200).send(metodosDePagamento);
 	}
 
 	async destroy(req, res) {
@@ -38,7 +38,7 @@ class MetodosDePagamento {
 		const metodoDePagamento = await Model.deleteOne({ _id });
 		metodosDePagamento.n == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel remover o metodo de pagamento!" }] }) :
-			res.status(200).send(metodosDePagamento.data);
+			res.status(200).send(metodosDePagamento);
 	}
 
 }

@@ -15,7 +15,7 @@ class Payments {
 		const payments = await Model.find().catch(e => console.log(e))
 		payments.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Nenhum pagamento encontrado!" }] }) :
-			res.status(200).send(payments.data);
+			res.status(200).send(payments);
 
 	}
 
@@ -24,7 +24,7 @@ class Payments {
 		const payment = await Model.findById({ _id }).catch(e => console.log(e))
 		payment.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel encontrar o pagamento" }] }) :
-			res.status(200).send(payment.data);
+			res.status(200).send([payment]);
 	}
 
 	async store(req, res) {
@@ -61,7 +61,7 @@ class Payments {
 
 				paymentSave.n == 0 ?
 					res.status(404).send({ errors: [{ "msg": "Nenhum estabelecimento encontrado!" }] }) :
-					res.status(200).send(paymentSave.data);
+					res.status(200).send(paymentSave);
 
 				break;
 

@@ -9,16 +9,15 @@ class Usuario {
 		const usuarios = await Model.find().catch(e => console.log(e))
 		usuarios.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Nenhum usuario encontrado!" }] }) :
-			res.status(200).send(usuarios.data);
+			res.status(200).send(usuarios);
 	}
 
 	async show(req, res) {
 		const { _id } = req.params;
-
 		const usuario = await Model.findById({ _id }).catch(e => console.log(e))
-		usuario.length == 0 ?
+		usuario && usuario.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Usuario não encontrado!" }] }) :
-			res.status(200).send(usuario.data);
+			res.status(200).send([usuario]);
 	}
 
 	async store(req, res) {

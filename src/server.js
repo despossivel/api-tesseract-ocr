@@ -15,13 +15,6 @@ const ejs = require('ejs');
 const app = express();
 
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, './views'))
-
-app.use('/static', express.static('./public'))
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(cors());
 
 
 
@@ -35,12 +28,28 @@ const Payments = require('./routes/Payments');
 const Recompesa = require('./routes/Recompensa');
 const Uploads = require('./routes/Uploads');
 const Usuario = require('./routes/Usuario');
+ 
 
-app.use([Index, 
-    Public, 
-    Auth, CartaoFidelidade,
-    Estabelecimento, MetodosDePagamento,    
-    Payments, Recompesa, Uploads, Usuario]);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, './views'))
+
+app.use('/static', express.static('./public'))
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
+
+app.use([
+    Index,
+    Public,
+    Auth,
+    CartaoFidelidade,
+    Estabelecimento,
+    MetodosDePagamento,
+    Payments,
+    Recompesa,
+    Uploads,
+    Usuario
+]);
 
 
 

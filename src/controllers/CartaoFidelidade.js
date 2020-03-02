@@ -18,7 +18,7 @@ class CartaoFidelidade {
 		
 		cartoesFidelidade.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Nenhum estabelecimento encontrado!" }] }) :
-			res.status(200).send(cartoesFidelidade.data);
+			res.status(200).send(cartoesFidelidade);
 
 	}
 
@@ -27,7 +27,7 @@ class CartaoFidelidade {
 		const cartaoFidelidade = await Model.find({ _id: req.params._id }).catch(e => console.log(e))
 		cartoesFidelidade.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Nenhum estabelecimento encontrado!" }] }) :
-			res.status(200).send(cartoesFidelidade.data);
+			res.status(200).send([cartoesFidelidade]);
 	}
 
 
@@ -54,7 +54,7 @@ class CartaoFidelidade {
 
 		cartaoFidelidade.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Nenhum estabelecimento encontrado!" }] }) :
-			res.status(200).send(cartaoFidelidade.data);
+			res.status(200).send(cartaoFidelidade);
 
 	}
 

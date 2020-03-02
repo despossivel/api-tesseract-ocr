@@ -1,5 +1,5 @@
-const { Route } = require('express');
-const route = new Route();
+const { Router } = require('express');
+const route = new Router();
 
 const middleware = require('../middlewares/routes/metodosDePagamento');
 const MetodosDePagamento = require('../controllers/MetodosDePagamento');

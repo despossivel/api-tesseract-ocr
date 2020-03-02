@@ -6,8 +6,10 @@ class Auth {
 
 	constructor() { }
 
-	async show(req, res) {
+	async show(req, res, next) {
 		const { email, senha } = req.body;
+ 
+
 		const token = JWT.sing({});
 		const senhaEncrypt = blowfish.encrypt(senha)
 		const login = await Model.findOne({ email, senha: senhaEncrypt, status: true }).catch(e => console.log(e))
@@ -18,6 +20,7 @@ class Auth {
 			fotoUrl: login.fotoUrl,
 			token
 		} : {};
+  
 
 		login ? res.status(200).send(response)
 			: res.status(404).send({ errors: [{ "msg": "Usuario não encontrado!" }], status: 404 })

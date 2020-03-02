@@ -19,7 +19,7 @@ class Estabelecimento {
 
 			estabelecimentos.length == 0 ?
 				res.status(404).send({ errors: [{ "msg": "Nenhum estabelecimento encontrado!" }] }) :
-				res.status(200).send(estabelecimentos.data);
+				res.status(200).send(estabelecimentos);
  
 		} catch (e) {
 			throw e;
@@ -31,14 +31,14 @@ class Estabelecimento {
 
 		estabelecimentos.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel encontrar o estabelecimento!" }] }) :
-			res.status(200).send(estabelecimentos.data);
+			res.status(200).send([estabelecimentos]);
 	}
 
 	async store(req, res) {
 		const estabelecimento = await Model.create(req.body);
 		estabelecimentos.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel criar o estabelecimento!" }] }) :
-			res.status(200).send(estabelecimentos.data);
+			res.status(200).send(estabelecimentos);
 	}
 
 	async update(req, res) {
@@ -47,7 +47,7 @@ class Estabelecimento {
 		const estabelecimento = await Model.updateOne({ _id }, doc);
 		estabelecimentos.n == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel atualizar o estabelecimento!" }] }) :
-			res.status(200).send(estabelecimentos.data);
+			res.status(200).send(estabelecimentos);
 
 	}
 
@@ -56,7 +56,7 @@ class Estabelecimento {
 		const estabelecimento = await Model.deleteOne({ _id });
 		estabelecimento.n == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel remover o estabelecimento!" }] }) :
-			res.status(200).send(estabelecimento.data);
+			res.status(200).send(estabelecimento);
 	}
 
 }
