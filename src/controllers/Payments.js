@@ -1,18 +1,13 @@
+const Cielo = require('../services/Cielo');
+
 const ModelPayment = require('../models/Payment');
 const ModelEstabelecimento = require('../models/Estabelecimento');
 
 
 class Payments {
 
-	/* constructor(application) {
-		this.application = application;
-		Model = this.application.src.models.Payment;
-		this.modalEstabelecimento = this.application.src.models.Estabelecimento;
-	} */
-
-
 	async index(req, res) {
-		const payments = await Model.find().catch(e => console.log(e))
+		const payments = await ModelPayment.find().catch(e => console.log(e))
 		payments.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Nenhum pagamento encontrado!" }] }) :
 			res.status(200).send(payments);
@@ -21,14 +16,14 @@ class Payments {
 
 	async show(req, res) {
 		const { _id } = req.params;
-		const payment = await Model.findById({ _id }).catch(e => console.log(e))
+		const payment = await ModelPayment.findById({ _id }).catch(e => console.log(e))
 		payment.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel encontrar o pagamento" }] }) :
 			res.status(200).send([payment]);
 	}
 
 	async store(req, res) {
-		const cielo = new this.application.src.services.Cielo(this.application)
+		const cielo = new Cielo();
 
 		let { _idUsuario, _idEstabelecimento, Type, Amount, ...card } = req.body;
 
@@ -37,14 +32,14 @@ class Payments {
 			Amount
 		};
 
-		const Transation = await cielo.payment(card, payment);
+		const Transation = await cielo.payment(card, payment).catch(e => console.error(e));
 
 		//https://developercielo.github.io/manual/cielo-ecommerce#resposta
 		switch (parseInt(Transation.Payment.ReturnCode)) {
 			case 4:
 			case 6:
 				const { MerchantOrderId } = Transation;
-				const paymentSave = await Model.create({
+				const paymentSave = await ModelPayment.create({
 					MerchantOrderId,
 					_idUsuario,
 					_idEstabelecimento,

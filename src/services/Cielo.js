@@ -1,7 +1,9 @@
+const config = require('../config/cielo');
+
 class Cielo {
 
-	constructor(application) {
-		this.GATEWAY = application.src.config.cielo;
+	constructor() {
+		this.GATEWAY = config;
 	}
 
 	async payment(card, payment) {
@@ -51,4 +53,4 @@ class Cielo {
 }
 
 
-module.exports = () => Cielo;
+module.exports = Cielo;

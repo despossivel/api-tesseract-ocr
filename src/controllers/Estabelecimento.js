@@ -29,25 +29,25 @@ class Estabelecimento {
 	async show(req, res) {
 		const estabelecimento = await Model.find({ _id: req.params._id }).catch(e => console.log(e))
 
-		estabelecimentos.length == 0 ?
+		estabelecimento.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel encontrar o estabelecimento!" }] }) :
-			res.status(200).send([estabelecimentos]);
+			res.status(200).send(estabelecimento);
 	}
 
 	async store(req, res) {
 		const estabelecimento = await Model.create(req.body);
-		estabelecimentos.length == 0 ?
+		estabelecimento.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel criar o estabelecimento!" }] }) :
-			res.status(200).send(estabelecimentos);
+			res.status(200).send(estabelecimento);
 	}
 
 	async update(req, res) {
 		const { _id } = req.params;
 		const { ...doc } = req.body;
 		const estabelecimento = await Model.updateOne({ _id }, doc);
-		estabelecimentos.n == 0 ?
+		estabelecimento.n == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel atualizar o estabelecimento!" }] }) :
-			res.status(200).send(estabelecimentos);
+			res.status(200).send(estabelecimento);
 
 	}
 

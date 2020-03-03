@@ -20,21 +20,23 @@ class Usuario {
 			res.status(200).send([usuario]);
 	}
 
+
 	async store(req, res) {
 		let doc = req.body;
 		doc.senha = blowfish.encrypt(doc.senha);
 
 		const usuario = await Model.create(doc);
-		const { _id } = usuario.data;
+		const { _id } = usuario;
 
 		await SMTP.send(doc.email, 'Confirmar conta no Pinpper', `Acesse o link para confirmar a sua conta
 			https://${process.env.NODE_ENV == 'heroku' ? process.env.HEROKU : process.env.DEV}/public/confirmar/conta/${_id}`, ``).catch(e => console.error(e))
 
-		res.status(200).send(usuario.data);
+		res.status(200).send(usuario);
 	}
 
 	async update(req, res) {
-		const { _id, senha, ...rest } = req.body;
+		const { _id } = req.params;
+		const { senha, ...rest } = req.body;
 		let doc = rest;
 
 		if (senha) {
@@ -50,7 +52,7 @@ class Usuario {
 	}
 
 	async destroy(req, res) {
-		const { _id } = req.body;
+		const { _id } = req.params;
 		const usuario = await Model.deleteOne({ _id });
 		usuario.n == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel remover o usuario!" }] }) :

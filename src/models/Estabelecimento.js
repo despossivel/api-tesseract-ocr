@@ -26,7 +26,7 @@ const Estabelecimento = new mongoose.Schema({
 		type: Number,
 		required: true
 	},
-	cidade: {
+	municipio: {
 		type: Number,
 		required: true
 	},
@@ -36,7 +36,7 @@ const Estabelecimento = new mongoose.Schema({
 	},
 	coordinates: {
 		type: [Number],
-		required: true
+		required: false
 	},
 	_idUsuario: {
 		type: ObjectId,

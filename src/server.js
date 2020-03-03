@@ -28,7 +28,7 @@ const Payments = require('./routes/Payments');
 const Recompesa = require('./routes/Recompensa');
 const Uploads = require('./routes/Uploads');
 const Usuario = require('./routes/Usuario');
- 
+
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, './views'))
@@ -50,22 +50,5 @@ app.use([
     Uploads,
     Usuario
 ]);
-
-
-
-
-
-/*
-consign()
-    .then('src/controllers')
-    .then('src/models')
-    .then('src/services')
-    .then('src/middlewares')
-    .then('src/config')
-    .then('src/utils')
-    .include('./src/routes')
-    .into(app)
-*/
-
 
 module.exports = app;

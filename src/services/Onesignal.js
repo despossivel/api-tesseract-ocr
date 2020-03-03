@@ -49,4 +49,4 @@ class Onesignal {
 
 //const onesignal = new Onesignal();
 //const send = onesignal.send()
-module.exports = () => new Onesignal();
+module.exports = new Onesignal();

@@ -33,4 +33,4 @@ class SMTP {
 
 }
 
-module.exports = () => new SMTP();
+module.exports = new SMTP();

@@ -14,42 +14,43 @@ class Recompensa {
 			find._idEstabelecimento = mongoose.Types.ObjectId(find._idEstabelecimento)
 			: find = {};
 
-		const Recompensa = await Model.find(find).catch(e => console.log(e))
+		const recompensa = await Model.find(find).catch(e => console.log(e))
 		recompensa.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Nenhuma recompensa encontrada no momento!" }] }) :
-			res.status(200).send(Recompensa);
+			res.status(200).send(recompensa);
 
 	}
 
 	async show(req, res) {
 		const { _id } = req.params;
-		const Recompensa = await Model.findById({ _id }).catch(e => console.log(e))
+		const recompensa = await Model.findById({ _id }).catch(e => console.log(e))
 		recompensa.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Recompensa não encontrada!" }] }) :
-			res.status(200).send([Recompensa]);
+			res.status(200).send([recompensa]);
 	}
 
 	async store(req, res) {
-		const Recompensa = await Model.create({ ...req.body });
+		const recompensa = await Model.create({ ...req.body });
 		recompensa.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possiel criar a recompensa!" }] }) :
-			res.status(200).send(Recompensa);
+			res.status(200).send(recompensa);
 	}
 
 	async update(req, res) {
-		const { _id, ...doc } = req.body._id;
-		const Recompensa = await Model.updateOne({ _id }, doc);
+		const { _id } = req.params;
+		const doc = req.body;
+		const recompensa = await Model.updateOne({ _id }, doc);
 		recompensa.n == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel atualizar a recompensa!" }] }) :
-			res.status(200).send(Recompensa);
+			res.status(200).send(recompensa);
 	}
 
 	async destroy(req, res) {
-		const { _id } = req.body;
-		const Recompensa = await Model.deleteOne({ _id });
+		const { _id } = req.params;
+		const recompensa = await Model.deleteOne({ _id });
 		recompensa.n == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel remover a recompensa" }] }) :
-			res.status(200).send(Recompensa);
+			res.status(200).send(recompensa);
 	}
 
 }

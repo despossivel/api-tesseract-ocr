@@ -16,7 +16,7 @@ module.exports = {
         Jwt.verify,
         check("_idUsuario").notEmpty(),
         check("_idEstabelecimento").notEmpty(),
-  
+
         check("CardNumber").notEmpty(),
         check("Holder").notEmpty(),
         check("ExpirationDate").notEmpty().isLength({ max: 7 }).isLength({ min: 7 }),
@@ -25,15 +25,5 @@ module.exports = {
         check("Type").notEmpty(),
         check("Amount").notEmpty(),
         expressValidation.validation
-    ],
-    // update: [
-    //     Jwt.verify,
-    //     check('_id').notEmpty(),
-    //     expressValidation.validation
-    // ],
-    // destroy: [
-    //     Jwt.verify,
-    //     check('_id').notEmpty(),
-    //     expressValidation.validation
-    // ]
+    ]
 };

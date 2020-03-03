@@ -17,12 +17,18 @@ module.exports = {
         check('nome').notEmpty(),
         check('nomeFantasia').notEmpty(),
         check('cnpj').notEmpty().custom(async (value) => {
-            const cnpj = Model.findOne({ cnpj: value })
-            if (cnpj) {
-                throw new Error('Cnpj já está em uso')
-            }
+            return Model.findOne({ cnpj: value }).then(cnpj => {
+                if (cnpj) {
+                    return Promise.reject('Cnpj já está em uso')
+                }
+            })
         }),
-        check('_idUsuario').notEmpty(),
+
+        check('telefone').exists().notEmpty(),
+        check('endereco').exists().notEmpty(),
+        check('estado').exists().notEmpty(),
+        check('municipio').exists().notEmpty(),
+        check('_idUsuario').exists().notEmpty(),
         expressValidation.validation
     ],
     update: [
