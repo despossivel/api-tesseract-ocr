@@ -39,45 +39,43 @@ describe('Estabelecimentos', () => {
         const response = await request(app)
             .post('/estabelecimento')
             .set('Authorization', token)
+            .send(estabelecimentoDemo)
             .expect(200)
 
-
-            console.log(response)
-
-        // estabelecimentoDemo._id = response.body._id;
+        estabelecimentoDemo._id = response.body._id;
 
     })
 
 
-    // it('Listar um', async () => {
+    it('Listar um', async () => {
 
-    //     await request(app)
-    //         .get(`/estabelecimento/${estabelecimentoDemo._id}`)
-    //         .set('Authorization', token)
-    //         .expect(200)
+        await request(app)
+            .get(`/estabelecimento/${estabelecimentoDemo._id}`)
+            .set('Authorization', token)
+            .expect(200)
 
-    // })
+    })
 
 
-    // it('Atualizar um', async () => {
+    it('Atualizar um', async () => {
 
-    //     await request(app)
-    //         .put(`/estabelecimento/${estabelecimentoDemo._id}`)
-    //         .set('Authorization', token)
-    //         .send({
-    //             nome: 'Atualizando nome para teste'
-    //         })
-    //         .expect(200)
+        await request(app)
+            .put(`/estabelecimento/${estabelecimentoDemo._id}`)
+            .set('Authorization', token)
+            .send({
+                nome: 'Atualizando nome para teste'
+            })
+            .expect(200)
 
-    // })
-    // it('Remover um', async () => {
+    })
+    it('Remover um', async () => {
 
-    //     await request(app)
-    //         .delete(`/estabelecimento/${estabelecimentoDemo._id}`)
-    //         .set('Authorization', token)
-    //         .expect(200)
+        await request(app)
+            .delete(`/estabelecimento/${estabelecimentoDemo._id}`)
+            .set('Authorization', token)
+            .expect(200)
 
-    // })
+    })
 
 
 });
