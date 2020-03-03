@@ -46,7 +46,7 @@ class Estabelecimento {
 		const { ...doc } = req.body;
 		const estabelecimento = await Model.updateOne({ _id }, doc);
 		estabelecimento.n == 0 ?
-			res.status(404).send({ errors: [{ "msg": "Não foi possivel atualizar o estabelecimento!" }] }) :
+			res.status(422).send({ errors: [{ "msg": "Não foi possivel atualizar o estabelecimento!" }] }) :
 			res.status(200).send(estabelecimento);
 
 	}
@@ -55,7 +55,7 @@ class Estabelecimento {
 		const { _id } = req.params;
 		const estabelecimento = await Model.deleteOne({ _id });
 		estabelecimento.n == 0 ?
-			res.status(404).send({ errors: [{ "msg": "Não foi possivel remover o estabelecimento!" }] }) :
+			res.status(422).send({ errors: [{ "msg": "Não foi possivel remover o estabelecimento!" }] }) :
 			res.status(200).send(estabelecimento);
 	}
 

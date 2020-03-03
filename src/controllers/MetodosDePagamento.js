@@ -30,7 +30,7 @@ class MetodosDePagamento {
 		const doc = req.body;
 		const metodoDePagamento = await Model.updateOne({ _id }, doc);
 		metodoDePagamento.n == 0 ?
-			res.status(404).send({ errors: [{ "msg": "Não foi possivel atualizar o metodo de pagamento!" }] }) :
+			res.status(422).send({ errors: [{ "msg": "Não foi possivel atualizar o metodo de pagamento!" }] }) :
 			res.status(200).send(metodoDePagamento);
 	}
 
@@ -38,7 +38,7 @@ class MetodosDePagamento {
 		const { _id } = req.params;
 		const metodoDePagamento = await Model.deleteOne({ _id });
 		metodoDePagamento.n == 0 ?
-			res.status(404).send({ errors: [{ "msg": "Não foi possivel remover o metodo de pagamento!" }] }) :
+			res.status(422).send({ errors: [{ "msg": "Não foi possivel remover o metodo de pagamento!" }] }) :
 			res.status(200).send(metodoDePagamento);
 	}
 

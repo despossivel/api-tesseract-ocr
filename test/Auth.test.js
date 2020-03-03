@@ -6,7 +6,7 @@ describe('Authenticação', () => {
 
   it('Efetuar login', async () => {
 
-    const response = await request(app).post('/auth')
+    await request(app).post('/auth')
       .send({
         email: "mattbmoller@gmail.com",
         senha: "qazx123."
@@ -17,7 +17,7 @@ describe('Authenticação', () => {
 
   it('Efetuar login com senha errada', async () => {
 
-    const response = await request(app).post('/auth')
+    await request(app).post('/auth')
       .send({
         email: "mattbmoller@gmail.com",
         senha: "qazx123"
@@ -27,3 +27,4 @@ describe('Authenticação', () => {
 
 
 });
+

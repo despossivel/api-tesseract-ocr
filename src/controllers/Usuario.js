@@ -46,7 +46,7 @@ class Usuario {
 
 		const usuario = await Model.updateOne({ _id }, doc);
 		usuario.n == 0 ?
-			res.status(404).send({ errors: [{ "msg": "Não foi possivel atualizar!" }] }) :
+			res.status(422).send({ errors: [{ "msg": "Não foi possivel atualizar!" }] }) :
 			res.status(200).send(usuario);
 
 	}
@@ -55,7 +55,7 @@ class Usuario {
 		const { _id } = req.params;
 		const usuario = await Model.deleteOne({ _id });
 		usuario.n == 0 ?
-			res.status(404).send({ errors: [{ "msg": "Não foi possivel remover o usuario!" }] }) :
+			res.status(422).send({ errors: [{ "msg": "Não foi possivel remover o usuario!" }] }) :
 			res.status(200).send(usuario);
 	}
 

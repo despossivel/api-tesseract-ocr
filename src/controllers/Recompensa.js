@@ -41,7 +41,7 @@ class Recompensa {
 		const doc = req.body;
 		const recompensa = await Model.updateOne({ _id }, doc);
 		recompensa.n == 0 ?
-			res.status(404).send({ errors: [{ "msg": "Não foi possivel atualizar a recompensa!" }] }) :
+			res.status(422).send({ errors: [{ "msg": "Não foi possivel atualizar a recompensa!" }] }) :
 			res.status(200).send(recompensa);
 	}
 
@@ -49,7 +49,7 @@ class Recompensa {
 		const { _id } = req.params;
 		const recompensa = await Model.deleteOne({ _id });
 		recompensa.n == 0 ?
-			res.status(404).send({ errors: [{ "msg": "Não foi possivel remover a recompensa" }] }) :
+			res.status(422).send({ errors: [{ "msg": "Não foi possivel remover a recompensa" }] }) :
 			res.status(200).send(recompensa);
 	}
 

@@ -10,7 +10,7 @@ class Public {
         _id = mongoose.Types.ObjectId(_id);
         const usuario = await Model.updateOne({ _id }, { status: true });
         usuario.length == 0 ?
-            res.status(404).send({ errors: [{ "msg": "Não foi possivel ativar sua conta!" }] }) :
+            res.status(422).send({ errors: [{ "msg": "Não foi possivel ativar sua conta!" }] }) :
             res.status(200).send(usuario.data);
     }
 
@@ -24,7 +24,7 @@ class Public {
         await SMTP.send(email, 'Recuperação de senha',
             `Conseguimos recuperar sua senha, ela é ${senha}`, ``)
             .catch(e => console.error(e))
-        res.status(200).send({ data: [{ "msg": "Email de recuperação foi enviado com sucesso!" }], status: 200 });
+        res.status(200).send({ data: [{ "msg": "Email de recuperação foi enviado com sucesso!" }] });
     }
 
 

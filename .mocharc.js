@@ -13,6 +13,6 @@ module.exports = {
   slow: 75,
   timeout: 50000,
   ui: 'bdd',
-  'watch-files': ['test/**/*.js', 'test/**/*.js'],
-  'watch-ignore': ['lib/vendor']
+  'watch-files': ['test/**/*.js'],
+  'watch-ignore': ['node_modules']
 };

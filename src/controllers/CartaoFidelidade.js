@@ -58,7 +58,7 @@ class CartaoFidelidade {
 		length == 0 ? cartaoFidelidade = await Model.create(doc) : cartaoFidelidade = await Model.updateOne({ _idUsuario, _idEstabelecimento }, doc);
 
 		cartaoFidelidade.length == 0 ?
-			res.status(404).send({ errors: [{ "msg": "Nenhum cartão fidelidade encontrado encontrado!" }] }) :
+			res.status(422).send({ errors: [{ "msg": "Nenhum cartão fidelidade encontrado encontrado!" }] }) :
 			res.status(200).send(cartaoFidelidade);
 
 	}
@@ -68,7 +68,7 @@ class CartaoFidelidade {
 		const { _id } = req.params; //mongoose.Types.ObjectId(
 		const cartaoFidelidade = await Model.deleteOne({ _id });
 		cartaoFidelidade.length == 0 ?
-			res.status(404).send({ errors: [{ "msg": "Nenhum cartão fidelidade encontrado encontrado!" }] }) :
+			res.status(422).send({ errors: [{ "msg": "Nenhum cartão fidelidade encontrado encontrado!" }] }) :
 			res.status(200).send(cartaoFidelidade);
 
 	}
