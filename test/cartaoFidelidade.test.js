@@ -24,23 +24,29 @@ describe('Cartões fidelidade', () => {
         token = await getToken()
     })
 
-    it('Criar novo cartão fidelidade', async () => {
+    it('Criar novo cartão fidelidade', (done) => {
 
-        const response = await request(app)
+        const response = request(app)
             .post('/cartao/fidelidade')
             .set('Authorization', token)
-            .send(cartaoDemo).expect(200);
+            .send(cartaoDemo).expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
         cartaoDemo._id = response.body._id;
 
     });
 
-    it('Criar novo cartão fidelidade para CPF', async () => {
+    it('Criar novo cartão fidelidade para CPF', (done) => {
 
-        const response = await request(app)
+        const response = request(app)
             .post('/cartao/fidelidade')
             .set('Authorization', token)
-            .send(cartaoDemo).expect(200);
+            .send(cartaoCPFDemo).expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
         cartaoCPFDemo._id = response.body._id;
 
@@ -50,134 +56,181 @@ describe('Cartões fidelidade', () => {
 
 
     //por patrão o strategy é de estabelecimentos
-    it('Listar todos os cartões fidelidade', async () => {
+    it('Listar todos os cartões fidelidade', (done) => {
 
-        await request(app)
+        request(app)
             .get('/cartoes/fidelidade')
             .set('Authorization', token)
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
     })
 
-    it('Listar todos cartões com o strategy de usuarios', async () => {
+    it('Listar todos cartões com o strategy de usuarios', (done) => {
 
-        await request(app)
+        request(app)
             .get('/cartoes/fidelidade?strategy=usuarios')
             .set('Authorization', token)
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
     })
 
 
 
-    it('Listar todos cartões com o strategy de CPF', async () => {
+    it('Listar todos cartões com o strategy de CPF', (done) => {
 
-        await request(app)
+        request(app)
             .get('/cartoes/fidelidade?strategy=cpf')
             .set('Authorization', token)
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
     })
 
 
-    it('Listar todos cartões com o strategy de estabelecimentos', async () => {
+    it('Listar todos cartões com o strategy de estabelecimentos', (done) => {
 
-        await request(app)
+        request(app)
             .get('/cartoes/fidelidade?strategy=estabelecimentos')
             .set('Authorization', token)
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
     })
 
-    it('Listar todos os cartões fidelidade de um CPF', async () => {
+    it('Listar todos os cartões fidelidade de um CPF', (done) => {
 
-        await request(app)
+        request(app)
             .get(`/cartoes/fidelidade?strategy=cpf&cpf=${cartaoCPFDemo.cpf}`)
             .set('Authorization', token)
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
     })
 
 
 
-    it('Listar todos os cartões fidelidade de um usuario', async () => {
+    it('Listar todos os cartões fidelidade de um usuario', (done) => {
 
-        await request(app)
+        request(app)
             .get(`/cartoes/fidelidade?_idUsuario=${cartaoDemo._idUsuario}`)
             .set('Authorization', token)
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
     })
 
-    it('Listar todos os cartões fidelidade de um estabelecimento', async () => {
-        await request(app)
+    it('Listar todos os cartões fidelidade de um estabelecimento', (done) => {
+        request(app)
             .get(`/cartoes/fidelidade?_idEstabelecimento=${cartaoDemo._idEstabelecimento}`)
             .set('Authorization', token)
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
     })
 
 
-    it('Listar um cartão fidelidade', async () => {
-        await request(app)
+    it('Listar um cartão fidelidade', (done) => {
+        request(app)
             .get(`/cartao/fidelidade/${cartaoDemo._id}`)
             .set('Authorization', token)
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
     })
 
 
-    it('Listar um cartão fidelidade com o strategy de usuario ', async () => {
-        await request(app)
+    it('Listar um cartão fidelidade com o strategy de usuario ', (done) => {
+        request(app)
             .get(`/cartao/fidelidade/${cartaoDemo._id}?strategy=usuarios`)
             .set('Authorization', token)
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
     })
 
-    it('Listar um cartão fidelidade com o strategy de estabelecimento ', async () => {
-        await request(app)
+    it('Listar um cartão fidelidade com o strategy de estabelecimento ', (done) => {
+        request(app)
             .get(`/cartao/fidelidade/${cartaoDemo._id}?strategy=estabelecimentos`)
             .set('Authorization', token)
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
     })
 
 
-    it('Atualizar um cartão fidelidade', async () => {
-        await request(app)
+    it('Atualizar um cartão fidelidade', (done) => {
+        request(app)
             .put(`/cartao/fidelidade/${cartaoDemo._idEstabelecimento}/${cartaoDemo._idUsuario}`)
             .set('Authorization', token)
             .send({
                 pontos: 200
             })
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
     })
 
 
-    it('Atualizar um cartão fidelidade em um CPF', async () => {
-        await request(app)
-            .put(`/cartao/fidelidade/${cartaoCPFDemo._idEstabelecimento}/${cartaoCPFDemo.cpf}?strategy=cpf`)
+    it('Atualizar um cartão fidelidade em um CPF', (done) => {
+
+        let cpf = cartaoCPFDemo.cpf;
+
+        cpf = cpf.replace('.', '')
+        cpf = cpf.replace('.', '')
+        cpf = cpf.replace('-', '')
+
+        request(app)
+            .put(`/cartao/fidelidade/cpf/${cartaoCPFDemo._idEstabelecimento}/${cpf}?strategy=cpf`)
             .set('Authorization', token)
             .send({
                 pontos: 200
             })
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
     })
 
 
 
-
-
-    it('Remover um cartão fidelidade', async () => {
-        await request(app)
+    it('Remover um cartão fidelidade', (done) => {
+        request(app)
             .delete(`/cartao/fidelidade/${cartaoDemo._id}`)
             .set('Authorization', token)
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
     })
 
 
-    it('Remover um cartão fidelidade CPF', async () => {
-        await request(app)
+    it('Remover um cartão fidelidade CPF', (done) => {
+        request(app)
             .delete(`/cartao/fidelidade/${cartaoCPFDemo._id}`)
             .set('Authorization', token)
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
     })
 
 

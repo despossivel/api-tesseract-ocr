@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../src/server');
 const getToken = require('./utils/login');
+const { payments: trucade } = require('./utils/trucades')
 
 let token;
 
@@ -21,53 +22,69 @@ let paymentDemo = {
 describe('Pagamentos', () => {
 
     before('token', async () => {
-        token = await getToken()
+        await trucade();
+        token = await getToken();
     })
 
-    it('Efetuar um pagamento', async () => {
+    it('Efetuar um pagamento', (done) => {
 
-        const response = await request(app)
+        const response = request(app)
             .post('/payment')
             .set('Authorization', token)
-            .send(paymentDemo).expect(200);
+            .send(paymentDemo).expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
         paymentDemo._id = response.body._id;
 
     });
 
-    it('Listar todos os pagamentos', async () => {
+    it('Listar todos os pagamentos', (done) => {
 
-        await request(app)
+        request(app)
             .get('/payments')
             .set('Authorization', token)
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
     })
 
-    it('Listar um pagamento', async () => {
-        await request(app)
+    it('Listar um pagamento', (done) => {
+        request(app)
             .get(`/payment/${paymentDemo._id}`)
             .set('Authorization', token)
-            .expect(200);
+            .expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
     })
 
     /*
-        it('Atualizar uma metodo de pagamento', async () => {
-            await request(app)
+        it('Atualizar uma metodo de pagamento', (done) => {
+            request(app)
                 .put(`/metodo/pagamento/${paymentDemo._id}`)
                 .set('Authorization', token)
                 .send({
                     titular: 'Matheus teste'
                 })
-                .expect(200);
+                .expect(200)  .end(function(err, res) {
+        if (err) return done(err);
+        done();
+      });
         })
     
     
-        it('Remover um metodo de pagamento', async () => {
-            await request(app)
+        it('Remover um metodo de pagamento', (done) => {
+            request(app)
                 .delete(`/metodo/pagamento/${paymentDemo._id}`)
                 .set('Authorization', token)
-                .expect(200);
+                .expect(200)  .end(function(err, res) {
+        if (err) return done(err);
+        done();
+      });
         })
     */
 

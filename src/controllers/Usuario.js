@@ -27,7 +27,9 @@ class Usuario {
 		const { _id } = usuario;
 
 		await SMTP.send(doc.email, 'Confirmar conta no Pinpper', `Acesse o link para confirmar a sua conta
-			https://${process.env.NODE_ENV == 'heroku' ? process.env.HEROKU : process.env.DEV}/public/confirmar/conta/${_id}`, ``).catch(e => console.error(e))
+			${process.env.HOST}/public/confirmar/conta/${_id}`, ``).catch(e => console.error(e))
+			
+		// console.log(usuario)
 
 		res.status(200).send(usuario);
 	}

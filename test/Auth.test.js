@@ -1,27 +1,42 @@
 const request = require('supertest');
 const app = require('../src/server');
 
+const createUserInitial = require('./utils/createUserInitial');
+const { usuario: trucade } = require('./utils/trucades')
 
 describe('Authenticação', () => {
 
-  it('Efetuar login', async () => {
+  before(async () => {
+    await trucade();
+    await createUserInitial()
+  })
 
-    await request(app).post('/auth')
+  it('Efetuar login', (done) => {
+
+    request(app).post('/auth')
       .send({
         email: "mattbmoller@gmail.com",
         senha: "qazx123."
-      }).expect(200);
+      }).expect(200)
+      .end(function(err, res) {
+        if (err) return done(err);
+        done();
+      });
 
   });
 
 
-  it('Efetuar login com senha errada', async () => {
+  it('Efetuar login com senha errada', (done) => {
 
-    await request(app).post('/auth')
+     request(app).post('/auth')
       .send({
         email: "mattbmoller@gmail.com",
         senha: "qazx123"
-      }).expect(404);
+      }).expect(404)
+      .end(function(err, res) {
+        if (err) return done(err);
+        done();
+      });
 
   });
 

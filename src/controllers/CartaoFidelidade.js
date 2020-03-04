@@ -42,7 +42,9 @@ class CartaoFidelidade {
 		let strategy;
 		const { _idUsuario, cpf } = req.body;
 
-		_idUsuario ? strategy = 'estabelecimentoCreateCartaoFidelidade' : strategy = 'cpfCreateCartaoFidelidade';
+		_idUsuario ? strategy = 'estabelecimentosCreateCartaoFidelidade' : strategy = 'cpfCreateCartaoFidelidade';
+
+
 
 		const modelStrategy = CartaoFidelidadeStrategy[strategy];
 		const cartaoFidelidade = await modelStrategy(req.body)
@@ -61,6 +63,7 @@ class CartaoFidelidade {
 		const count = CartaoFidelidadeStrategy[`${strategy}CountDocument`];
 		let cartaoFidelidade;
 
+		
 		const length = await count(find);
 
 		const create = CartaoFidelidadeStrategy[`${strategy}CreateCartaoFidelidade`];

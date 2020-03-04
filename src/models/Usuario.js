@@ -63,7 +63,7 @@ Usuario.pre('save', function (next) {
 
 Usuario.virtual('fotoUrl').get(function () {
     if (this.foto) {
-        return `http://${process.env.NODE_ENV == 'heroku' ? process.env.HEROKU : process.env.DEV}/static/uploads/${encodeURIComponent(this.foto)}`
+        return `${process.env.HOST}/static/uploads/${encodeURIComponent(this.foto)}`
     }
 })
 

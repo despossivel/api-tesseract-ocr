@@ -12,7 +12,7 @@ module.exports = {
   // reporter: 'nyan',
   reporter: 'spec',
   slow: 75,
-  timeout: 5000,
+  timeout: 150000,
   ui: 'bdd',
   'watch-files': ['test/**/*.js'],
   'watch-ignore': ['node_modules']

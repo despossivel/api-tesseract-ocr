@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../src/server');
 const getToken = require('./utils/login');
 
-const { estabelecimento: estabelecimentoTrucade } = require('./utils/trucades')
+const { estabelecimento: trucade } = require('./utils/trucades')
 
 let token;
 
@@ -20,94 +20,126 @@ let estabelecimentoDemo = {
 describe('Estabelecimentos', () => {
 
     before('token', async () => {
-        await estabelecimentoTrucade();
+        await trucade();
         token = await getToken()
     })
 
-    it('Criar novo estabelecimento', async () => {
+    it('Criar novo estabelecimento', (done) => {
 
-        const response = await request(app)
+        const response = request(app)
             .post('/estabelecimento')
             .set('Authorization', token)
             .send(estabelecimentoDemo)
             .expect(200)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
         estabelecimentoDemo._id = response.body._id;
 
     })
 
-    it('Criar novo estabelecimento com CNPJ já cadastrado', async () => {
+    it('Criar novo estabelecimento com CNPJ já cadastrado', (done) => {
         let { _id, ...novoEstabelecimentoDemo } = estabelecimentoDemo;
         novoEstabelecimentoDemo.telefone = '1928166899';
 
-        await request(app)
+        request(app)
             .post('/estabelecimento')
             .set('Authorization', token)
             .send(novoEstabelecimentoDemo)
             .expect(422)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
     })
 
-    it('Criar novo estabelecimento com telefone já cadastrado', async () => {
+    it('Criar novo estabelecimento com telefone já cadastrado', (done) => {
         let { _id, ...novoEstabelecimentoDemo } = estabelecimentoDemo;
         novoEstabelecimentoDemo.cnpj = '84.134.197/0001-44';
 
-       await request(app)
+        request(app)
             .post('/estabelecimento')
             .set('Authorization', token)
             .send(novoEstabelecimentoDemo)
             .expect(422)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
     })
 
 
-    it('Listar todos', async () => {
+    it('Listar todos', (done) => {
 
-        await request(app)
+        request(app)
             .get('/estabelecimentos')
             .set('Authorization', token)
-            .expect(200);
+            .expect(200)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });;
 
     })
 
 
 
-    it('Listar todos estabelecimentos de um usuario', async () => {
+    it('Listar todos estabelecimentos de um usuario', (done) => {
 
-        await request(app)
+        request(app)
             .get(`/estabelecimentos?_idUsuario=${estabelecimentoDemo._idUsuario}`)
             .set('Authorization', token)
-            .expect(200);
+            .expect(200)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });;
 
     })
 
-    it('Listar um estabelecimento', async () => {
+    it('Listar um estabelecimento', (done) => {
 
-        await request(app)
+        request(app)
             .get(`/estabelecimento/${estabelecimentoDemo._id}`)
             .set('Authorization', token)
             .expect(200)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
     })
 
 
-    it('Atualizar um estabelecimento', async () => {
+    it('Atualizar um estabelecimento', (done) => {
 
-        await request(app)
+        request(app)
             .put(`/estabelecimento/${estabelecimentoDemo._id}`)
             .set('Authorization', token)
             .send({
                 nome: 'Atualizando nome para teste'
             })
             .expect(200)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
     })
-    it('Remover um estabelecimento', async () => {
+    it('Remover um estabelecimento', (done) => {
 
-        await request(app)
+        request(app)
             .delete(`/estabelecimento/${estabelecimentoDemo._id}`)
             .set('Authorization', token)
             .expect(200)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
 
     })
 
