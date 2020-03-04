@@ -16,8 +16,6 @@ const app = express();
 
 
 
-
-
 const Index = require('./routes/index');
 const Public = require('./routes/Public');
 const Auth = require('./routes/auth');
@@ -50,5 +48,21 @@ app.use([
     Uploads,
     Usuario
 ]);
+
+
+
+// pegar rotas indefinidas e responder com 404
+app.use(function (req, res, next) {
+    res.status(404).send("Desculpe, não consigo encontrar isso!")
+});
+
+// detectar erros do servidor e responder com 500
+app.use(function (err, req, res, next) {
+    console.error(err.stack)
+    res.status(500).send('Algo quebrou!')
+})
+
+
+
 
 module.exports = app;
