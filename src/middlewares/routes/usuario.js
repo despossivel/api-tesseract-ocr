@@ -30,7 +30,7 @@ module.exports = {
                 }
             })
         }),
-        check('cpf').exists().notEmpty().custom((value) => {
+        check('cpf').notEmpty().custom((value) => {
             return Model.findOne({ cpf: value }).then(cpf => {
                 if (cpf) {
                     return Promise.reject('Cpf já está em uso')

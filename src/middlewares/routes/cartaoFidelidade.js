@@ -14,14 +14,14 @@ module.exports = {
     store: [
         Jwt.verify,
         check('_idEstabelecimento').notEmpty(),
-        check('_idUsuario').notEmpty(),
+        // check('_idUsuario').,
         check('pontos').notEmpty(),
         expressValidation.validation
     ],
     update: [
         Jwt.verify,
         check('_idEstabelecimento').notEmpty(),
-        check('_idUsuario').notEmpty(),
+        // check('_idUsuario').notEmpty(),
         check('pontos').notEmpty(),
         expressValidation.validation
     ],
