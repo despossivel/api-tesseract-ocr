@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const blowfish = require('../utils/blowfish');
 
 const Usuario = new mongoose.Schema({
     nome: {
@@ -19,6 +20,10 @@ const Usuario = new mongoose.Schema({
     },
     estado: {
         type: Number,
+        required: true
+    },
+    cpf: {
+        type: String,
         required: true
     },
     senha: {
@@ -50,8 +55,16 @@ const Usuario = new mongoose.Schema({
         setDefaultsOnInsert: true
     })
 
+
+Usuario.pre('save', function (next) {
+    this.senha = blowfish.encrypt(this.senha);
+    next();
+})
+
 Usuario.virtual('fotoUrl').get(function () {
-    return `http://${process.env.NODE_ENV == 'heroku' ? process.env.HEROKU : process.env.DEV}/static/uploads/${encodeURIComponent(this.foto)}`
+    if (this.foto) {
+        return `http://${process.env.NODE_ENV == 'heroku' ? process.env.HEROKU : process.env.DEV}/static/uploads/${encodeURIComponent(this.foto)}`
+    }
 })
 
 

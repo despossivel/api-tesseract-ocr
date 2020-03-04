@@ -9,9 +9,10 @@ module.exports = {
   extension: ['js'],
   opts: false,
   package: './package.json',
+  // reporter: 'nyan',
   reporter: 'spec',
   slow: 75,
-  timeout: 50000,
+  timeout: 5000,
   ui: 'bdd',
   'watch-files': ['test/**/*.js'],
   'watch-ignore': ['node_modules']

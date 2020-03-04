@@ -36,6 +36,30 @@ describe('Estabelecimentos', () => {
 
     })
 
+    it('Criar novo estabelecimento com CNPJ já cadastrado', async () => {
+        let { _id, ...novoEstabelecimentoDemo } = estabelecimentoDemo;
+        novoEstabelecimentoDemo.telefone = '1928166899';
+
+        await request(app)
+            .post('/estabelecimento')
+            .set('Authorization', token)
+            .send(novoEstabelecimentoDemo)
+            .expect(422)
+
+    })
+
+    it('Criar novo estabelecimento com telefone já cadastrado', async () => {
+        let { _id, ...novoEstabelecimentoDemo } = estabelecimentoDemo;
+        novoEstabelecimentoDemo.cnpj = '84.134.197/0001-44';
+
+       await request(app)
+            .post('/estabelecimento')
+            .set('Authorization', token)
+            .send(novoEstabelecimentoDemo)
+            .expect(422)
+
+    })
+
 
     it('Listar todos', async () => {
 
@@ -47,6 +71,7 @@ describe('Estabelecimentos', () => {
     })
 
 
+
     it('Listar todos estabelecimentos de um usuario', async () => {
 
         await request(app)
@@ -55,37 +80,6 @@ describe('Estabelecimentos', () => {
             .expect(200);
 
     })
-
-
-
-
-    /*
-    it('Criar novo estabelecimento com CNPJ já cadastrado', async () => {
-        let { _id, ...novoEstabelecimentoDemo } = estabelecimentoDemo;
-        novoEstabelecimentoDemo.telefone = '1928166899';
-
-        const response = await request(app)
-            .post('/estabelecimento')
-            .set('Authorization', token)
-            .send(novoEstabelecimentoDemo)
-            .expect(200)
-
-    })
-
-    it('Criar novo estabelecimento com telefone já cadastrado', async () => {
-        let { _id, ...novoEstabelecimentoDemo } = estabelecimentoDemo;
-        novoEstabelecimentoDemo.cnpj = '84.134.197/0001-44';
-
-        const response = await request(app)
-            .post('/estabelecimento')
-            .set('Authorization', token)
-            .send(novoEstabelecimentoDemo)
-            .expect(200)
-
-    })
-
-
-
 
     it('Listar um estabelecimento', async () => {
 
@@ -116,6 +110,6 @@ describe('Estabelecimentos', () => {
             .expect(200)
 
     })
-*/
+
 
 });

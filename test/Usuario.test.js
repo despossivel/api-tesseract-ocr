@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../src/server');
 const getToken = require('./utils/login');
-
+const { usuario: usuarioTrucade } = require('./utils/trucades')
 let token;
 
 // --reporter nyan
@@ -10,6 +10,7 @@ let usuarioDemo = {
     "nome": "Daniel",
     "usuario": "daniel",
     "email": "danel@gmail.com.br",
+    "cpf": "029.026.062-06",
     "estado": 12,
     "municipio": 1200427,
     "senha": "qazx123.",
@@ -19,14 +20,15 @@ let usuarioDemo = {
 describe('Usuarios', () => {
 
     before('token', async () => {
-        token = await getToken()
+        await usuarioTrucade();
+        token = await getToken();
     })
 
     it('Criar novo usuario', async () => {
 
         const response = await request(app)
             .post('/usuario')
-            .set('Authorization', token)
+            // .set('Authorization', token)
             .send(usuarioDemo).expect(200);
 
         usuarioDemo._id = response.body._id;
@@ -34,10 +36,26 @@ describe('Usuarios', () => {
     });
 
 
+    it('Criar novo usuario com CPF já cadastrado', async () => {
+        let { _id, ...novoUsuarioDemo } = usuarioDemo;
+        novoUsuarioDemo.email = 'daniel2@gmail.com';
+        novoUsuarioDemo.telefone = '9499910000384933';
+        novoUsuarioDemo.usuario = 'daniel2';
+
+        const response = await request(app)
+            .post('/usuario')
+            .set('Authorization', token)
+            .send(novoUsuarioDemo).expect(422);
+
+
+    })
+
+
     it('Criar novo usuario com nome de usuario já cadastrado', async () => {
         let { _id, ...novoUsuarioDemo } = usuarioDemo;
         novoUsuarioDemo.email = 'daniel2@gmail.com';
         novoUsuarioDemo.telefone = '9499910000384933';
+        novoUsuarioDemo.cpf = '029.026.06-99';
 
         const response = await request(app)
             .post('/usuario')
@@ -50,6 +68,7 @@ describe('Usuarios', () => {
         let { _id, ...novoUsuarioDemo } = usuarioDemo;
         novoUsuarioDemo.usuario = 'daniel2';
         novoUsuarioDemo.telefone = '9499910000384933';
+        novoUsuarioDemo.cpf = '029.026.06-99';
 
         const response = await request(app)
             .post('/usuario')
@@ -63,6 +82,7 @@ describe('Usuarios', () => {
         let { _id, ...novoUsuarioDemo } = usuarioDemo;
         novoUsuarioDemo.email = 'daniel2@gmail.com';
         novoUsuarioDemo.usuario = 'daniel2';
+        novoUsuarioDemo.cpf = '029.026.06-99';
 
         const response = await request(app)
             .post('/usuario')

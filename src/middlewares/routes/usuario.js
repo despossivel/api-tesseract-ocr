@@ -30,6 +30,13 @@ module.exports = {
                 }
             })
         }),
+        check('cpf').exists().notEmpty().custom((value) => {
+            return Model.findOne({ cpf: value }).then(cpf => {
+                if (cpf) {
+                    return Promise.reject('Cpf já está em uso')
+                }
+            })
+        }),
         check('municipio').notEmpty(),
         check('estado').notEmpty().isLength({ max: 2 }),
         check('senha').notEmpty().isLength({ min: 5 }).withMessage('Sua senha deve ter pelo menos 5 caracteres'),

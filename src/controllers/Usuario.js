@@ -22,9 +22,7 @@ class Usuario {
 
 
 	async store(req, res) {
-		let doc = req.body;
-		doc.senha = blowfish.encrypt(doc.senha);
-
+		const doc = req.body;
 		const usuario = await Model.create(doc);
 		const { _id } = usuario;
 
