@@ -26,15 +26,12 @@ describe('Pagamentos', () => {
         token = await getToken();
     })
 
-    it('Efetuar um pagamento', (done) => {
+    it('Efetuar um pagamento', async () => {
 
-        const response = request(app)
+        const response =  await request(app)
             .post('/payment')
             .set('Authorization', token)
-            .send(paymentDemo).expect(200).end(function (err, res) {
-                if (err) return done(err);
-                done();
-            });
+            .send(paymentDemo).expect(200)
 
         paymentDemo._id = response.body._id;
 

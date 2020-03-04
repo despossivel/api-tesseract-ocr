@@ -1,6 +1,8 @@
 const request = require('supertest');
 const app = require('../src/server');
 const getToken = require('./utils/login');
+const { cartaofidelidades: trucade,
+    cartaofidelidadecpfs: trucadeCpfs } = require('./utils/trucades')
 
 let token;
 
@@ -21,32 +23,28 @@ let cartaoCPFDemo = {
 describe('Cartões fidelidade', () => {
 
     before('token', async () => {
-        token = await getToken()
+        await trucade();
+        await trucadeCpfs();
+        token = await getToken();
     })
 
-    it('Criar novo cartão fidelidade', (done) => {
+    it('Criar novo cartão fidelidade', async () => {
 
-        const response = request(app)
+        const response = await request(app)
             .post('/cartao/fidelidade')
             .set('Authorization', token)
-            .send(cartaoDemo).expect(200).end(function (err, res) {
-                if (err) return done(err);
-                done();
-            });
+            .send(cartaoDemo).expect(200)
 
         cartaoDemo._id = response.body._id;
 
     });
 
-    it('Criar novo cartão fidelidade para CPF', (done) => {
+    it('Criar novo cartão fidelidade para CPF', async () => {
 
-        const response = request(app)
+        const response = await request(app)
             .post('/cartao/fidelidade')
             .set('Authorization', token)
-            .send(cartaoCPFDemo).expect(200).end(function (err, res) {
-                if (err) return done(err);
-                done();
-            });
+            .send(cartaoCPFDemo).expect(200)
 
         cartaoCPFDemo._id = response.body._id;
 

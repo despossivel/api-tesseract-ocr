@@ -24,17 +24,14 @@ describe('Estabelecimentos', () => {
         token = await getToken()
     })
 
-    it('Criar novo estabelecimento', (done) => {
+    it('Criar novo estabelecimento',  async () => {
 
-        const response = request(app)
+        const response =  await request(app)
             .post('/estabelecimento')
             .set('Authorization', token)
             .send(estabelecimentoDemo)
             .expect(200)
-            .end(function (err, res) {
-                if (err) return done(err);
-                done();
-            });
+            
 
         estabelecimentoDemo._id = response.body._id;
 

@@ -21,15 +21,13 @@ describe('Recompensas', () => {
         token = await getToken()
     })
 
-    it('Criar nova recomepnsa', (done) => {
+    it('Criar nova recomepnsa', async () => {
 
-        const response = request(app)
+        const response = await request(app)
             .post('/recompensa')
             .set('Authorization', token)
-            .send(recomepnsaDemo).expect(200).end(function (err, res) {
-                if (err) return done(err);
-                done();
-            });
+            .send(recomepnsaDemo).expect(200)
+
 
         recomepnsaDemo._id = response.body._id;
 

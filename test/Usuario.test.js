@@ -23,18 +23,13 @@ describe('Usuarios', () => {
         token = await getToken();
     })
 
-    it('Criar novo usuario', (done) => {
+    it('Criar novo usuario', async () => {
 
-        const response = request(app)
+        const response = await request(app)
             .post('/usuario')
             // .set('Authorization', token)
-            .send(usuarioDemo).expect(200).end(function (err, res) {
-                if (err) return done(err);
-                done();
-            });
-
-            console.error(response)
-
+            .send(usuarioDemo).expect(200)
+            
         usuarioDemo._id = response.body._id;
 
     });

@@ -26,15 +26,12 @@ describe('Metodos de pagamento', () => {
         token = await getToken()
     })
 
-    it('Criar novo metodo de pagamento', (done) => {
+    it('Criar novo metodo de pagamento', async () => {
 
-        const response = request(app)
+        const response = await request(app)
             .post('/metodo/pagamento')
             .set('Authorization', token)
-            .send(metodoDePagamentoDemo).expect(200).end(function (err, res) {
-                if (err) return done(err);
-                done();
-            });
+            .send(metodoDePagamentoDemo).expect(200)
 
         metodoDePagamentoDemo._id = response.body._id;
 
