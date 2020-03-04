@@ -33,6 +33,47 @@ describe('Usuarios', () => {
 
     });
 
+
+    it('Criar novo usuario com nome de usuario já cadastrado', async () => {
+        let { _id, ...novoUsuarioDemo } = usuarioDemo;
+        novoUsuarioDemo.email = 'daniel2@gmail.com';
+        novoUsuarioDemo.telefone = '9499910000384933';
+
+        const response = await request(app)
+            .post('/usuario')
+            .set('Authorization', token)
+            .send(novoUsuarioDemo).expect(422);
+
+    })
+
+    it('Criar novo usuario com email já cadastrado', async () => {
+        let { _id, ...novoUsuarioDemo } = usuarioDemo;
+        novoUsuarioDemo.usuario = 'daniel2';
+        novoUsuarioDemo.telefone = '9499910000384933';
+
+        const response = await request(app)
+            .post('/usuario')
+            .set('Authorization', token)
+            .send(novoUsuarioDemo).expect(422);
+
+
+    })
+
+    it('Criar novo usuario com telefone já cadastrado', async () => {
+        let { _id, ...novoUsuarioDemo } = usuarioDemo;
+        novoUsuarioDemo.email = 'daniel2@gmail.com';
+        novoUsuarioDemo.usuario = 'daniel2';
+
+        const response = await request(app)
+            .post('/usuario')
+            .set('Authorization', token)
+            .send(novoUsuarioDemo).expect(422);
+
+    })
+
+
+
+
     it('Listar todos usuarios', async () => {
 
         await request(app)

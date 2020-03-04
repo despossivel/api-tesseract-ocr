@@ -28,9 +28,7 @@ class CartaoFidelidade {
 		const { strategy } = ValidatorQuery(query);
 		const modelStrategy = CartaoFidelidadeStrategy[strategy];
 		const cartaoFidelidade = await modelStrategy(Model, { ..._id });
-
-		console.log(cartaoFidelidade)
-
+ 
 		cartaoFidelidade.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Nenhum cartão fidelidade encontrado encontrado!" }] }) :
 			res.status(200).send(cartaoFidelidade);

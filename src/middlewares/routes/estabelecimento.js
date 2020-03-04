@@ -23,8 +23,13 @@ module.exports = {
                 }
             })
         }),
-
-        check('telefone').exists().notEmpty(),
+        check('telefone').exists().notEmpty().custom(async (value) => {
+            return Model.findOne({ telefone: value }).then(telefone => {
+                if (telefone) {
+                    return Promise.reject('Telefone já está em uso')
+                }
+            })
+        }),
         check('endereco').exists().notEmpty(),
         check('estado').exists().notEmpty(),
         check('municipio').exists().notEmpty(),

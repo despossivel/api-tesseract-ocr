@@ -28,13 +28,16 @@ class Cielo {
 			}
 		};
 
+
 		switch (payment.Type) {
 			case 'CreditCard':
-				return await this.credit(dadosSale).catch(e => console.error(e));
+				const responseCredit = await this.credit(dadosSale).catch(e => console.error(e));
+				return responseCredit;
 				break;
 
 			case 'DebitCard':
-				return await this.debit(dadosSale).catch(e => console.error(e));
+				const responseDebit = await this.debit(dadosSale).catch(e => console.error(e));
+				return responseDebit;
 				break;
 		}
 	}

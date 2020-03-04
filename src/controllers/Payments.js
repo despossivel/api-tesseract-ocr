@@ -32,10 +32,13 @@ class Payments {
 			Amount
 		};
 
+
 		const Transation = await cielo.payment(card, payment).catch(e => console.error(e));
 
+	
 		//https://developercielo.github.io/manual/cielo-ecommerce#resposta
 		switch (parseInt(Transation.Payment.ReturnCode)) {
+			case 1:
 			case 4:
 			case 6:
 				const { MerchantOrderId } = Transation;
@@ -70,6 +73,9 @@ class Payments {
 				break;
 
 		}
+
+
+
 
 	}
 
