@@ -20,10 +20,12 @@ class Public {
         const usuario = await Model.find({ email, status: true }).catch(e => console.log(e))
         const [response] = usuario;
         let { senha } = response;
-        senha = this.blowfish.decrypt(senha)
+        senha = blowfish.decrypt(senha)
+
         await SMTP.send(email, 'Recuperação de senha',
             `Conseguimos recuperar sua senha, ela é ${senha}`, ``)
             .catch(e => console.error(e))
+
         res.status(200).send({ data: [{ "msg": "Email de recuperação foi enviado com sucesso!" }] });
     }
 

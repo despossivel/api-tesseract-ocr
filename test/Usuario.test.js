@@ -29,7 +29,7 @@ describe('Usuarios', () => {
             .post('/usuario')
             // .set('Authorization', token)
             .send(usuarioDemo).expect(200)
-            
+
         usuarioDemo._id = response.body._id;
 
     });
@@ -103,6 +103,25 @@ describe('Usuarios', () => {
     })
 
 
+    it('Confirmar conta', (done) => {
+        const response = request(app)
+            .post(`/public/confirmar/conta/${usuarioDemo._id}`)
+            .set('Authorization', token)
+            .send(novoUsuarioDemo).expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
+    })
+
+    it('Recuperação de senha', (done) => {
+        const response = request(app)
+            .post(`/public/esqueci/minha/senha/${usuarioDemo.email}`)
+            .set('Authorization', token)
+            .send(novoUsuarioDemo).expect(200).end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
+    })
 
 
     it('Listar todos usuarios', (done) => {
