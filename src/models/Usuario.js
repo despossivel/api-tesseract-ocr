@@ -60,6 +60,15 @@ Usuario.pre('save', function (next) {
     this.senha = blowfish.encrypt(this.senha);
     next();
 })
+/*
+Usuario.pre('save', function (next) {
+    if (senha) {
+        this.senha = blowfish.encrypt(senha)
+        next();
+    }
+})
+*/
+
 
 Usuario.virtual('fotoUrl').get(function () {
     if (this.foto) {

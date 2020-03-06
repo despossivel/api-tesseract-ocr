@@ -39,10 +39,12 @@ class Usuario {
 		const { senha, ...rest } = req.body;
 		let doc = rest;
 
+		/*
 		if (senha) {
-			const senhaEncrypt = this.blowfish.encrypt(senha)
+			const senhaEncrypt = blowfish.encrypt(senha)
 			doc.senha = senhaEncrypt;
 		}
+		*/
 
 		const usuario = await Model.updateOne({ _id }, doc);
 		usuario.n == 0 ?
