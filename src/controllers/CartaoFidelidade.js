@@ -69,9 +69,9 @@ class CartaoFidelidade {
 
 		const create = CartaoFidelidadeStrategy[`${strategy}CreateCartaoFidelidade`];
 		const updateOne = CartaoFidelidadeStrategy[`${strategy}UpdateCartaoFidelidade`];
-
+ 
 		length == 0 ?
-			cartaoFidelidade = await create(doc) :
+			cartaoFidelidade = await create({ ...doc, ...find }) :
 			cartaoFidelidade = await updateOne(find, doc);
 
 		cartaoFidelidade.length == 0 ?
