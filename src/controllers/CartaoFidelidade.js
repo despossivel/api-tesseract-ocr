@@ -14,6 +14,7 @@ class CartaoFidelidade {
 	async index(req, res) {
 		const query = req.query;
 		const { strategy, ...find } = ValidatorQuery(query);
+
 		const modelStrategy = CartaoFidelidadeStrategy[strategy];
 		const cartoesFidelidade = await modelStrategy(find);
 
@@ -63,7 +64,7 @@ class CartaoFidelidade {
 		const count = CartaoFidelidadeStrategy[`${strategy}CountDocument`];
 		let cartaoFidelidade;
 
-		
+
 		const length = await count(find);
 
 		const create = CartaoFidelidadeStrategy[`${strategy}CreateCartaoFidelidade`];

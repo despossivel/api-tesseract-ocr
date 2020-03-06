@@ -4,7 +4,7 @@ const connection = mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${proc
     useUnifiedTopology: true,
     useNewUrlParser: true
 }).then(() => {
-    console.log('Mongoose se conectou som sucesso!')
+    console.log(`Mongoose se conectou som sucesso ao banco ${process.env.DB_NAME}!`)
 }).catch(e => console.error(e))
 
 module.exports = () => connection;
