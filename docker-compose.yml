@@ -1,0 +1,11 @@
+version: "2"
+services:
+  backend:
+    build:
+      command: pm2-runtime process.json
+      volumes:
+      - .:/user/api.pinpper.com
+      - /usr/api.pinpper.com/node_modules
+      ports:
+        - "5001:5001"
+        container_name: api.pinpper.com
