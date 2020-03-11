@@ -1,0 +1,6 @@
+{
+ "script":"index.js",
+ "watch":true,
+ "ignore_watch":["./public/uploads"],
+ "name":"api.pinpper.com"   
+}
