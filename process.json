@@ -1,6 +1,6 @@
 {
  "script":"index.js",
  "watch":true,
- "ignore_watch":["./public/uploads", "./node_modules"],
+ "ignore_watch":["./.git","./public/uploads", "./node_modules"],
  "name":"api.pinpper.com"   
 }
