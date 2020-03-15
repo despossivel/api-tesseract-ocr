@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
+const Licence = require('./Licence');
+
 const Estabelecimento = new mongoose.Schema({
 	nome: {
 		type: String,
@@ -45,12 +47,12 @@ const Estabelecimento = new mongoose.Schema({
 	status: {
 		type: Boolean,
 		require: true,
-		default: false
+		default: true
 	},
 	licence: {
 		type: Boolean,
 		require: true,
-		default: false
+		default: true
 	}
 },
 	{
@@ -62,6 +64,14 @@ const Estabelecimento = new mongoose.Schema({
 		setDefaultsOnInsert: true
 	});
 
+
+Estabelecimento.pre('save', function (next) {
+	this._idEstabelecimento = Licence.create({
+		_idEstabelecimento: this._idEstabelecimento,
+		status: true
+	});
+	next();
+})
 
 
 Estabelecimento.virtual('logoUrl').get(function () {
