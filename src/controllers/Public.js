@@ -18,6 +18,9 @@ class Public {
     async show(req, res) {
         const { email } = req.params;
         const usuario = await Model.find({ email, status: true }).catch(e => console.log(e))
+
+        if (usuario.length == 0) res.status(404).send({ errors: [{ "msg": "Usuario não encontrado!" }] })
+
         const [response] = usuario;
         let { senha } = response;
         senha = blowfish.decrypt(senha)
