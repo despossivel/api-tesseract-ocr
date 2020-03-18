@@ -33,9 +33,6 @@ const estabelecimentosCountDocument = async (find) => await ModelCartaoFidelidad
 const cpfCountDocument = async (find) => await ModelCartaoFidelidadeCPF.countDocuments(find);
 
 
-
-
-
 const createCartaoFidelidade = async (doc) => await ModelCartaoFidelidade.create(doc);
 const cpfCreateCartaoFidelidade = async (doc) => await ModelCartaoFidelidadeCPF.create(doc);
 
@@ -43,8 +40,6 @@ const cpfCreateCartaoFidelidade = async (doc) => await ModelCartaoFidelidadeCPF.
 //{ _idUsuario, _idEstabelecimento }
 const estabelecimentosUpdateCartaoFidelidade = async (find, doc) => await ModelCartaoFidelidade.updateOne(find, doc)
 const cpfUpdateCartaoFidelidade = async (find, doc) => await ModelCartaoFidelidadeCPF.updateOne(find, doc)
-
-
 
 
 const cpfDestroyCartaoFidelidade = async (find) => await ModelCartaoFidelidadeCPF.deleteOne(find)
