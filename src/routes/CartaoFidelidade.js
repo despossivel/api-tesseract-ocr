@@ -9,10 +9,9 @@ route.get('/cartao/fidelidade/:_id', middleware.show, CartaoFidelidade.show)
 route.post('/cartao/fidelidade', middleware.store, CartaoFidelidade.store)
 
 
-route.put('/cartao/fidelidade/:_id', middleware.update, CartaoFidelidade.update)
-
+route.put('/cartao/fidelidade/simples/:_id', middleware.updateById, CartaoFidelidade.update)
 route.put('/cartao/fidelidade/:_idEstabelecimento/:_idUsuario', middleware.update, CartaoFidelidade.update)
-route.put('/cartao/fidelidade/cpf/:_idEstabelecimento/:cpf', middleware.update, CartaoFidelidade.update)
+route.put('/cartao/fidelidade/cpf/:_idEstabelecimento/:cpf', middleware.updateByCpf, CartaoFidelidade.update)
 
 
 route.delete('/cartao/fidelidade/:_id', middleware.destroy, CartaoFidelidade.destroy)
