@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const Licence = require('./Licence');
+const Usuario = require('./Usuario');
 
 const Estabelecimento = new mongoose.Schema({
 	nome: {
@@ -65,11 +66,31 @@ const Estabelecimento = new mongoose.Schema({
 	});
 
 
+	
 Estabelecimento.pre('save', function (next) {
-	this._idEstabelecimento = Licence.create({
-		_idEstabelecimento: this._idEstabelecimento,
-		status: true
-	});
+
+	console.log(this)
+
+	// Licence.create({
+	// 	_idEstabelecimento: this._idEstabelecimento,
+	// 	tempoEmDias: 30,
+	// 	status: true
+	// });
+
+	// console.log({
+	// 	_id: this._idUsuario
+	// })
+
+	// console.log({
+	// 	adminIn: [this._idEstabelecimento]
+	// })
+
+	// Usuario.updateOne({
+	// 	_id: this._idUsuario
+	// }, {
+	// 	adminIn: [this._idEstabelecimento]
+	// });
+
 	next();
 })
 
