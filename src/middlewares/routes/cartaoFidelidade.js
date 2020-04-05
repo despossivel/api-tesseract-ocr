@@ -21,6 +21,19 @@ module.exports = {
     update: [
         Jwt.verify,
         check('_idEstabelecimento').notEmpty(),
+        check('_idUsuario').notEmpty(),
+        check('pontos').notEmpty(),
+        expressValidation.validation
+    ],
+    updateById: [
+        Jwt.verify,
+        check('_id').notEmpty(),
+        check('pontos').notEmpty(),
+        expressValidation.validation
+    ],
+    updateByCpf: [
+        Jwt.verify,
+        check('_idEstabelecimento').notEmpty(),
         // check('_idUsuario').notEmpty(),
         check('pontos').notEmpty(),
         expressValidation.validation
