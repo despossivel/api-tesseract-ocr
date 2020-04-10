@@ -5,7 +5,8 @@ services:
     command: pm2-runtime process.json
     volumes:
       - .:/usr/api.pinpper.com
-      - /usr/api.pinpper.com/node_modules
+      - ./node_modules:/usr/api.pinpper.com/node_modules
+      - ./public/uploads:/usr/api.pinpper.com/public/uploads
     ports:
       - "5000:5000"
     container_name: api.pinpper.com
