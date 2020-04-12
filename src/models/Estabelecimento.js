@@ -2,7 +2,13 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const Licence = require('./Licence');
-const Usuario = require('./Usuario');
+// const Usuario = require('./Usuario');
+
+const GooglePlaces = require('../services/GooglePlaces')
+
+
+const { parseISO, isAfter, addDays } = require('date-fns')
+// const { ptBR } = require('date-fns/locale')
 
 const Estabelecimento = new mongoose.Schema({
 	nome: {
@@ -37,9 +43,18 @@ const Estabelecimento = new mongoose.Schema({
 		type: String,
 		require: false
 	},
-	coordinates: {
-		type: [Number],
+	placeId: {
+		type: String,
+		require: false
+	},
+	geometry: {
+		type: Object,
 		required: false
+	},
+	valorPonto: {
+		type: Number,
+		required: false,
+		default: 1
 	},
 	_idUsuario: {
 		type: ObjectId,
@@ -66,30 +81,60 @@ const Estabelecimento = new mongoose.Schema({
 	});
 
 
-	
-Estabelecimento.pre('save', function (next) {
+// Estabelecimento.pre('findOne', async function (next) {
+// 	console.log(this)
+// 	next()
+// })
 
-	console.log(this)
+Estabelecimento.pre('updateOne', async function (next) {
+	const {
+		_id: _idEstabelecimento
+	} = this._conditions;
+	const {
+		licence
+	} = this._update;
 
-	// Licence.create({
-	// 	_idEstabelecimento: this._idEstabelecimento,
-	// 	tempoEmDias: 30,
-	// 	status: true
-	// });
+	if (licence) {
 
-	// console.log({
-	// 	_id: this._idUsuario
-	// })
+		const licenceCurrent = await Licence.findOne({
+			_idEstabelecimento
+		})
 
-	// console.log({
-	// 	adminIn: [this._idEstabelecimento]
-	// })
+		if (licenceCurrent) {
 
-	// Usuario.updateOne({
-	// 	_id: this._idUsuario
-	// }, {
-	// 	adminIn: [this._idEstabelecimento]
-	// });
+			await Licence.updateOne({
+				_idEstabelecimento
+			}, {
+				status: true,
+				venceEm: addDays(new Date(), 30)
+			});
+
+
+		} else {
+			await Licence.create({
+				_idEstabelecimento,
+				status: true,
+				venceEm: addDays(new Date(), 30)
+			})
+		}
+
+	}
+
+	next();
+})
+
+Estabelecimento.pre('save', async function (next) {
+	const {
+		place_id,
+		geometry
+	} = await GooglePlaces.search(this.nomeFantasia,
+		'-8.0297299,-50.0313114',
+		'500')
+
+	if (place_id) {
+		this.placeId = place_id;
+		this.geometry = geometry;
+	}
 
 	next();
 })
