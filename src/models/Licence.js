@@ -9,6 +9,10 @@ const Licence = new mongoose.Schema({
     status: {
         type: Boolean,
         required: true
+    },
+    tempoEmDias: {
+        type: Number,
+        required: true
     }
 },
     {
