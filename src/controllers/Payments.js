@@ -2,7 +2,7 @@ const Cielo = require('../services/Cielo');
 
 const ModelPayment = require('../models/Payment');
 const ModelEstabelecimento = require('../models/Estabelecimento');
-
+const ModelLicence = require('../models/Licence')
 
 class Payments {
 
@@ -23,19 +23,30 @@ class Payments {
 	}
 
 	async store(req, res) {
+
+		const { _idUsuario, _idEstabelecimento, Type, Amount, ...card } = req.body;
+
+		const licenceCurrent = await ModelLicence.findOne({
+			_idEstabelecimento
+		})
+
+		const { status } = licenceCurrent;
+
+		console.log(licenceCurrent)
+
+
+		if (status) return res.status(403).send({ errors: [{ "msg": "Desculpe, mas sua licença ainda é válida, por isso não foi possível renová-la agora!" }] })
+
 		const cielo = new Cielo();
 
-		let { _idUsuario, _idEstabelecimento, Type, Amount, ...card } = req.body;
 
 		const payment = {
 			Type,
 			Amount
 		};
 
-
 		const Transation = await cielo.payment(card, payment).catch(e => console.error(e));
 
-	
 		//https://developercielo.github.io/manual/cielo-ecommerce#resposta
 		switch (parseInt(Transation.Payment.ReturnCode)) {
 			case 1:
@@ -53,7 +64,7 @@ class Payments {
 				await ModelEstabelecimento.updateOne({
 					_id: _idEstabelecimento
 				}, {
-					status: true,
+					// status: true,
 					licence: true
 				})
 

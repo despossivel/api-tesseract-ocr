@@ -10,8 +10,8 @@ const Licence = new mongoose.Schema({
         type: Boolean,
         required: true
     },
-    tempoEmDias: {
-        type: Number,
+    venceEm: {
+        type: Date,
         required: true
     }
 },

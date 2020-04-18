@@ -1,16 +1,12 @@
 //const Treatment =  require('../utils/Treatment');
 const Model = require('../models/Estabelecimento');
 
+const GooglePlaces = require('../services/GooglePlaces')
 
 
 class Estabelecimento {
 
-	constructor() {
-		//this.application = application;
-		//this.model = this.application.src.models.Estabelecimento;
-	}
-
-
+	constructor() { }
 
 	async index(req, res) {
 		try {
@@ -20,7 +16,7 @@ class Estabelecimento {
 			estabelecimentos.length == 0 ?
 				res.status(404).send({ errors: [{ "msg": "Nenhum estabelecimento encontrado!" }] }) :
 				res.status(200).send(estabelecimentos);
- 
+
 		} catch (e) {
 			throw e;
 		}
@@ -28,10 +24,19 @@ class Estabelecimento {
 
 	async show(req, res) {
 		const estabelecimento = await Model.find({ _id: req.params._id }).catch(e => console.log(e))
+		const [estabelecimentoUnique] = estabelecimento;
+		const estabelecimentoFinal = { ...estabelecimentoUnique._doc, details: {} };
+
+		if (estabelecimento.length > 0) {
+			const { placeId } = estabelecimento[0];
+			const detailsPlace = await GooglePlaces.details(placeId)
+
+			estabelecimentoFinal.details = detailsPlace;
+		}
 
 		estabelecimento.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel encontrar o estabelecimento!" }] }) :
-			res.status(200).send(estabelecimento);
+			res.status(200).send([estabelecimentoFinal]);
 	}
 
 	async store(req, res) {
