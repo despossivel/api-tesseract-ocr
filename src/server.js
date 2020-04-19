@@ -1,9 +1,10 @@
 require('dotenv').config({
-    path: process.env.NODE_ENV == 'test' ? '.env.test' : '.env'
+    path: process.env.NODE_ENV == 'dev' ? '.env.dev' : process.env.NODE_ENV == 'test' ? '.env.test' : '.env'
 })
 
-require('./config/connection');
+console.log(process.env.NODE_ENV == 'dev' ? '.env.dev' : process.env.NODE_ENV == 'test' ? '.env.test' : '.env')
 
+require('./config/connection');
 
 const express = require('express');
 const consign = require('consign');
