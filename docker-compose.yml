@@ -10,3 +10,11 @@ services:
     ports:
       - "5000:5000"
     container_name: api.pinpper.com
+    networks:
+      - pinpper
+    restart: always
+
+
+networks: 
+       pinpper:
+          driver: bridge
