@@ -26,6 +26,10 @@ const Usuario = new mongoose.Schema({
         type: String,
         required: true
     },
+    tokenMessagin: {
+        type: String,
+        required: false
+    },
     senha: {
         type: String,
         required: true
