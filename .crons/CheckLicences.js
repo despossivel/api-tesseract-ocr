@@ -14,7 +14,17 @@ const Licence = require('../src/models/Licence');
 const Estabelecimento = require('../src/models/Estabelecimento');
 
 const run = async () => {
+
+    // const estabelecimentos = await Estabelecimento.find({});
+    // const estabelecimentosId = estabelecimentos.map(({ _id }) => {
+    //     return { _id };
+    // })
+
+    // // console.log(estabelecimentosId)
+    // const licences = await Licence.find({ _id: { "$in": estabelecimentosId } });
     const licences = await Licence.find({});
+
+
     const expireds = licences.map(({ updatedAt, venceEm, _idEstabelecimento }) => {
         const newVenceEm = venceEm;
         const status = isAfter(new Date(), newVenceEm);

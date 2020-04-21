@@ -37,6 +37,7 @@ class Estabelecimento {
 		estabelecimento.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel encontrar o estabelecimento!" }] }) :
 			res.status(200).send([estabelecimentoFinal]);
+			
 	}
 
 	async store(req, res) {
