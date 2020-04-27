@@ -2,11 +2,11 @@ version: "2"
 services:
   web:
     build: .
-    command: pm2-runtime process.json
+    container_name: api.pinpper.com
+    #command:   pm2-runtime process.json
     volumes:
       - .:/usr/api.pinpper.com
       - ./node_modules:/usr/api.pinpper.com/node_modules
       - ./public/uploads:/usr/api.pinpper.com/public/uploads
     ports:
       - "5000:5000"
-    container_name: api.pinpper.com
