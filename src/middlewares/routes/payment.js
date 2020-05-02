@@ -16,7 +16,6 @@ module.exports = {
         Jwt.verify,
         check("_idUsuario").notEmpty(),
         check("_idEstabelecimento").notEmpty(),
-
         check("CardNumber").notEmpty(),
         check("Holder").notEmpty(),
         check("ExpirationDate").notEmpty().isLength({ max: 7 }).isLength({ min: 7 }),

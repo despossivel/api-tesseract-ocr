@@ -30,12 +30,11 @@ class Payments {
 			_idEstabelecimento
 		})
 
-		const { status } = licenceCurrent;
-
-		console.log(licenceCurrent)
-
-
-		if (status) return res.status(403).send({ errors: [{ "msg": "Desculpe, mas sua licença ainda é válida, por isso não foi possível renová-la agora!" }] })
+		if (licenceCurrent) {
+			const { status } = licenceCurrent;
+			if (status) return res.status(403)
+				.send({ errors: [{ "msg": "Desculpe, mas sua licença ainda é válida, por isso não foi possível renová-la agora!" }] })
+		}
 
 		const cielo = new Cielo();
 
@@ -46,45 +45,48 @@ class Payments {
 		};
 
 		const Transation = await cielo.payment(card, payment).catch(e => console.error(e));
+		if (Transation) {
+			//https://developercielo.github.io/manual/cielo-ecommerce#resposta
+			switch (parseInt(Transation.Payment.ReturnCode)) {
+				case 1:
+				case 4:
+				case 6:
+					const { MerchantOrderId } = Transation;
 
-		//https://developercielo.github.io/manual/cielo-ecommerce#resposta
-		switch (parseInt(Transation.Payment.ReturnCode)) {
-			case 1:
-			case 4:
-			case 6:
-				const { MerchantOrderId } = Transation;
-				const paymentSave = await ModelPayment.create({
-					MerchantOrderId,
-					_idUsuario,
-					_idEstabelecimento,
-					Customer: '',
-					Transation
-				});
+					const paymentSave = await ModelPayment.create({
+						MerchantOrderId,
+						_idUsuario,
+						_idEstabelecimento,
+						Customer: 'Pinpper.com',
+						Transation
+					});
 
-				await ModelEstabelecimento.updateOne({
-					_id: _idEstabelecimento
-				}, {
-					// status: true,
-					licence: true
-				})
+					await ModelEstabelecimento.updateOne({
+						_id: _idEstabelecimento
+					}, {
+						// status: true,
+						licence: true
+					})
 
-				paymentSave.n == 0 ?
-					res.status(404).send({ errors: [{ "msg": "Nenhum estabelecimento encontrado!" }] }) :
-					res.status(200).send(paymentSave);
+					paymentSave.n == 0 ?
+						res.status(404).send({ errors: [{ "msg": "Nenhum estabelecimento encontrado!" }] }) :
+						res.status(200).send(paymentSave);
 
-				break;
+					break;
 
-			case 5: //Não Autorizada
-			case 57: //Cartão Expirado
-			case 78: //Cartão Bloqueado
-			case 99: //Time Out
-			case 77: //Cartão Cancelado
-			case 70: //Problemas com o Cartão de Crédito
-				res.send({ errors: [{ "msg": Transation.Payment.ReturnMessage }], status: 404 })
-				break;
+				case 5: //Não Autorizada
+				case 57: //Cartão Expirado
+				case 78: //Cartão Bloqueado
+				case 99: //Time Out
+				case 77: //Cartão Cancelado
+				case 70: //Problemas com o Cartão de Crédito
+					res.send({ errors: [{ "msg": Transation.Payment.ReturnMessage }], status: 404 })
+					break;
 
+			}
+		} else {
+			res.status(500).send({ errors: [{ "msg": "Alguma coisa aconteceu, tente novamente mais tarde!" }] })
 		}
-
 
 
 

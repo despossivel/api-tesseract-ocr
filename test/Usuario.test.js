@@ -104,20 +104,20 @@ describe('Usuarios', () => {
 
 
     it('Confirmar conta', (done) => {
+
         const response = request(app)
-            .post(`/public/confirmar/conta/${usuarioDemo._id}`)
-            .set('Authorization', token)
-            .send(novoUsuarioDemo).expect(200).end(function (err, res) {
+            .get(`/public/confirmar/conta/${usuarioDemo._id}`)
+            .expect(200).end(function (err, res) {
                 if (err) return done(err);
                 done();
             });
     })
 
     it('Recuperação de senha', (done) => {
+
         const response = request(app)
-            .post(`/public/esqueci/minha/senha/${usuarioDemo.email}`)
-            .set('Authorization', token)
-            .send(novoUsuarioDemo).expect(200).end(function (err, res) {
+            .get(`/public/esqueci/minha/senha/${usuarioDemo.email}`)
+            .expect(200).end(function (err, res) {
                 if (err) return done(err);
                 done();
             });
