@@ -28,6 +28,7 @@ describe('Pagamentos', () => {
 
     it('Efetuar um pagamento', async () => {
 
+
         const response =  await request(app)
             .post('/payment')
             .set('Authorization', token)
@@ -46,6 +47,8 @@ describe('Pagamentos', () => {
                 if (err) return done(err);
                 done();
             });
+
+            
 
     })
 
