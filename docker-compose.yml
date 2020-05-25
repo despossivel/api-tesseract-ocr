@@ -3,7 +3,8 @@ services:
   web:
     container_name: api.pinpper.com
     build: .
-    command: pm2-runtime process.json
+    container_name: api.pinpper.com
+    #command:   pm2-runtime process.json
     volumes:
       - .:/usr/api.pinpper.com
       - ./node_modules:/usr/api.pinpper.com/node_modules
