@@ -9,13 +9,18 @@ class Auth {
 	async show(req, res, next) {
 		const { email, senha } = req.body;
 
-
 		const token = JWT.sing({});
 		const senhaEncrypt = blowfish.encrypt(senha)
+
 		const login = await Model.findOne({ email, senha: senhaEncrypt }).catch(e => console.log(e)) //, status: true
 		let response;
 
-		if (login && !login._doc.status) response = { errors: [{ "msg": "Usuario não confirmado, verifique seu e-mail!" }], status: 401 };
+		if (login && !login._doc.hasOwnProperty('status')) return res
+			.status(200)
+			.send({
+				errors: [{ "msg": "Usuario não confirmado, verifique seu e-mail!" }],
+				status: 401
+			});
 
 		login ? response = {
 			...login._doc,
