@@ -12,7 +12,7 @@ class Auth {
 		const token = JWT.sing({});
 		const senhaEncrypt = blowfish.encrypt(senha)
 
-		const login = await Model.findOne({ email, senha: senhaEncrypt }).catch(e => console.log(e)) //, status: true
+		const login = await Model.findOne({ email, senha: senhaEncrypt }).catch(e => console.log(e))  
 		let response;
 
 		if (login && !login._doc.hasOwnProperty('status')) return res
