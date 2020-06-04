@@ -23,7 +23,6 @@ class Auth {
 			token
 		} : {};
 
-
 		login ? res.status(200).send(response)
 			: res.status(404).send({ errors: [{ "msg": "Usuario não encontrado!" }], status: 404 })
 
