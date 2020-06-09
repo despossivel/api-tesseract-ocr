@@ -19,21 +19,18 @@
     <link rel="stylesheet" href="/static/libs/icomoon/style.css">
 </head>
 <style>
+    body{
+        margin:0;
+    }
     html {
         background: #f7f9ff;
         font-size: 10px;
     }
 
-
     :root {
         --color-blue: #0094ff;
         --color-white: #fff;
-        --curve: cubic-bezier(0.420, 0.000, 0.275, 1.155);
-    }
-
-    @mixin size($size) {
-        width: $size;
-        height: $size;
+        --curve: cubic-bezier(0.42, 0, 0.275, 1.155);
     }
 
     *,
@@ -55,70 +52,100 @@
         animation: grow 3s infinite;
         fill: var(--color-blue);
         opacity: 0;
+    }
 
-        &:nth-child(1) {
-            @include size(12px);
-            left: 12px;
-            top: 16px;
-        }
+    .star:nth-child(1) {
+        width: 12px;
+        height: 12px;
+        left: 12px;
+        top: 16px;
+    }
 
-        &:nth-child(2) {
-            @include size(18px);
-            left: 168px;
-            top: 84px;
-        }
+    .star:nth-child(2) {
+        width: 18px;
+        height: 18px;
+        left: 168px;
+        top: 84px;
+    }
 
-        &:nth-child(3) {
-            @include size(10px);
-            left: 32px;
-            top: 162px;
-        }
+    .star:nth-child(3) {
+        width: 10px;
+        height: 10px;
+        left: 32px;
+        top: 162px;
+    }
 
-        &:nth-child(4) {
-            @include size(20px);
-            left: 82px;
-            top: -12px;
-        }
+    .star:nth-child(4) {
+        width: 20px;
+        height: 20px;
+        left: 82px;
+        top: -12px;
+    }
 
-        &:nth-child(5) {
-            @include size(14px);
-            left: 125px;
-            top: 162px;
-        }
+    .star:nth-child(5) {
+        width: 14px;
+        height: 14px;
+        left: 125px;
+        top: 162px;
+    }
 
-        &:nth-child(6) {
-            @include size(10px);
-            left: 16px;
-            top: 16px;
-        }
+    .star:nth-child(6) {
+        width: 10px;
+        height: 10px;
+        left: 16px;
+        top: 16px;
+    }
 
-        @for $i from 1 through 6 {
-            &:nth-child(#{$i}) {
-                animation-delay: $i*(3.0s/2);
-            }
-        }
+    .star:nth-child(1) {
+        animation-delay: 1.5s;
+    }
+
+    .star:nth-child(2) {
+        animation-delay: 3s;
+    }
+
+    .star:nth-child(3) {
+        animation-delay: 4.5s;
+    }
+
+    .star:nth-child(4) {
+        animation-delay: 6s;
+    }
+
+    .star:nth-child(5) {
+        animation-delay: 7.5s;
+    }
+
+    .star:nth-child(6) {
+        animation-delay: 9s;
     }
 
     .checkmark {
         position: relative;
         padding: 30px;
         animation: checkmark 5m var(--curve) both;
-
-        &__check {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            z-index: 10;
-            transform: translate3d(-50%, -50%, 0);
-            fill: var(--color-white);
-        }
-
-        &__background {
-            fill: var(--color-blue);
-            animation: rotate 35s linear both infinite;
-        }
     }
 
+    .checkmark__check {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 10;
+        transform: translate3d(-50%, -50%, 0);
+        fill: var(--color-white);
+    }
+
+    .checkmark__background {
+        fill: var(--color-blue);
+        animation: rotate 35s linear both infinite;
+    }
+
+    .text-span{
+        font-size: 18px;
+        font-family: sans-serif;
+        font-weight: 700;
+        color: #0094ff;
+    }
 
     @keyframes rotate {
         0% {
@@ -209,6 +236,9 @@
                         </path>
                     </svg>
                 </div>
+                <span class="text-span">
+                    Conta confirmada com sucesso!
+                </span>
             </center>
         </div>
     </div>
