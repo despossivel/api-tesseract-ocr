@@ -16,7 +16,7 @@ class Auth {
 		let response;
 
 		if (login && !login._doc.hasOwnProperty('status')) return res
-			.status(200)
+			.status(401)
 			.send({
 				errors: [{ "msg": "Usuario não confirmado, verifique seu e-mail!" }],
 				status: 401
