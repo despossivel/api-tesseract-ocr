@@ -45,10 +45,9 @@ class CartaoFidelidade {
 
 		_idUsuario ? strategy = 'estabelecimentosCreateCartaoFidelidade' : strategy = 'cpfCreateCartaoFidelidade';
 
-
-
 		const modelStrategy = CartaoFidelidadeStrategy[strategy];
-		const cartaoFidelidade = await modelStrategy(req.body)
+		const cartaoFidelidade = await modelStrategy(req.body);
+		
 		cartaoFidelidade.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel criar o cartão fidelidade!" }] }) :
 			res.status(200).send(cartaoFidelidade);

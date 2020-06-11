@@ -1,7 +1,7 @@
-
+const ModelUsuario = require('../models/Usuario');
 const ModelCartaoFidelidade = require('../models/CartaoFidelidade');
 const ModelCartaoFidelidadeCPF = require('../models/CartaoFidelidadeCPF');
-
+const mongoose = require('mongoose')
 
 const estabelecimentos = async (find) => await ModelCartaoFidelidade.aggregate().lookup({
     from: 'estabelecimentos', localField: '_idEstabelecimento',
@@ -33,8 +33,70 @@ const estabelecimentosCountDocument = async (find) => await ModelCartaoFidelidad
 const cpfCountDocument = async (find) => await ModelCartaoFidelidadeCPF.countDocuments(find);
 
 
-const createCartaoFidelidade = async (doc) => await ModelCartaoFidelidade.create(doc);
-const cpfCreateCartaoFidelidade = async (doc) => await ModelCartaoFidelidadeCPF.create(doc);
+const createCartaoFidelidade = async (doc) => {
+    const { _idUsuario, _idEstabelecimento, pontos } = doc;
+ 
+    const [findUsuario] = await ModelUsuario.find({
+        _id: _idUsuario
+    })
+
+    if (findUsuario) {
+        const { cpf } = findUsuario;
+ 
+        const [findCartaoFideldiadeCpf] = await ModelCartaoFidelidadeCPF.find({
+            _idEstabelecimento: mongoose.Types.ObjectId(_idEstabelecimento),
+            cpf
+        });
+ 
+        if (findCartaoFideldiadeCpf) {
+            const {
+                pontos: pontosInCpf
+            } = findCartaoFideldiadeCpf;
+
+            doc.pontos = parseInt(pontos) + parseInt(pontosInCpf);
+        }
+ 
+    }
+
+    return await ModelCartaoFidelidade.create(doc);
+ 
+};
+
+
+
+
+const cpfCreateCartaoFidelidade = async (doc) => {
+    const { cpf, _idEstabelecimento, pontos } = doc;
+    const [findUsuario] = await ModelUsuario.find({ cpf });
+
+    if (!findUsuario) return await ModelCartaoFidelidadeCPF.create(doc);
+
+    const { _id: _idUsuario } = findUsuario;
+
+    const [checkCartaoFidelidadeUsuario] = await ModelCartaoFidelidade.find({
+        _idUsuario,
+        _idEstabelecimento
+    })
+
+    if (!checkCartaoFidelidadeUsuario) return await ModelCartaoFidelidade.create({
+        _idUsuario,
+        _idEstabelecimento,
+        pontos
+    })
+
+    const {
+        _id: _idCartaoFidelidadeUsuario,
+        pontos: pontosCurrent
+    } = checkCartaoFidelidadeUsuario;
+
+    return await ModelCartaoFidelidade.updateOne({
+        _id: _idCartaoFidelidadeUsuario,
+        _idEstabelecimento
+    }, {
+        pontos: parseInt(pontosCurrent) + parseInt(pontos)
+    })
+
+};
 
 
 //{ _idUsuario, _idEstabelecimento }
