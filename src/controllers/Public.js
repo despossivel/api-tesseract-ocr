@@ -6,12 +6,15 @@ const SMTP = require('../services/SMTP');
 class Public {
 
     async update(req, res) {
+
         let { _id } = req.params;
         _id = mongoose.Types.ObjectId(_id);
         const usuario = await Model.updateOne({ _id }, { status: true });
+
         usuario.length == 0 ?
             res.status(422).send({ errors: [{ "msg": "Não foi possivel ativar sua conta!" }] }) :
             res.status(200).send(usuario.data);
+        res.status(200).render('confirmar-email')
     }
 
     //recuperar senha

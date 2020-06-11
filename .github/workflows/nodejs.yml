@@ -32,7 +32,7 @@ jobs:
       with:
         command: |
           cd  ${{ secrets.DIR }}
-          git pull
+          docker pull despossivel/api.pinpper.com
         host: ${{ secrets.HOST }}
         user: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY}}

@@ -53,6 +53,9 @@ app.use([
 ]);
 
 
+app.use('/docs-api',express.static(path.resolve(__dirname, '..', 'public', 'docs',)));
+
+
 
 // pegar rotas indefinidas e responder com 404
 app.use(function (req, res, next) {
