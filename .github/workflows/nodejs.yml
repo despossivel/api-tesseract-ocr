@@ -5,13 +5,12 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -19,26 +18,26 @@ jobs:
         node-version: [12.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm install
-      env:
-        CI: true
-    - name: Build and push Docker images
-      uses: docker/build-push-action@v1.1.0
-      with:
-        username: despossivel
-        password: qazx123.
-        repository:  despossivel/api.pinpper
-    - name: Deploy
-      uses: fifsky/ssh-action@master
-      with:
-        command: |
-          cd  ${{ secrets.DIR }}
-          docker pull despossivel/api.pinpper.com
-        host: ${{ secrets.HOST }}
-        user: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_KEY}}
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+        env:
+          CI: true
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v1.1.0
+        with:
+          username: ${{ secrets.registryUser }}
+          password: ${{ secrets.registryPassword }}
+          repository: despossivel/api.pinpper.com
+      - name: Deploy
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            cd  ${{ secrets.DIR }}
+            docker pull despossivel/api.pinpper.com
+          host: ${{ secrets.HOST }}
+          user: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY}}
