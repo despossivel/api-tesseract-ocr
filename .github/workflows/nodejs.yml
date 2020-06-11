@@ -29,8 +29,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v1.1.0
         with:
-          username: ${{ secrets.registryUser }}
-          password: ${{ secrets.registryPassword }}
+          username: ${{ secrets.REGISTRYUSER }}
+          password: ${{ secrets.REGISTRYPASSWORD }}
           repository: despossivel/api.pinpper.com
       - name: Deploy
         uses: fifsky/ssh-action@master
