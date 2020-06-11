@@ -37,8 +37,6 @@ class CartaoFidelidade {
 			res.status(200).send(cartaoFidelidade);
 	}
 
-
-
 	async store(req, res) {
 		let strategy;
 		const { _idUsuario, cpf } = req.body;
