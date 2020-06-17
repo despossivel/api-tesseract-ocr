@@ -13,8 +13,7 @@ class Public {
 
         usuario.length == 0 ?
             res.status(422).send({ errors: [{ "msg": "Não foi possivel ativar sua conta!" }] }) :
-            res.status(200).send(usuario.data);
-        res.status(200).render('confirmar-email')
+            res.status(200).render('confirmar-email')
     }
 
     //recuperar senha
