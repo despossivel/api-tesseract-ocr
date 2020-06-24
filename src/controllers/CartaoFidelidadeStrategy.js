@@ -35,19 +35,45 @@ const cpfCountDocument = async (find) => await ModelCartaoFidelidadeCPF.countDoc
 
 const createCartaoFidelidade = async (doc) => {
     const { _idUsuario, _idEstabelecimento, pontos } = doc;
- 
+
+    //verificar se o usuario existe
     const [findUsuario] = await ModelUsuario.find({
         _id: _idUsuario
     })
 
+
+    const [findCartaoFideldiade] = await ModelCartaoFidelidade.find({
+        _idUsuario,
+        _idEstabelecimento
+    })
+
+    if (findCartaoFideldiade) {
+
+        const {
+            _id: _idCartaoFidelidadeUsuario,
+            pontos: pontosCurrent
+        } = findCartaoFideldiade;
+
+        return await ModelCartaoFidelidade.updateOne({
+            _id
+        }, {
+            pontos: parseInt(pontos) + parseInt(pontosCurrent)
+        });
+
+    }
+
+
+    //se existir 
     if (findUsuario) {
         const { cpf } = findUsuario;
- 
+
+        //verificar se o CPF já esta cadastrado nos cartoes por CPF
         const [findCartaoFideldiadeCpf] = await ModelCartaoFidelidadeCPF.find({
             _idEstabelecimento: mongoose.Types.ObjectId(_idEstabelecimento),
             cpf
         });
- 
+
+        //se existir obtem os pontos
         if (findCartaoFideldiadeCpf) {
             const {
                 pontos: pontosInCpf
@@ -55,11 +81,11 @@ const createCartaoFidelidade = async (doc) => {
 
             doc.pontos = parseInt(pontos) + parseInt(pontosInCpf);
         }
- 
-    }
 
+    }
+    // e cria o cartão
     return await ModelCartaoFidelidade.create(doc);
- 
+
 };
 
 
@@ -69,10 +95,33 @@ const cpfCreateCartaoFidelidade = async (doc) => {
     const { cpf, _idEstabelecimento, pontos } = doc;
     const [findUsuario] = await ModelUsuario.find({ cpf });
 
+
+    //verificar se o CPF já existe se existir adicionar pontos
+    const [findCPFExist] = await ModelCartaoFidelidadeCPF.find({ cpf, _idEstabelecimento });
+
+
+
+    if (findCPFExist) {
+        const {
+            _id: _idCartaoFidelidadeCPF,
+            pontos: pontosCurrentCPF
+        } = findCPFExist;
+
+        return await ModelCartaoFidelidadeCPF.updateOne({
+            _id: _idCartaoFidelidadeCPF,
+            _idEstabelecimento
+        }, {
+            pontos: parseInt(pontosCurrentCPF) + parseInt(pontos)
+        });
+    }
+
+
+    // se o cpf não existir na tabela de usuario cria o cartão por CPF
     if (!findUsuario) return await ModelCartaoFidelidadeCPF.create(doc);
 
-    const { _id: _idUsuario } = findUsuario;
 
+    // se existir o cpf na tabela de usuario e não existir nenhum cartão fidelidade
+    const { _id: _idUsuario } = findUsuario;
     const [checkCartaoFidelidadeUsuario] = await ModelCartaoFidelidade.find({
         _idUsuario,
         _idEstabelecimento
@@ -84,6 +133,7 @@ const cpfCreateCartaoFidelidade = async (doc) => {
         pontos
     })
 
+    // se existir o cpf na tabela de usuario, adiciona os pontos ao usuario
     const {
         _id: _idCartaoFidelidadeUsuario,
         pontos: pontosCurrent
@@ -95,6 +145,7 @@ const cpfCreateCartaoFidelidade = async (doc) => {
     }, {
         pontos: parseInt(pontosCurrent) + parseInt(pontos)
     })
+    /////////////////////////////////////////////////////////////////////////
 
 };
 
