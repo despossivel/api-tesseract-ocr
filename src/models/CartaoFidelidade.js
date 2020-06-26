@@ -22,7 +22,23 @@ const CartaoFidelidade = new mongoose.Schema({
 }, {
 	upsert: true,
 	new: true,
-	setDefaultsOnInsert: true
+	setDefaultsOnInsert: true,
+	toObject: { virtuals: true },
+	toJSON: { virtuals: true }
 });
+
+
+// CartaoFidelidade.virtual('logoUrl').get(function () {
+// 	console.log(this)
+
+// 	if (this.estabelecimento.length > 0) {
+// 		const [estabelecimentoOne] = this.estabelecimento;
+// 		const {
+// 			logo
+// 		} = estabelecimentoOne;
+
+// 		return `${process.env.HOST}/static/uploads/${encodeURIComponent(logo)}`
+// 	}
+// })
 
 module.exports = mongoose.model('CartaoFidelidade', CartaoFidelidade);

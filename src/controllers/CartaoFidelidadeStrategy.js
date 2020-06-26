@@ -3,10 +3,29 @@ const ModelCartaoFidelidade = require('../models/CartaoFidelidade');
 const ModelCartaoFidelidadeCPF = require('../models/CartaoFidelidadeCPF');
 const mongoose = require('mongoose')
 
-const estabelecimentos = async (find) => await ModelCartaoFidelidade.aggregate().lookup({
-    from: 'estabelecimentos', localField: '_idEstabelecimento',
-    foreignField: '_id', as: 'estabelecimento'
-}).match(find);
+
+//${process.env.HOST}/static/uploads/${encodeURIComponent(this.logo)}
+const estabelecimentos = async (find) => {
+
+    const cartoes = await ModelCartaoFidelidade.aggregate().lookup({
+        from: 'estabelecimentos', localField: '_idEstabelecimento',
+        foreignField: '_id', as: 'estabelecimento'
+    }).match(find);
+ 
+    cartoes.map((item, ...rest) => {
+        const [estabelecimentoOne] = item.estabelecimento;
+        const {
+            logo
+        } = estabelecimentoOne;
+        estabelecimentoOne.logoUrl = `${process.env.HOST}/static/uploads/${encodeURIComponent(logo)}`;
+        return {
+            estabelecimentoOne,
+            ...rest
+        }
+    })
+
+    return cartoes;
+}
 
 const usuarios = async (find) => await ModelCartaoFidelidade.aggregate([{
     $lookup: {
@@ -101,6 +120,7 @@ const cpfCreateCartaoFidelidade = async (doc) => {
 
 
 
+
     if (findCPFExist) {
         const {
             _id: _idCartaoFidelidadeCPF,
@@ -116,6 +136,7 @@ const cpfCreateCartaoFidelidade = async (doc) => {
     }
 
 
+
     // se o cpf não existir na tabela de usuario cria o cartão por CPF
     if (!findUsuario) return await ModelCartaoFidelidadeCPF.create(doc);
 
@@ -126,6 +147,8 @@ const cpfCreateCartaoFidelidade = async (doc) => {
         _idUsuario,
         _idEstabelecimento
     })
+
+    // console.log(checkCartaoFidelidadeUsuario)
 
     if (!checkCartaoFidelidadeUsuario) return await ModelCartaoFidelidade.create({
         _idUsuario,
