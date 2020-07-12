@@ -10,7 +10,7 @@ services:
       - ./node_modules:/usr/api.pinpper.com/node_modules
       - ./public/uploads:/usr/api.pinpper.com/public/uploads
     ports:
-      - "5000:5000"
+      - "80:5000"
     networks:
       - pinpper
     restart: always
