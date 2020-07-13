@@ -1,15 +1,15 @@
 version: "2"
 services:
-  nginx:
-    container_name: nginx-api
-    build:
-      context: .docker/nginx
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
-    networks:
-      - pinpper
-    restart: always
+  # nginx:
+  #   container_name: nginx-api
+  #   build:
+  #     context: .docker/nginx
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "80:80"
+  #   networks:
+  #     - pinpper
+  #   restart: always
   web:
     container_name: api.pinpper.com
     build:
@@ -21,8 +21,8 @@ services:
       - .:/usr/api.pinpper.com
       - ./node_modules:/usr/api.pinpper.com/node_modules
       - ./public/uploads:/usr/api.pinpper.com/public/uploads
-    # ports:
-    #   - "5000:5000"
+    ports:
+      - "80:5000"
     networks:
       - pinpper
     restart: always
