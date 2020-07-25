@@ -5,18 +5,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 5000
+    - port: 80
+      targetPort: 5000
   selector:
     app: api-pinpper-com
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: api-pinpper-com-service
-# spec:
-#   type: NodePort
-#   ports:
-#     - protocol: TCP
-#       port: 5000
-#       nodePort: 30080
-#   selector:
-#     app: api-pinpper-com-service
