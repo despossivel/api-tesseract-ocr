@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+data:
+  nginx.conf: server { listen 80 default_server; server_name _; location / { proxy_set_header X-Real-IP $remote_addr; proxy_set_header X-Forwarded-For $remote_addr; proxy_set_header Host $host; proxy_pass http://10.245.36.182:30080; } location ~* \.(?:ico|css|js|gif|jpe?g|png|ttf|woff)$ {  access_log off; expires 30d; add_header Pragma public; proxy_pass http://10.245.36.182:30080; } }

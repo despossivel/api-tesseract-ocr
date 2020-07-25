@@ -17,7 +17,7 @@ RUN npm i pm2 -g
 COPY . .
 
 # RUN pm2-runtime process.json
-# EXPOSE 80
+EXPOSE 5000
 #CMD [ "node", "index.js" ]
 CMD ["pm2-runtime","process.json"]
 

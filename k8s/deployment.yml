@@ -16,6 +16,6 @@ spec:
         - name: api-pinpper-com
           image: despossivel/api.pinpper.com:latest
           ports:
-            - containerPort: 80
+            - containerPort: 5000
       imagePullSecrets:
         - name: regcred
