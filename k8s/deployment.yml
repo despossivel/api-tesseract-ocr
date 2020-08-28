@@ -17,5 +17,14 @@ spec:
           image: despossivel/api.pinpper.com:latest
           ports:
             - containerPort: 5000
+          volumeMounts:
+            - name: pinpper-upload
+              mountPath: /usr/src/app/public/uploads
       imagePullSecrets:
         - name: regcred
+
+
+      volumes:
+        - name: pinpper-upload
+          persistentVolumeClaim:
+            claimName: pinpper-upload
