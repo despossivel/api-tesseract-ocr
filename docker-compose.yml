@@ -3,7 +3,7 @@ services:
   web:
     container_name: api.pinpper.com
     build: .
-    container_name: api.pinpper.com
+    # container_name: api.pinpper.com
     #command:   pm2-runtime process.json
     volumes:
       - .:/usr/api.pinpper.com
@@ -15,7 +15,6 @@ services:
       - pinpper
     restart: always
 
-
-networks: 
-       pinpper:
-          driver: bridge
+networks:
+  pinpper:
+    driver: bridge

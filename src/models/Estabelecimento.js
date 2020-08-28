@@ -141,6 +141,9 @@ Estabelecimento.pre('save', async function (next) {
 
 
 Estabelecimento.virtual('logoUrl').get(function () {
+
+	// console.log(this)
+
 	if (this.logo) {
 		return `${process.env.HOST}/static/uploads/${encodeURIComponent(this.logo)}`
 	}

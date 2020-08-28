@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-pinpper-com
+spec:
+  selector:
+    matchLabels:
+      app: api-pinpper-com
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: api-pinpper-com
+    spec:
+      containers:
+        - name: api-pinpper-com
+          image: despossivel/api.pinpper.com:latest
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: pinpper-upload
+              mountPath: /usr/src/app/public/uploads
+      imagePullSecrets:
+        - name: regcred
+
+
+      volumes:
+        - name: pinpper-upload
+          persistentVolumeClaim:
+            claimName: pinpper-upload
