@@ -2,5 +2,5 @@
  "script":"index.js",
  "watch":true,
  "ignore_watch":["./.git","./public/uploads", "./node_modules"],
- "name":"api.pinpper.com"   
+ "name":"api.chegarapidoexpress.com"   
 }

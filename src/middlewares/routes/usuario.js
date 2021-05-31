@@ -1,7 +1,7 @@
-const { check } = require('express-validator');
-const expressValidation = require('../expressValidation')
-const Jwt = require('../Jwt');
-const Model = require('../../models/Usuario')
+const { check } = require('express-validator'),
+    expressValidation = require('../expressValidation'),
+    Jwt = require('../Jwt'),
+    Model = require('../../models/Usuario');
 
 module.exports = {
     index: [

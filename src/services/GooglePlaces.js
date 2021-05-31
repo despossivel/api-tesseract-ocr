@@ -14,19 +14,20 @@ class GooglePlaces {
         try {
 
             // return await request(, function (error, response, body) {
-            const response = await axios.get(`${this.baseUrl}/nearbysearch/${this.responseType}?radius=${radius}&name=${nome}&location=${location}&key=${this.KEY}`);
-            const { results } = response.data;
+            const response = await axios.get(`${this.baseUrl}/nearbysearch/${this.responseType}?radius=${radius}&name=${nome}&location=${location}&key=${this.KEY}`),
+                { results } = response.data;
 
             if (results.length == 0) return {
                 place_id: false
             };
-            const [result] = results;
-            const {
-                place_id,
-                geometry,
-                vicinity,
-                name,
-            } = result;
+
+            const [result] = results,
+                {
+                    place_id,
+                    geometry,
+                    vicinity,
+                    name,
+                } = result;
 
             return {
                 place_id,
@@ -48,10 +49,11 @@ class GooglePlaces {
     //ChIJN4gGfXgJ4JIRp-pGr2pBwCc
     async details(place_id) {
         try {
-            const response = await axios.get(`${this.baseUrl}/details/${this.responseType}?placeid=${place_id}&key=${this.KEY}`);
+            const response = await axios.get(`${this.baseUrl}/details/${this.responseType}?placeid=${place_id}&key=${this.KEY}`),
+                { result } = response.data;
 
-            const { result } = response.data
             if (!result) return false;
+            
             const {
                 formatted_address,
                 weekday_text,

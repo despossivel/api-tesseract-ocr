@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const blowfish = require('../utils/blowfish');
+const mongoose = require('mongoose'),
+    blowfish = require('../utils/blowfish');
 
 const Usuario = new mongoose.Schema({
     nome: {

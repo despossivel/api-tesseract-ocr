@@ -1,11 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+	Model = require('../models/Order');
 
-const Model = require('../models/Recompensa');
-
-class Recompensa {
-
-
-
+class Order {
 
 	async index(req, res) {
 		let find = req.query;
@@ -57,4 +53,4 @@ class Recompensa {
 
 
 
-module.exports = new Recompensa();
+module.exports = new Order();

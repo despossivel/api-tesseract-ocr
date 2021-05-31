@@ -1,9 +1,8 @@
-const SMTP = require('../services/SMTP');
-const blowfish = require('../utils/blowfish');
-const Model = require('../models/Usuario');
+const SMTP = require('../services/SMTP'),
+	blowfish = require('../utils/blowfish'),
+	Model = require('../models/Usuario');
 
 class Usuario {
-
 
 	async index(req, res) {
 		const usuarios = await Model.find().catch(e => console.log(e))
@@ -26,7 +25,7 @@ class Usuario {
 		const usuario = await Model.create(doc);
 		const { _id } = usuario;
 
-		await SMTP.send(doc.email, 'Confirmar conta no Pinpper', `Acesse o link para confirmar a sua conta
+		await SMTP.send(doc.email, 'Confirmar conta no Chega Rapido Express', `Acesse o link para confirmar a sua conta
 			${process.env.HOST}/public/confirmar/conta/${_id}`, ``).catch(e => console.error(e))
 
 		res.status(200).send(usuario);

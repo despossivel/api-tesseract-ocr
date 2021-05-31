@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const ObjectId = mongoose.Schema.Types.ObjectId;
+const mongoose = require('mongoose'),
+	ObjectId = mongoose.Schema.Types.ObjectId;
 
 const Recompensa = new mongoose.Schema({
 	_idEstabelecimento: {

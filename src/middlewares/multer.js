@@ -1,6 +1,6 @@
-const multer = require('multer')
-const path = require('path')
-const crypto = require('crypto')
+const multer = require('multer'),
+    path = require('path'),
+    crypto = require('crypto');
 
 module.exports = {
     dest: path.resolve(__dirname, '..', '..', 'public', 'uploads'),

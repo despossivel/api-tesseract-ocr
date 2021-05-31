@@ -14,4 +14,4 @@ class Response {
 
 }
 
-module.exports = () => new Response();
+module.exports = _ => new Response();

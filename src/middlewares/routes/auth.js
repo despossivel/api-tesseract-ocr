@@ -1,9 +1,8 @@
-const { check } = require('express-validator');
-const expressValidation = require('../expressValidation')
+const { check } = require('express-validator'),
+    expressValidation = require('../expressValidation')
 
 module.exports = {
     index: [
-  
         expressValidation.validation
     ]
 };

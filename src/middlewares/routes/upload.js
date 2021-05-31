@@ -1,9 +1,8 @@
-const { check } = require('express-validator');
-const multer = require('multer');
-
-const expressValidation = require('../expressValidation')
-const Jwt = require('../Jwt');
-const config = require('../multer')
+const { check } = require('express-validator'),
+    multer = require('multer'),
+    expressValidation = require('../expressValidation'),
+    Jwt = require('../Jwt'),
+    config = require('../multer')
 
 module.exports = {
     foto: [

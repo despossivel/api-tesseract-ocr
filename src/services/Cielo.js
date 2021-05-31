@@ -11,7 +11,7 @@ class Cielo {
 		const dadosSale = {
 			"MerchantOrderId": Math.random() * (9999 - 1) + 123,
 			"Customer": {
-				"Name": "Pinpper Online"
+				"Name": "Chega Rapido Express Online"
 			},
 			"Payment": {
 				...payment,
@@ -42,18 +42,15 @@ class Cielo {
 		}
 	}
 
-	credit = async (sale) => await this.GATEWAY.creditCard.completeTransaction(sale)
+	credit = async sale => await this.GATEWAY.creditCard.completeTransaction(sale)
 		.catch(error => console.error(error));
 
-	debit = async (sale) => await this.GATEWAY.debitCard.simpleTransaction(sale)
+	debit = async sale => await this.GATEWAY.debitCard.simpleTransaction(sale)
 		.catch(error => console.error(error));
 
-
-	consulting = async (paymentId) => await this.GATEWAY.consulting.sale(paymentId)
+	consulting = async paymentId => await this.GATEWAY.consulting.sale(paymentId)
 		.catch(e => console.error(e));
 
-
 }
-
 
 module.exports = Cielo;

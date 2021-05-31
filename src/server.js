@@ -17,45 +17,32 @@ const app = express();
 
 
 
-const Index = require('./routes/index');
-const Public = require('./routes/Public');
-const Auth = require('./routes/auth');
-const CartaoFidelidade = require('./routes/CartaoFidelidade');
-const Estabelecimento = require('./routes/Estabelecimento');
-const MetodosDePagamento = require('./routes/MetodosDePagamento');
-const Payments = require('./routes/Payments');
-const Recompesa = require('./routes/Recompensa');
-const Uploads = require('./routes/Uploads');
-const Usuario = require('./routes/Usuario');
+const Index = require('./routes/index'),
+    Public = require('./routes/Public'),
+    Auth = require('./routes/auth'),
+    Payments = require('./routes/Payments'),
+    Order = require('./routes/Order'),
+    Uploads = require('./routes/Uploads'),
+    Usuario = require('./routes/Usuario');
 
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, './views'))
-
 app.use('/static', express.static('./public'))
-
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-
 app.use([
     Index,
     Public,
     Auth,
-    CartaoFidelidade,
-    Estabelecimento,
-    MetodosDePagamento,
     Payments,
-    Recompesa,
+    Order,
     Uploads,
     Usuario
 ]);
 
-
-app.use('/docs-api',express.static(path.resolve(__dirname, '..', 'public', 'docs',)));
-
-
+app.use('/docs-api', express.static(path.resolve(__dirname, '..', 'public', 'docs',)));
 
 // pegar rotas indefinidas e responder com 404
 app.use(function (req, res, next) {
@@ -67,8 +54,5 @@ app.use(function (err, req, res, next) {
     console.error(err.stack)
     res.status(500).send('Algo quebrou!')
 })
-
-
-
 
 module.exports = app;

@@ -1,8 +1,7 @@
-const Cielo = require('../services/Cielo');
-
-const ModelPayment = require('../models/Payment');
-const ModelEstabelecimento = require('../models/Estabelecimento');
-const ModelLicence = require('../models/Licence')
+const Cielo = require('../services/Cielo'),
+	ModelPayment = require('../models/Payment');
+	// ModelEstabelecimento = require('../models/Estabelecimento'),
+	// ModelLicence = require('../models/Licence')
 
 class Payments {
 
@@ -15,8 +14,9 @@ class Payments {
 	}
 
 	async show(req, res) {
-		const { _id } = req.params;
-		const payment = await ModelPayment.findById({ _id }).catch(e => console.log(e))
+		const { _id } = req.params,
+			payment = await ModelPayment.findById({ _id }).catch(e => console.log(e))
+			
 		payment.length == 0 ?
 			res.status(404).send({ errors: [{ "msg": "Não foi possivel encontrar o pagamento" }] }) :
 			res.status(200).send([payment]);
@@ -26,15 +26,15 @@ class Payments {
 
 		const { _idUsuario, _idEstabelecimento, Type, Amount, ...card } = req.body;
 
-		const licenceCurrent = await ModelLicence.findOne({
-			_idEstabelecimento
-		})
+		// const licenceCurrent = await ModelLicence.findOne({
+		// 	_idEstabelecimento
+		// })
 
-		if (licenceCurrent) {
-			const { status } = licenceCurrent;
-			if (status) return res.status(403)
-				.send({ errors: [{ "msg": "Desculpe, mas sua licença ainda é válida, por isso não foi possível renová-la agora!" }] })
-		}
+		// if (licenceCurrent) {
+		// 	const { status } = licenceCurrent;
+		// 	if (status) return res.status(403)
+		// 		.send({ errors: [{ "msg": "Desculpe, mas sua licença ainda é válida, por isso não foi possível renová-la agora!" }] })
+		// }
 
 		const cielo = new Cielo();
 
@@ -57,16 +57,16 @@ class Payments {
 						MerchantOrderId,
 						_idUsuario,
 						_idEstabelecimento,
-						Customer: 'Pinpper.com',
+						Customer: 'chegarapidoexpress.com',
 						Transation
 					});
 
-					await ModelEstabelecimento.updateOne({
-						_id: _idEstabelecimento
-					}, {
-						// status: true,
-						licence: true
-					})
+					// await ModelEstabelecimento.updateOne({
+					// 	_id: _idEstabelecimento
+					// }, {
+					// 	// status: true,
+					// 	licence: true
+					// })
 
 					paymentSave.n == 0 ?
 						res.status(404).send({ errors: [{ "msg": "Nenhum estabelecimento encontrado!" }] }) :

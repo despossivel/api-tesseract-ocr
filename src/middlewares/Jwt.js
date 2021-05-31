@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const { promisify } = require('util')
+const jwt = require('jsonwebtoken'),
+	{ promisify } = require('util')
 class JWT {
 
 	constructor() {
@@ -7,7 +7,7 @@ class JWT {
 		this.expiresIn = '8h';
 	}
 
-	sing = (payload) => jwt.sign({ payload }, this.privateKey, { expiresIn: '8h' })
+	sing = payload => jwt.sign({ payload }, this.privateKey, { expiresIn: '8h' })
 
 	verify = (req, res, next) => {
 		const token = req.headers['authorization'];

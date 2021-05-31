@@ -1,8 +1,7 @@
-const { Router } = require('express');
-const route = new Router();
-
-const middleware = require('../middlewares/routes/payment');
-const Payments = require('../controllers/Payments');
+const { Router } = require('express'),
+    route = new Router(),
+    middleware = require('../middlewares/routes/payment'),
+    Payments = require('../controllers/Payments');
 
 route.get('/payments', middleware.index, Payments.index);
 route.get('/payment/:_id', middleware.show, Payments.show);

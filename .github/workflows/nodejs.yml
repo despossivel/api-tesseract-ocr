@@ -31,13 +31,13 @@ jobs:
         with:
           username: ${{ secrets.REGISTRYUSER }}
           password: ${{ secrets.REGISTRYPASSWORD }}
-          repository: despossivel/api.pinpper.com
+          repository: despossivel/api.chegarapidoexpress.com
       - name: Deploy
         uses: fifsky/ssh-action@master
         with:
           command: |
             cd  ${{ secrets.DIR }}
-            docker pull despossivel/api.pinpper.com
+            docker pull despossivel/api.chegarapidoexpress.com
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY}}

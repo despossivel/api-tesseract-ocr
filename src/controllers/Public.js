@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const Model = require('../models/Usuario');
-const blowfish = require('../utils/blowfish');
-const SMTP = require('../services/SMTP');
+const mongoose = require('mongoose'),
+    Model = require('../models/Usuario'),
+    blowfish = require('../utils/blowfish'),
+    SMTP = require('../services/SMTP');
 
 class Public {
 
@@ -18,8 +18,8 @@ class Public {
 
     //recuperar senha
     async show(req, res) {
-        const { email } = req.params;
-        const usuario = await Model.find({ email, status: true }).catch(e => console.log(e))
+        const { email } = req.params,
+            usuario = await Model.find({ email, status: true }).catch(e => console.log(e))
 
         if (usuario.length == 0) res.status(404).send({ errors: [{ "msg": "Usuario não encontrado!" }] })
 

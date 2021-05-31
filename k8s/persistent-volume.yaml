@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-    name: pinpper-upload
+    name: chegarapidoexpress-upload
 spec:
     accessModes:
         - ReadWriteOnce
