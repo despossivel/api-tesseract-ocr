@@ -2,21 +2,58 @@ const mongoose = require('mongoose'),
 	ObjectId = mongoose.Schema.Types.ObjectId;
 
 const Recompensa = new mongoose.Schema({
-	_idEstabelecimento: {
+	_idUsuario: {
 		type: ObjectId,
 		require: true
 	},
-	titulo: {
+	pointA: {
 		type: String,
 		require: true
 	},
-	descricao: {
+	pointAChecked: {
+		type: Date,
+		require: true
+	},
+	pointB: {
 		type: String,
 		require: true
 	},
-	quantidadePontos: {
-		type: Number,
+	pointBChecked: {
+		type: Date,
 		require: true
+	},
+	pointC: {
+		type: String,
+		require: true
+	},
+	pointCChecked: {
+		type: Date,
+		require: true
+	},
+	retorno: {
+		type: Boolean,
+		require: true,
+		setDefaultOnInsert: false
+	},
+	fazer: {
+		type: String,
+		require: true
+	},
+	distancia: {
+		type: String,
+		require: true
+	},
+	tempo: {
+		type: String,
+		require: true
+	},
+	valor: {
+		type: String,
+		require: true
+	},
+	agendadoPara: {
+		type: Date,
+		require: false
 	},
 	status: {
 		type: Boolean,

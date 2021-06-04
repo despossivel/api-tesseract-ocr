@@ -13,16 +13,9 @@ module.exports = {
         check("_id").notEmpty(),
         expressValidation.validation
     ],
-    store: [
+    storeCpf: [
         //  Jwt.verify,
         check('nome').notEmpty(),
-        check('usuario').notEmpty().custom((value) => {
-            return Model.findOne({ usuario: value }).then(usuario => {
-                if (usuario) {
-                    return Promise.reject('Nome de usuário já está em uso')
-                }
-            })
-        }),
         check('email').notEmpty().isEmail().custom((value) => {
             return Model.findOne({ email: value }).then(email => {
                 if (email) {
@@ -35,6 +28,34 @@ module.exports = {
                 if (cpf) {
                     return Promise.reject('Cpf já está em uso')
                 }
+            })
+        }),
+        check('municipio').notEmpty(),
+        check('estado').notEmpty().isLength({ max: 2 }),
+        check('senha').notEmpty().isLength({ min: 5 }).withMessage('Sua senha deve ter pelo menos 5 caracteres'),
+        check('telefone').notEmpty().custom((value) => {
+            return Model.findOne({ telefone: value }).then(telefone => {
+                if (telefone) {
+                    return Promise.reject('Telefone já está em uso')
+                }
+            })
+        }),
+        expressValidation.validation
+    ],
+    storeCnpj: [
+        //  Jwt.verify,
+        check('nome').notEmpty(),
+        check('email').notEmpty().isEmail().custom((value) => {
+            return Model.findOne({ email: value }).then(email => {
+                if (email) {
+                    return Promise.reject('E-mail já está em uso')
+                }
+            })
+        }),
+        check('cnpj').notEmpty().custom((value) => {
+            return Model.findOne({ cnpj: value }).then(cnpj => {
+                if (cnpj) return Promise.reject('Cnpj já está em uso')
+
             })
         }),
         check('municipio').notEmpty(),

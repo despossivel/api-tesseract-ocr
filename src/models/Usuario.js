@@ -6,10 +6,6 @@ const Usuario = new mongoose.Schema({
         type: String,
         required: true
     },
-    usuario: {
-        type: String,
-        required: true
-    },
     email: {
         type: String,
         required: true
@@ -22,13 +18,9 @@ const Usuario = new mongoose.Schema({
         type: Number,
         required: true
     },
-    cpf: {
+    cpfOrCnpj: {
         type: String,
         required: true
-    },
-    tokenMessagin: {
-        type: String,
-        required: false
     },
     senha: {
         type: String,
@@ -38,12 +30,13 @@ const Usuario = new mongoose.Schema({
         type: String,
         required: true
     },
+    contrato: {
+        type: Boolean,
+        require: true,
+        setDefaultOnInsert: false
+    },
     adminIn: {
         type: Array
-    },
-    foto: {
-        type: String,
-        required: false
     },
     status: {
         type: Boolean,
@@ -74,7 +67,7 @@ Usuario.pre('save', function (next) {
 */
 
 
-Usuario.virtual('fotoUrl').get(function () {
+Usuario.virtual('fotoUrl').get(() => {
     if (this.foto) {
         return `${process.env.HOST}/static/uploads/${encodeURIComponent(this.foto)}`
     }

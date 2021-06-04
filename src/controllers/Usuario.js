@@ -22,7 +22,29 @@ class Usuario {
 
 	async store(req, res) {
 		const doc = req.body;
-		const usuario = await Model.create(doc);
+
+		let killDoc;
+
+		const isCpf = doc.hasOwnProperty('cpf');
+
+		if (isCpf) {
+			const { cpf, ...rest } = doc;
+			killDoc = rest;
+		} else {
+			const { cnpj, ...rest } = doc;
+			killDoc = rest;
+		}
+
+		const docPartner = isCpf ? {
+			...killDoc,
+			cpfOrCnpj: doc.cpf
+		} : {
+			...killDoc,
+			cpfOrCnpj: doc.cnpj
+		};
+
+
+		const usuario = await Model.create(docPartner);
 		const { _id } = usuario;
 
 		await SMTP.send(doc.email, 'Confirmar conta no Chega Rapido Express', `Acesse o link para confirmar a sua conta

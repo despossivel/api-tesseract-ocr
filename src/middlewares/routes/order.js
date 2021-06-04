@@ -14,10 +14,17 @@ module.exports = {
     ],
     store: [
         Jwt.verify,
-        check('_idOrder').notEmpty(),
-        check('titulo').notEmpty(),
-        check('descricao').notEmpty(),
-        check('quantidadePontos').notEmpty(),
+        check('_idUsuario').notEmpty(),
+        check('pointA').notEmpty(),
+        check('pointB').notEmpty(),
+        check('pointC').notEmpty(),
+        check('pointC').notEmpty(),
+        check('retorno').notEmpty(),
+        check('fazer').notEmpty(),
+        // check('agendadoPara').notEmpty(),
+        check('distancia').notEmpty(),
+        check('tempo').notEmpty(),
+        check('valor').notEmpty(),
         expressValidation.validation
     ],
     update: [
