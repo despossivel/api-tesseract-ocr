@@ -48,7 +48,7 @@ class Usuario {
 		const { _id } = usuario;
 
 		await SMTP.send(doc.email, 'Confirmar conta no Chega Rapido Express', `Acesse o link para confirmar a sua conta
-			${process.env.HOST}/public/confirmar/conta/${_id}`, ``).catch(e => console.error(e))
+			${process.env.HOST}public/confirmar/conta/${_id}`, ``).catch(e => console.error(e))
 
 		res.status(200).send(usuario);
 	}
