@@ -23,7 +23,8 @@ const Index = require('./routes/index'),
     Payments = require('./routes/Payments'),
     Order = require('./routes/Order'),
     Uploads = require('./routes/Uploads'),
-    Usuario = require('./routes/Usuario');
+    Usuario = require('./routes/Usuario'),
+    Address = require('./routes/Address');
 
 
 app.set('view engine', 'ejs');
@@ -39,7 +40,8 @@ app.use([
     Payments,
     Order,
     Uploads,
-    Usuario
+    Usuario,
+    Address
 ]);
 
 app.use('/docs-api', express.static(path.resolve(__dirname, '..', 'public', 'docs',)));
