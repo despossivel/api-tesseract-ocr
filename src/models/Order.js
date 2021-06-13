@@ -7,36 +7,64 @@ const Recompensa = new mongoose.Schema({
 		require: true
 	},
 	pointA: {
-		type: String,
-		require: true
+		endereco: {
+			type: String,
+			require: true
+		},
+		fazer: {
+			type: String,
+			require: true
+		},
+		complemento: {
+			type: String,
+			require: true
+		}
+
 	},
 	pointAChecked: {
 		type: Date,
 		require: true
 	},
 	pointB: {
-		type: String,
-		require: true
+		endereco: {
+			type: String,
+			require: true
+		},
+		fazer: {
+			type: String,
+			require: true
+		},
+		complemento: {
+			type: String,
+			require: true
+		}
+
 	},
 	pointBChecked: {
 		type: Date,
 		require: true
 	},
 	pointC: {
-		type: String,
-		require: true
+		endereco: {
+			type: String,
+			require: true
+		},
+		fazer: {
+			type: String,
+			require: true
+		},
+		complemento: {
+			type: String,
+			require: true
+		},
+		returnPointA: {
+			type: Boolean,
+			require: true,
+			setDefaultOnInsert: true
+		}
 	},
 	pointCChecked: {
 		type: Date,
-		require: true
-	},
-	retorno: {
-		type: Boolean,
-		require: true,
-		setDefaultOnInsert: false
-	},
-	fazer: {
-		type: String,
 		require: true
 	},
 	distancia: {
@@ -55,12 +83,19 @@ const Recompensa = new mongoose.Schema({
 		type: Date,
 		require: false
 	},
+	// 0 - aguardando analise
+	// 1 - aprovado
+	// 2 - em andamento
+	// 3 - concluida
 	status: {
 		type: Boolean,
 		require: true,
 		setDefaultOnInsert: true
 	},
-
+	paymentId: {
+		type: String,
+		require: false
+	},
 },
 	{
 		timestamps: true,
