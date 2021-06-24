@@ -6,8 +6,8 @@ class Order {
 	async index(req, res) {
 		let find = req.query;
 
-		find._idEstabelecimento ?
-			find._idEstabelecimento = mongoose.Types.ObjectId(find._idEstabelecimento)
+		find._idUsuario ?
+			find._idUsuario = mongoose.Types.ObjectId(find._idUsuario)
 			: find = {};
 
 		const order = await Model.find(find).catch(e => console.log(e))
