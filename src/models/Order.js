@@ -72,8 +72,14 @@ const Recompensa = new mongoose.Schema({
 		require: true
 	},
 	tempo: {
-		type: String,
-		require: true
+		text: {
+			type: String,
+			require: true
+		},
+		value: {
+			type: Number,
+			require: true
+		}
 	},
 	valor: {
 		type: String,
