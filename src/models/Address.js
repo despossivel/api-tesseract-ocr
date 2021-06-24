@@ -22,7 +22,7 @@ const Address = new mongoose.Schema({
 	},
 	complemento: {
 		type: String,
-		require: true
+		require: false
 	},
 	status: {
 		type: Boolean,

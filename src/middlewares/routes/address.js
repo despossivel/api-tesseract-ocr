@@ -16,7 +16,7 @@ module.exports = {
         Jwt.verify,
         check('_idUsuario').notEmpty(),
         check('endereco').notEmpty(),
-        check('complemento').notEmpty(),
+        // check('complemento').notEmpty(),
         check('coordenadas').notEmpty(),
         expressValidation.validation
     ],
