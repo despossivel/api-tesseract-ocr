@@ -18,12 +18,22 @@ const Recompensa = new mongoose.Schema({
 		complemento: {
 			type: String,
 			require: true
+		},
+		coordenadas: {
+			lat: {
+				type: String,
+				require: true
+			},
+			lng: {
+				type: String,
+				require: true
+			}
 		}
 
 	},
 	pointAChecked: {
 		type: Date,
-		require: true
+		require: false
 	},
 	pointB: {
 		endereco: {
@@ -37,12 +47,22 @@ const Recompensa = new mongoose.Schema({
 		complemento: {
 			type: String,
 			require: true
+		},
+		coordenadas: {
+			lat: {
+				type: String,
+				require: true
+			},
+			lng: {
+				type: String,
+				require: true
+			}
 		}
 
 	},
 	pointBChecked: {
 		type: Date,
-		require: true
+		require: false
 	},
 	pointC: {
 		endereco: {
@@ -57,6 +77,16 @@ const Recompensa = new mongoose.Schema({
 			type: String,
 			require: true
 		},
+		coordenadas: {
+			lat: {
+				type: String,
+				require: true
+			},
+			lng: {
+				type: String,
+				require: true
+			}
+		},
 		returnPointA: {
 			type: Boolean,
 			require: true,
@@ -65,11 +95,17 @@ const Recompensa = new mongoose.Schema({
 	},
 	pointCChecked: {
 		type: Date,
-		require: true
+		require: false
 	},
 	distancia: {
-		type: String,
-		require: true
+		text: {
+			type: String,
+			require: true
+		},
+		value: {
+			type: Number,
+			require: true
+		}
 	},
 	tempo: {
 		text: {

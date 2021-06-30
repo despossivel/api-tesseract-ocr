@@ -5,12 +5,13 @@ class Address {
 
     async index(req, res) {
         let find = req.query;
-
+ 
         find._idUsuario ?
             find._idUsuario = mongoose.Types.ObjectId(find._idUsuario)
             : find = {};
-
+ 
         const address = await Model.find(find).catch(e => console.log(e))
+
         address.length == 0 ?
             res.status(404).send({ errors: [{ "msg": "Nenhuma address encontrada no momento!" }] }) :
             res.status(200).send(address);
