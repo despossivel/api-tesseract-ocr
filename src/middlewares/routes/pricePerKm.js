@@ -4,11 +4,11 @@ const Jwt = require('../Jwt');
 
 module.exports = {
     index: [
-        Jwt.verify,
+        // Jwt.verify,
         expressValidation.validation
     ],
     show: [
-        Jwt.verify,
+        // Jwt.verify,
         check("_id").notEmpty(),
         expressValidation.validation
     ],
