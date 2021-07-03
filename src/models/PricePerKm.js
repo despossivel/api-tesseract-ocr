@@ -1,14 +1,8 @@
 const mongoose = require('mongoose'),
-    ObjectId = mongoose.Schema.Types.ObjectId;
+    // ObjectId = mongoose.Schema.Types.ObjectId,
+    Float = require('mongoose-float').loadType(mongoose);
 
-
-
-
-const getPrice = num => (num / 100).toFixed(2);
-
-const setPrice = num => parseFloat(num) * 100;
-
-
+ 
 const PricePerKm = new mongoose.Schema({
     de: {
         type: Number,
@@ -19,9 +13,7 @@ const PricePerKm = new mongoose.Schema({
         require: true
     },
     price: {
-        type: mongoose.Schema.Types.Decimal128,
-        get: getPrice,
-        set: setPrice,
+        type: Float,
         require: true
     }
 },
