@@ -118,7 +118,7 @@ const Recompensa = new mongoose.Schema({
 		}
 	},
 	valor: {
-		type: String,
+		type: mongoose.Schema.Types.Decimal128,
 		require: true
 	},
 	agendadoPara: {
@@ -132,7 +132,7 @@ const Recompensa = new mongoose.Schema({
 	status: {
 		type: Boolean,
 		require: true,
-		setDefaultOnInsert: true
+		setDefaultOnInsert: 0
 	},
 	paymentId: {
 		type: String,

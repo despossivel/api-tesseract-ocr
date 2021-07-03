@@ -19,7 +19,7 @@ const PricePerKm = new mongoose.Schema({
         require: true
     },
     price: {
-        type: Number,
+        type: mongoose.Schema.Types.Decimal128,
         get: getPrice,
         set: setPrice,
         require: true
