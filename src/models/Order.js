@@ -2,7 +2,7 @@ const mongoose = require('mongoose'),
 	ObjectId = mongoose.Schema.Types.ObjectId,
 	Float = require('mongoose-float').loadType(mongoose);
 
-const Recompensa = new mongoose.Schema({
+const Order = new mongoose.Schema({
 	_idUsuario: {
 		type: ObjectId,
 		require: true
@@ -133,7 +133,7 @@ const Recompensa = new mongoose.Schema({
 	status: {
 		type: Boolean,
 		require: true,
-		setDefaultOnInsert: 0
+		default: 0
 	},
 	paymentId: {
 		type: String,
@@ -147,4 +147,4 @@ const Recompensa = new mongoose.Schema({
 		setDefaultsOnInsert: true
 	});
 
-module.exports = mongoose.model('Recompensa', Recompensa);
+module.exports = mongoose.model('Order', Order);
