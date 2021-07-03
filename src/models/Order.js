@@ -1,5 +1,6 @@
 const mongoose = require('mongoose'),
-	ObjectId = mongoose.Schema.Types.ObjectId;
+	ObjectId = mongoose.Schema.Types.ObjectId,
+	Float = require('mongoose-float').loadType(mongoose);
 
 const Recompensa = new mongoose.Schema({
 	_idUsuario: {
@@ -118,7 +119,7 @@ const Recompensa = new mongoose.Schema({
 		}
 	},
 	valor: {
-		type: mongoose.Schema.Types.Decimal128,
+		type: Float,
 		require: true
 	},
 	agendadoPara: {
