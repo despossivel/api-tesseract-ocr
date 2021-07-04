@@ -126,12 +126,13 @@ const Order = new mongoose.Schema({
 		type: Date,
 		require: false
 	},
-	// 0 - aguardando analise
-	// 1 - aprovado
-	// 2 - em andamento
-	// 3 - concluida
+	// 0 - aguardando pagamento
+	// 1 - pagamento confirmado
+	// 2 - aguardado aprovacao do admin
+	// 3 - em andamento
+	// 4 - concluida
 	status: {
-		type: Boolean,
+		type: Number,
 		require: true,
 		default: 0
 	},
