@@ -26,6 +26,14 @@ const Usuario = new mongoose.Schema({
         type: String,
         required: true
     },
+    endereco: {
+        type: String,
+        required: true
+    },
+    complemento: {
+        type: String,
+        required: true
+    },
     telefone: {
         type: String,
         required: true
