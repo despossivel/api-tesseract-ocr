@@ -16,7 +16,15 @@ const Order = new mongoose.Schema({
 			type: String,
 			require: true
 		},
+		descricaofazer: {
+			type: String,
+			require: true
+		},
 		complemento: {
+			type: String,
+			require: true
+		},
+		telefone: {
 			type: String,
 			require: true
 		},
@@ -45,7 +53,15 @@ const Order = new mongoose.Schema({
 			type: String,
 			require: true
 		},
+		descricaofazer: {
+			type: String,
+			require: true
+		},
 		complemento: {
+			type: String,
+			require: true
+		},
+		telefone: {
 			type: String,
 			require: true
 		},
@@ -73,6 +89,10 @@ const Order = new mongoose.Schema({
 		fazer: {
 			type: String,
 			require: true
+		},
+		descricaofazer: {
+			type: String,
+			require: false
 		},
 		complemento: {
 			type: String,

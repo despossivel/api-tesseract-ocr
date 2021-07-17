@@ -18,7 +18,6 @@ module.exports = {
         check('pointA').notEmpty(),
         check('pointB').notEmpty(),
         check('pointC').notEmpty(),
-        check('pointC').notEmpty(),
         // check('retorno').notEmpty(),
         // check('fazer').notEmpty(),
         // check('agendadoPara').notEmpty(),
