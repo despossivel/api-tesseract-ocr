@@ -31,6 +31,8 @@ module.exports = {
             })
         }),
         check('municipio').notEmpty(),
+        check('endereco').notEmpty(),
+        check('complemento').notEmpty(),
         check('estado').notEmpty().isLength({ max: 2 }),
         check('senha').notEmpty().isLength({ min: 5 }).withMessage('Sua senha deve ter pelo menos 5 caracteres'),
         check('telefone').notEmpty().custom((value) => {
@@ -59,6 +61,8 @@ module.exports = {
             })
         }),
         check('municipio').notEmpty(),
+        check('endereco').notEmpty(),
+        check('complemento').notEmpty(),
         check('estado').notEmpty().isLength({ max: 2 }),
         check('senha').notEmpty().isLength({ min: 5 }).withMessage('Sua senha deve ter pelo menos 5 caracteres'),
         check('telefone').notEmpty().custom((value) => {

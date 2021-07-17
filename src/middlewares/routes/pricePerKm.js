@@ -4,26 +4,19 @@ const Jwt = require('../Jwt');
 
 module.exports = {
     index: [
-        Jwt.verify,
+        // Jwt.verify,
         expressValidation.validation
     ],
     show: [
-        Jwt.verify,
+        // Jwt.verify,
         check("_id").notEmpty(),
         expressValidation.validation
     ],
     store: [
         Jwt.verify,
-        check('_idUsuario').notEmpty(),
-        check('pointA').notEmpty(),
-        check('pointB').notEmpty(),
-        check('pointC').notEmpty(),
-        // check('retorno').notEmpty(),
-        // check('fazer').notEmpty(),
-        // check('agendadoPara').notEmpty(),
-        check('distancia').notEmpty(),
-        check('tempo').notEmpty(),
-        check('valor').notEmpty(),
+        check('de').notEmpty(),
+        check('ate').notEmpty(),
+        check('price').notEmpty(),
         expressValidation.validation
     ],
     update: [

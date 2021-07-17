@@ -24,7 +24,8 @@ const Index = require('./routes/index'),
     Order = require('./routes/Order'),
     Uploads = require('./routes/Uploads'),
     Usuario = require('./routes/Usuario'),
-    Address = require('./routes/Address');
+    Address = require('./routes/Address'),
+    PricePerKm = require('./routes/PricePerKm');
 
 
 app.set('view engine', 'ejs');
@@ -41,18 +42,17 @@ app.use([
     Order,
     Uploads,
     Usuario,
-    Address
+    Address,
+    PricePerKm
 ]);
 
 app.use('/docs-api', express.static(path.resolve(__dirname, '..', 'public', 'docs',)));
 
 // pegar rotas indefinidas e responder com 404
-app.use(function (req, res, next) {
-    res.status(404).send("Desculpe, não consigo encontrar isso!")
-});
+app.use((req, res, next) => res.status(404).send("Desculpe, não consigo encontrar isso!"));
 
 // detectar erros do servidor e responder com 500
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
     console.error(err.stack)
     res.status(500).send('Algo quebrou!')
 })

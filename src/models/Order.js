@@ -1,7 +1,8 @@
 const mongoose = require('mongoose'),
-	ObjectId = mongoose.Schema.Types.ObjectId;
+	ObjectId = mongoose.Schema.Types.ObjectId,
+	Float = require('mongoose-float').loadType(mongoose);
 
-const Recompensa = new mongoose.Schema({
+const Order = new mongoose.Schema({
 	_idUsuario: {
 		type: ObjectId,
 		require: true
@@ -15,15 +16,33 @@ const Recompensa = new mongoose.Schema({
 			type: String,
 			require: true
 		},
+		descricaofazer: {
+			type: String,
+			require: true
+		},
 		complemento: {
 			type: String,
 			require: true
+		},
+		telefone: {
+			type: String,
+			require: true
+		},
+		coordenadas: {
+			lat: {
+				type: String,
+				require: true
+			},
+			lng: {
+				type: String,
+				require: true
+			}
 		}
 
 	},
 	pointAChecked: {
 		type: Date,
-		require: true
+		require: false
 	},
 	pointB: {
 		endereco: {
@@ -34,15 +53,33 @@ const Recompensa = new mongoose.Schema({
 			type: String,
 			require: true
 		},
+		descricaofazer: {
+			type: String,
+			require: true
+		},
 		complemento: {
 			type: String,
 			require: true
+		},
+		telefone: {
+			type: String,
+			require: true
+		},
+		coordenadas: {
+			lat: {
+				type: String,
+				require: true
+			},
+			lng: {
+				type: String,
+				require: true
+			}
 		}
 
 	},
 	pointBChecked: {
 		type: Date,
-		require: true
+		require: false
 	},
 	pointC: {
 		endereco: {
@@ -53,9 +90,23 @@ const Recompensa = new mongoose.Schema({
 			type: String,
 			require: true
 		},
+		descricaofazer: {
+			type: String,
+			require: false
+		},
 		complemento: {
 			type: String,
 			require: true
+		},
+		coordenadas: {
+			lat: {
+				type: String,
+				require: true
+			},
+			lng: {
+				type: String,
+				require: true
+			}
 		},
 		returnPointA: {
 			type: Boolean,
@@ -65,11 +116,17 @@ const Recompensa = new mongoose.Schema({
 	},
 	pointCChecked: {
 		type: Date,
-		require: true
+		require: false
 	},
 	distancia: {
-		type: String,
-		require: true
+		text: {
+			type: String,
+			require: true
+		},
+		value: {
+			type: Number,
+			require: true
+		}
 	},
 	tempo: {
 		text: {
@@ -82,21 +139,22 @@ const Recompensa = new mongoose.Schema({
 		}
 	},
 	valor: {
-		type: String,
+		type: Float,
 		require: true
 	},
 	agendadoPara: {
 		type: Date,
 		require: false
 	},
-	// 0 - aguardando analise
-	// 1 - aprovado
-	// 2 - em andamento
-	// 3 - concluida
+	// 0 - aguardando pagamento
+	// 1 - pagamento confirmado
+	// 2 - aguardado aprovacao do admin
+	// 3 - em andamento
+	// 4 - concluida
 	status: {
-		type: Boolean,
+		type: Number,
 		require: true,
-		setDefaultOnInsert: true
+		default: 0
 	},
 	paymentId: {
 		type: String,
@@ -110,4 +168,4 @@ const Recompensa = new mongoose.Schema({
 		setDefaultsOnInsert: true
 	});
 
-module.exports = mongoose.model('Recompensa', Recompensa);
+module.exports = mongoose.model('Order', Order);
