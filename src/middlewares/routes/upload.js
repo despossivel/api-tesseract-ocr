@@ -6,15 +6,9 @@ const { check } = require('express-validator'),
 
 module.exports = {
     foto: [
-        Jwt.verify,
+        // Jwt.verify,
         // check('_id').exists().notEmpty(),
         multer(config).single('foto'),
         expressValidation.validation
-    ],
-    logo: [
-        Jwt.verify,
-        // check('_id').exists().notEmpty(),
-        multer(config).single('logo'),
-        expressValidation.validation
-    ],
+    ]
 };

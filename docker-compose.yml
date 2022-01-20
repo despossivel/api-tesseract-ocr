@@ -1,20 +1,11 @@
 version: "2"
 services:
-  web:
-    container_name: api.chegarapidoexpress.com
+  tesseract:
+    container_name: tesseract
     build: .
-    # container_name: api.chegarapidoexpress.com
-    #command:   pm2-runtime process.json
     volumes:
-      - .:/usr/api.chegarapidoexpress.com
-      - ./node_modules:/usr/api.chegarapidoexpress.com/node_modules
-      - ./public/uploads:/usr/api.chegarapidoexpress.com/public/uploads
+      - .:/usr/tesseract
+      - ./node_modules:/usr/tesseract/node_modules
+      - ./public/uploads:/usr/tesseract/public/uploads
     ports:
-      - "5000:5000"
-    networks:
-      - chegarapidoexpress
-    restart: always
-
-networks:
-  chegarapidoexpress:
-    driver: bridge
+      - "8888:8888"

@@ -4,6 +4,6 @@ const { Router } = require('express'),
     Uploads = require('../controllers/Uploads');
 
 route.post('/upload/foto', middleware.foto, Uploads.foto)
-route.post('/upload/logo', middleware.logo, Uploads.logo)
+ 
 
 module.exports = route;

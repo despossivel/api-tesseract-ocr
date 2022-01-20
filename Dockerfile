@@ -1,4 +1,14 @@
-FROM node:12-alpine
+FROM node:16-alpine
+
+# FROM alpine:3.15.0
+
+
+RUN apk update && apk add --no-cache wget \ 
+ && apk add bash \
+#  && apk add nginx \
+ && wget https://nodejs.org/dist/v16.13.2/node-v16.13.2-linux-x64.tar.xz && tar -xf node-v16.13.2-linux-x64.tar.xz \
+ && apk add tesseract-ocr \
+ && apk add tesseract-lang
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -16,6 +26,6 @@ RUN npm i pm2 -g
 # Bundle app source
 COPY . .
 
-EXPOSE 5000
+EXPOSE 8888
 #CMD [ "node", "index.js" ]
 CMD ["pm2-runtime","process.json"]
