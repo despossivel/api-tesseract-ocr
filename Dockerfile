@@ -7,8 +7,8 @@ RUN apk update && apk add --no-cache wget \
  && apk add bash \
 #  && apk add nginx \
  && wget https://nodejs.org/dist/v16.13.2/node-v16.13.2-linux-x64.tar.xz && tar -xf node-v16.13.2-linux-x64.tar.xz \
- && apk add tesseract-ocr \
- && apk add tesseract-lang
+ && apk add tesseract-ocr 
+#  && apk add tesseract-ocr-lang
 
 # Create app directory
 WORKDIR /usr/src/app

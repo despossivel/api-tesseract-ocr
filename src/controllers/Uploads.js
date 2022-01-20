@@ -10,12 +10,11 @@ class Uploads {
 		// const { _id } = req.body,
 
 
-		console.log(' req.file >>> ',  req.file)
+		// console.log(' req.file >>> ',  req.file)
 
 
+ 
 
-		return;
-		
 		const filename = { foto: req.file.filename };
 
 
@@ -25,7 +24,7 @@ class Uploads {
 
 		// tesseract "/usr/src/app/public/uploads/5764656fc71a8158.jpeg" stdout -l por --oem 1 --psm 3
 		const config = {
-			lang: "por",
+			lang: "eng",
 			oem: 1,
 			psm: 3,
 		}
