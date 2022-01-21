@@ -2,5 +2,5 @@
  "script":"index.js",
  "watch":true,
  "ignore_watch":["./.git","./public/uploads", "./node_modules"],
- "name":"api.chegarapidoexpress.com"   
+ "name":"api.tesseract-ocr.com"   
 }

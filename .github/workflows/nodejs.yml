@@ -31,13 +31,13 @@ jobs:
         with:
           username: ${{ secrets.REGISTRYUSER }}
           password: ${{ secrets.REGISTRYPASSWORD }}
-          repository: despossivel/api.chegarapidoexpress.com
+          repository: despossivel/api.tesseract-ocr.com
       - name: Deploy
         uses: fifsky/ssh-action@master
         with:
           command: |
             cd  ${{ secrets.DIR }}
-            docker pull despossivel/api.chegarapidoexpress.com
+            docker pull despossivel/api.tesseract-ocr.com
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY}}
