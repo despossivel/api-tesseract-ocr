@@ -6,6 +6,6 @@ spec:
   type: LoadBalancer
   ports:
     - port: 80
-      targetPort: 5000
+      targetPort: 8888
   selector:
     app: api-tesseract-ocr-com

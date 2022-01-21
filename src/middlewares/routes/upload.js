@@ -5,10 +5,10 @@ const { check } = require('express-validator'),
     config = require('../multer')
 
 module.exports = {
-    foto: [
+    image: [
         // Jwt.verify,
         // check('_id').exists().notEmpty(),
-        multer(config).single('foto'),
+        multer(config).single('image'),
         expressValidation.validation
     ]
 };

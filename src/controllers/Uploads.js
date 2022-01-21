@@ -6,16 +6,11 @@ const tesseract = require("node-tesseract-ocr")
 
 class Uploads {
 
-	async foto(req, res) {
-		// const { _id } = req.body,
-
-
-		// console.log(' req.file >>> ',  req.file)
-
-
+	async image(req, res) {
+ 
  
 
-		const filename = { foto: req.file.filename };
+		const filename = { image: req.file.filename };
 
 
 		// https://community.blueprism.com/communities/community-home/digestviewer/viewthread?GroupId=433&MessageKey=8f7d1dd6-4120-481b-9085-180c1cd33852&CommunityKey=4a78c71e-844a-422f-bd20-3bf6c4fbd146&tab=digestviewer
@@ -29,20 +24,9 @@ class Uploads {
 			psm: 3,
 		}
 
+		const IMG = `${path.resolve(__dirname, '..', '..', 'public', 'uploads')}/${filename.image}`;
 
-
-
-		const IMG = `${path.resolve(__dirname, '..', '..', 'public', 'uploads')}/${filename.foto}`;
-
-		// var writeFileStream = fs.createWriteStream(IMG)
-
-
-		// console.log(IMG)
-
-		// request(IMG).pipe(writeFileStream).on('close', function () {
-		// 	console.log(url, 'saved to', filename.foto)
-
-
+	
 		tesseract
 			.recognize(IMG, config)
 			.then((text) => {
@@ -59,17 +43,7 @@ class Uploads {
 				console.log(error.message)
 			})
 
-
-		// })
-
-
-
-
-
-
-
-
-
+ 
 	}
 
 
