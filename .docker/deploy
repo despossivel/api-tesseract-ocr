@@ -1,0 +1,10 @@
+#!/bin/bash
+# git checkout develop
+yarn build
+docker-compose -f ./docker-compose.yml up -d --build
+docker login
+docker commit tesseract despossivel/tesseract
+docker push despossivel/tesseract
+docker-compose down
+
+ssh root@149.28.197.225 'docker login && docker rmi despossivel/tesseract -f && docker rm tesseract -f && docker run -d --network resgatme --name tesseract -p 8888:8888 despossivel/tesseract' 
