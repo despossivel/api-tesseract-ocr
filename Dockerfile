@@ -1,7 +1,7 @@
 FROM debian:stable
  
 RUN apt-get update  \
-    && apt-get install curl tesseract-ocr tesseract-ocr-por nginx -y  \
+    && apt-get install curl tesseract-ocr tesseract-ocr-por -y  \
     && curl -sL https://deb.nodesource.com/setup_16.x -o nodesource_setup.sh \
     && bash nodesource_setup.sh \ 
     && apt install nodejs build-essential -y \
