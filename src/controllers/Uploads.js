@@ -19,9 +19,9 @@ class Uploads {
 
 		// tesseract "/usr/src/app/public/uploads/5764656fc71a8158.jpeg" stdout -l por --oem 1 --psm 3
 		const config = {
-			lang: "por",
-			oem: 1,
-			psm: 3,
+			lang: "eng",
+			oem: 1, //motoor
+			psm: 3, // tipo de leiitura
 		}
 
 		const IMG = `${path.resolve(__dirname, '..', '..', 'public', 'uploads')}/${filename.image}`;
@@ -30,7 +30,8 @@ class Uploads {
 		tesseract
 			.recognize(IMG, config)
 			.then((text) => {
-				// console.log("Result:", text)
+
+				console.log("Result:", text)
 
 				res.status(200).send({
 					success: true,
